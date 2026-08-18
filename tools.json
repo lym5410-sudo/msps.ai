@@ -1,0 +1,34 @@
+[
+  {
+    "name": "國小英語600單字",
+    "category": "英語學習",
+    "icon": "🇬🇧",
+    "description": "600個核心英語單字學習工具",
+    "url": "#",
+    "grade": "中高年級"
+  },
+  {
+    "name": "數學預習學習網站",
+    "category": "數學學習",
+    "icon": "🔢",
+    "description": "數學重點整理、預習與 AI 助教",
+    "url": "#",
+    "grade": "高年級"
+  },
+  {
+    "name": "課堂互動小白板",
+    "category": "課堂工具",
+    "icon": "📝",
+    "description": "課堂即時繪圖、文字與分組協作",
+    "url": "#",
+    "grade": "教師／學生"
+  },
+  {
+    "name": "AI 教育地圖",
+    "category": "AI 智慧工具",
+    "icon": "🗺️",
+    "description": "探索學校資訊與教育資料",
+    "url": "#",
+    "grade": "教師"
+  }
+]
