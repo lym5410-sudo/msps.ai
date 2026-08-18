@@ -1,0 +1,2658 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>AI 教育工具中心｜管理後台</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+
+    margin: 0;
+
+    font-family:
+        "Noto Sans TC",
+        "Microsoft JhengHei",
+        Arial,
+        sans-serif;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eef2ff,
+            #f8fafc
+        );
+
+    color: #1e293b;
+
+    min-height: 100vh;
+}
+
+
+/* =========================
+   登入
+========================= */
+
+.login-page {
+
+    min-height: 100vh;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 20px;
+}
+
+
+.login-box {
+
+    width: 100%;
+
+    max-width: 420px;
+
+    background: white;
+
+    border-radius: 24px;
+
+    padding: 40px;
+
+    box-shadow:
+        0 20px 60px
+        rgba(15,23,42,0.15);
+
+    text-align: center;
+}
+
+
+.login-icon {
+
+    font-size: 60px;
+
+    margin-bottom: 10px;
+}
+
+
+.login-box h1 {
+
+    margin: 0;
+
+    font-size: 28px;
+}
+
+
+.login-box p {
+
+    color: #64748b;
+
+    margin-bottom: 28px;
+}
+
+
+input,
+select,
+textarea {
+
+    width: 100%;
+
+    padding: 13px 15px;
+
+    border:
+        1px solid #cbd5e1;
+
+    border-radius: 12px;
+
+    font-size: 15px;
+
+    outline: none;
+
+    font-family: inherit;
+
+    transition: 0.2s;
+}
+
+
+input:focus,
+select:focus,
+textarea:focus {
+
+    border-color: #6366f1;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(99,102,241,0.12);
+}
+
+
+button {
+
+    border: none;
+
+    cursor: pointer;
+
+    font-family: inherit;
+}
+
+
+.primary-btn {
+
+    width: 100%;
+
+    padding: 14px;
+
+    margin-top: 15px;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #4f46e5,
+            #7c3aed
+        );
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: 800;
+}
+
+
+.primary-btn:hover {
+
+    opacity: 0.9;
+
+}
+
+
+.login-error {
+
+    color: #dc2626;
+
+    margin-top: 15px;
+
+    font-size: 14px;
+}
+
+
+/* =========================
+   後台
+========================= */
+
+.admin-page {
+
+    display: none;
+
+    min-height: 100vh;
+}
+
+
+header {
+
+    background:
+        linear-gradient(
+            135deg,
+            #312e81,
+            #4f46e5,
+            #7c3aed
+        );
+
+    color: white;
+
+    padding: 28px 20px;
+}
+
+
+.header-inner {
+
+    max-width: 1100px;
+
+    margin: auto;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 20px;
+}
+
+
+header h1 {
+
+    margin: 0;
+
+    font-size: 25px;
+}
+
+
+header p {
+
+    margin: 6px 0 0;
+
+    opacity: 0.85;
+}
+
+
+.logout-btn {
+
+    background:
+        rgba(255,255,255,0.15);
+
+    color: white;
+
+    padding: 10px 16px;
+
+    border-radius: 10px;
+
+    font-weight: 700;
+}
+
+
+main {
+
+    max-width: 1100px;
+
+    margin: auto;
+
+    padding: 35px 20px 60px;
+}
+
+
+/* =========================
+   區塊
+========================= */
+
+.section {
+
+    background: white;
+
+    border-radius: 20px;
+
+    padding: 26px;
+
+    margin-bottom: 25px;
+
+    box-shadow:
+        0 8px 30px
+        rgba(15,23,42,0.07);
+}
+
+
+.section h2 {
+
+    margin-top: 0;
+
+    margin-bottom: 22px;
+}
+
+
+/* =========================
+   表單
+========================= */
+
+.form-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 18px;
+}
+
+
+.form-group {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 7px;
+}
+
+
+.full {
+
+    grid-column: 1 / -1;
+}
+
+
+label {
+
+    font-weight: 800;
+
+    font-size: 14px;
+}
+
+
+.required {
+
+    color: #dc2626;
+}
+
+
+/* =========================
+   三大專區
+========================= */
+
+.category-selector {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 14px;
+}
+
+
+.category-option {
+
+    padding: 20px;
+
+    border:
+        2px solid #e2e8f0;
+
+    border-radius: 16px;
+
+    background: white;
+
+    cursor: pointer;
+
+    text-align: center;
+
+    transition: 0.2s;
+}
+
+
+.category-option:hover {
+
+    border-color: #a5b4fc;
+
+    transform: translateY(-2px);
+}
+
+
+.category-option.active {
+
+    border-color: #4f46e5;
+
+    background: #eef2ff;
+}
+
+
+.category-icon {
+
+    font-size: 35px;
+
+    display: block;
+
+    margin-bottom: 8px;
+}
+
+
+.category-name {
+
+    font-weight: 900;
+
+    font-size: 17px;
+}
+
+
+.category-description {
+
+    color: #64748b;
+
+    font-size: 12px;
+
+    margin-top: 5px;
+}
+
+
+/* =========================
+   動態設定
+========================= */
+
+.dynamic-fields {
+
+    margin-top: 20px;
+
+    padding: 20px;
+
+    background: #f8fafc;
+
+    border-radius: 16px;
+
+    border:
+        1px solid #e2e8f0;
+}
+
+
+.dynamic-title {
+
+    font-weight: 900;
+
+    font-size: 17px;
+
+    margin-bottom: 17px;
+}
+
+
+.keyword-help {
+
+    color: #64748b;
+
+    font-size: 12px;
+}
+
+
+/* =========================
+   工具列表
+========================= */
+
+.tool-list {
+
+    display: grid;
+
+    gap: 12px;
+}
+
+
+.tool-item {
+
+    border:
+        1px solid #e2e8f0;
+
+    border-radius: 15px;
+
+    padding: 17px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 15px;
+}
+
+
+.tool-info {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    min-width: 0;
+}
+
+
+.tool-icon {
+
+    font-size: 36px;
+
+    flex-shrink: 0;
+}
+
+
+.tool-name {
+
+    font-weight: 900;
+
+    font-size: 16px;
+}
+
+
+.tool-meta {
+
+    color: #64748b;
+
+    font-size: 13px;
+
+    margin-top: 5px;
+}
+
+
+.tool-keywords {
+
+    color: #6366f1;
+
+    font-size: 12px;
+
+    margin-top: 4px;
+}
+
+
+.tool-actions {
+
+    display: flex;
+
+    gap: 8px;
+
+    flex-shrink: 0;
+}
+
+
+.edit-btn {
+
+    background: #eef2ff;
+
+    color: #4338ca;
+
+    padding: 9px 13px;
+
+    border-radius: 9px;
+
+    font-weight: 700;
+}
+
+
+.delete-btn {
+
+    background: #fef2f2;
+
+    color: #dc2626;
+
+    padding: 9px 13px;
+
+    border-radius: 9px;
+
+    font-weight: 700;
+}
+
+
+/* =========================
+   訊息
+========================= */
+
+.message {
+
+    display: none;
+
+    margin-top: 15px;
+
+    padding: 13px 15px;
+
+    border-radius: 10px;
+
+    font-weight: 700;
+}
+
+
+.success {
+
+    background: #dcfce7;
+
+    color: #166534;
+}
+
+
+.error {
+
+    background: #fee2e2;
+
+    color: #991b1b;
+}
+
+
+/* =========================
+   手機
+========================= */
+
+@media (max-width: 700px) {
+
+    .form-grid {
+
+        grid-template-columns: 1fr;
+    }
+
+
+    .full {
+
+        grid-column: auto;
+    }
+
+
+    .category-selector {
+
+        grid-template-columns: 1fr;
+    }
+
+
+    .header-inner {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+
+    .tool-item {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+
+    .tool-actions {
+
+        width: 100%;
+    }
+
+
+    .tool-actions button {
+
+        flex: 1;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- ==================================================
+     登入頁面
+================================================== -->
+
+<div
+    class="login-page"
+    id="loginPage"
+>
+
+    <div class="login-box">
+
+        <div class="login-icon">
+            🤖
+        </div>
+
+        <h1>
+            AI 教育工具中心
+        </h1>
+
+        <p>
+            管理員後台
+        </p>
+
+        <input
+            type="password"
+            id="passwordInput"
+            placeholder="請輸入管理員密碼"
+        >
+
+        <button
+            class="primary-btn"
+            onclick="login()"
+        >
+            🔐 登入
+        </button>
+
+        <div
+            class="login-error"
+            id="loginError"
+        ></div>
+
+    </div>
+
+</div>
+
+
+<!-- ==================================================
+     管理後台
+================================================== -->
+
+<div
+    class="admin-page"
+    id="adminPage"
+>
+
+
+<header>
+
+    <div class="header-inner">
+
+        <div>
+
+            <h1>
+                🛠️ AI 教育工具中心
+            </h1>
+
+            <p>
+                工具管理後台
+            </p>
+
+        </div>
+
+        <button
+            class="logout-btn"
+            onclick="logout()"
+        >
+            登出
+        </button>
+
+    </div>
+
+</header>
+
+
+<main>
+
+
+<!-- ==================================================
+     新增 / 編輯
+================================================== -->
+
+<div class="section">
+
+    <h2 id="formTitle">
+        ➕ 新增工具
+    </h2>
+
+
+    <div class="form-grid">
+
+
+        <!-- 網站名稱 -->
+
+        <div class="form-group">
+
+            <label>
+                網站名稱
+                <span class="required">*</span>
+            </label>
+
+            <input
+                id="name"
+                placeholder="例如：六上自然自主學習"
+            >
+
+        </div>
+
+
+        <!-- 網站網址 -->
+
+        <div class="form-group">
+
+            <label>
+                網站網址
+                <span class="required">*</span>
+            </label>
+
+            <input
+                id="url"
+                type="url"
+                placeholder="https://xxxxx.netlify.app/"
+            >
+
+        </div>
+
+
+        <!-- 圖示 -->
+
+        <div class="form-group">
+
+            <label>
+                圖示
+            </label>
+
+            <input
+                id="icon"
+                value="📚"
+                placeholder="例如：🌱"
+            >
+
+        </div>
+
+
+        <!-- 簡介 -->
+
+        <div class="form-group">
+
+            <label>
+                簡短介紹
+            </label>
+
+            <input
+                id="description"
+                placeholder="簡單介紹這個網站"
+            >
+
+        </div>
+
+
+        <!-- 三大專區 -->
+
+        <div class="form-group full">
+
+            <label>
+                所屬專區
+                <span class="required">*</span>
+            </label>
+
+
+            <div class="category-selector">
+
+
+                <div
+                    class="category-option"
+                    data-category="學生"
+                    onclick="selectCategory('學生')"
+                >
+
+                    <span class="category-icon">
+                        👦
+                    </span>
+
+                    <div class="category-name">
+                        學生專區
+                    </div>
+
+                    <div class="category-description">
+                        學生自主學習
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="category-option"
+                    data-category="教師"
+                    onclick="selectCategory('教師')"
+                >
+
+                    <span class="category-icon">
+                        👨‍🏫
+                    </span>
+
+                    <div class="category-name">
+                        教師專區
+                    </div>
+
+                    <div class="category-description">
+                        課堂教學使用
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="category-option"
+                    data-category="資訊工具"
+                    onclick="selectCategory('資訊工具')"
+                >
+
+                    <span class="category-icon">
+                        💻
+                    </span>
+
+                    <div class="category-name">
+                        資訊工具
+                    </div>
+
+                    <div class="category-description">
+                        AI 與資訊相關工具
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==================================================
+         學生設定
+    ================================================== -->
+
+    <div
+        class="dynamic-fields"
+        id="studentFields"
+        style="display:none;"
+    >
+
+        <div class="dynamic-title">
+            👦 學生專區設定
+        </div>
+
+
+        <div class="form-grid">
+
+
+            <div class="form-group">
+
+                <label>
+                    學習領域
+                </label>
+
+                <select id="studentSubject">
+
+                    <option value="國語文">
+                        國語文
+                    </option>
+
+                    <option value="數學">
+                        數學
+                    </option>
+
+                    <option value="英語">
+                        英語
+                    </option>
+
+                    <option value="自然">
+                        自然
+                    </option>
+
+                    <option value="社會">
+                        社會
+                    </option>
+
+                    <option value="綜合">
+                        綜合
+                    </option>
+
+                    <option value="資訊">
+                        資訊
+                    </option>
+
+                    <option value="其他">
+                        其他
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    學習階段
+                </label>
+
+                <select id="studentStage">
+
+                    <option value="國小低年級">
+                        國小低年級
+                    </option>
+
+                    <option value="國小中年級">
+                        國小中年級
+                    </option>
+
+                    <option value="國小高年級">
+                        國小高年級
+                    </option>
+
+                    <option value="國小全年級">
+                        國小全年級
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group full">
+
+                <label>
+                    關鍵字
+                </label>
+
+                <input
+                    id="studentKeywords"
+                    placeholder="例如：六年級、六上、自學、閱讀"
+                >
+
+                <div class="keyword-help">
+                    多個關鍵字請用「、」分隔
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==================================================
+         教師設定
+    ================================================== -->
+
+    <div
+        class="dynamic-fields"
+        id="teacherFields"
+        style="display:none;"
+    >
+
+        <div class="dynamic-title">
+            👨‍🏫 教師專區設定
+        </div>
+
+
+        <div class="form-grid">
+
+
+            <div class="form-group">
+
+                <label>
+                    教學領域
+                </label>
+
+                <select id="teacherSubject">
+
+                    <option value="國語文">
+                        國語文
+                    </option>
+
+                    <option value="數學">
+                        數學
+                    </option>
+
+                    <option value="英語">
+                        英語
+                    </option>
+
+                    <option value="自然">
+                        自然
+                    </option>
+
+                    <option value="社會">
+                        社會
+                    </option>
+
+                    <option value="資訊">
+                        資訊
+                    </option>
+
+                    <option value="跨領域">
+                        跨領域
+                    </option>
+
+                    <option value="其他">
+                        其他
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    適用階段
+                </label>
+
+                <select id="teacherStage">
+
+                    <option value="低年級">
+                        低年級
+                    </option>
+
+                    <option value="中年級">
+                        中年級
+                    </option>
+
+                    <option value="高年級">
+                        高年級
+                    </option>
+
+                    <option value="全校">
+                        全校
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group full">
+
+                <label>
+                    關鍵字
+                </label>
+
+                <input
+                    id="teacherKeywords"
+                    placeholder="例如：AI、課堂互動、評量"
+                >
+
+                <div class="keyword-help">
+                    多個關鍵字請用「、」分隔
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==================================================
+         資訊工具設定
+    ================================================== -->
+
+    <div
+        class="dynamic-fields"
+        id="infoFields"
+        style="display:none;"
+    >
+
+        <div class="dynamic-title">
+            💻 資訊工具設定
+        </div>
+
+
+        <div class="form-grid">
+
+
+            <div class="form-group">
+
+                <label>
+                    工具類型
+                </label>
+
+                <select id="infoType">
+
+                    <option value="AI工具">
+                        AI 工具
+                    </option>
+
+                    <option value="網站工具">
+                        網站工具
+                    </option>
+
+                    <option value="資訊工具">
+                        資訊工具
+                    </option>
+
+                    <option value="行政工具">
+                        行政工具
+                    </option>
+
+                    <option value="其他">
+                        其他
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    關鍵字
+                </label>
+
+                <input
+                    id="infoKeywords"
+                    placeholder="例如：AI、圖片、文字"
+                >
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <button
+        class="primary-btn"
+        id="saveButton"
+        onclick="saveTool()"
+    >
+        💾 新增工具
+    </button>
+
+
+    <button
+        id="cancelButton"
+        onclick="cancelEdit()"
+        style="
+            display:none;
+            width:100%;
+            margin-top:10px;
+            padding:12px;
+            border-radius:12px;
+            background:#f1f5f9;
+            color:#475569;
+            font-weight:700;
+        "
+    >
+        取消編輯
+    </button>
+
+
+    <div
+        class="message"
+        id="message"
+    ></div>
+
+</div>
+
+
+<!-- ==================================================
+     現有工具
+================================================== -->
+
+<div class="section">
+
+    <h2>
+        📚 現有工具
+    </h2>
+
+    <div
+        class="tool-list"
+        id="toolList"
+    >
+        正在載入……
+    </div>
+
+</div>
+
+
+</main>
+
+</div>
+
+
+<script>
+
+/* ==================================================
+   API
+================================================== */
+
+const API_URL =
+    "/.netlify/functions/manage-tools";
+
+
+let adminPassword = "";
+
+let tools = [];
+
+let selectedCategory = "";
+
+let editingId = null;
+
+
+/* ==================================================
+   登入
+================================================== */
+
+async function login() {
+
+    const password =
+        document
+            .getElementById("passwordInput")
+            .value
+            .trim();
+
+
+    if (!password) {
+
+        showLoginError(
+            "請輸入管理員密碼"
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                API_URL,
+                {
+
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json",
+
+                        "x-admin-password":
+                            password
+
+                    },
+
+                    body:
+                        JSON.stringify({
+
+                            action: "login"
+
+                        })
+
+                }
+            );
+
+
+        const result =
+            await response.json();
+
+
+        if (
+            !response.ok ||
+            !result.success
+        ) {
+
+            showLoginError(
+                result.message ||
+                "登入失敗"
+            );
+
+            return;
+
+        }
+
+
+        adminPassword =
+            password;
+
+
+        document
+            .getElementById("loginPage")
+            .style.display = "none";
+
+
+        document
+            .getElementById("adminPage")
+            .style.display = "block";
+
+
+        loadTools();
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        showLoginError(
+            "無法連接管理系統"
+        );
+
+    }
+
+}
+
+
+/* ==================================================
+   登入錯誤
+================================================== */
+
+function showLoginError(message) {
+
+    document
+        .getElementById("loginError")
+        .textContent =
+        message;
+
+}
+
+
+/* ==================================================
+   登出
+================================================== */
+
+function logout() {
+
+    adminPassword = "";
+
+    location.reload();
+
+}
+
+
+/* ==================================================
+   選擇專區
+================================================== */
+
+function selectCategory(category) {
+
+    selectedCategory =
+        category;
+
+
+    document
+        .querySelectorAll(
+            ".category-option"
+        )
+        .forEach(option => {
+
+            option.classList.toggle(
+                "active",
+                option.dataset.category ===
+                category
+            );
+
+        });
+
+
+    document
+        .getElementById("studentFields")
+        .style.display =
+        "none";
+
+
+    document
+        .getElementById("teacherFields")
+        .style.display =
+        "none";
+
+
+    document
+        .getElementById("infoFields")
+        .style.display =
+        "none";
+
+
+    if (category === "學生") {
+
+        document
+            .getElementById("studentFields")
+            .style.display =
+            "block";
+
+    }
+
+
+    if (category === "教師") {
+
+        document
+            .getElementById("teacherFields")
+            .style.display =
+            "block";
+
+    }
+
+
+    if (category === "資訊工具") {
+
+        document
+            .getElementById("infoFields")
+            .style.display =
+            "block";
+
+    }
+
+}
+
+
+/* ==================================================
+   關鍵字
+================================================== */
+
+function parseKeywords(text) {
+
+    return text
+
+        .split(/[、,，]/)
+
+        .map(
+            item =>
+                item.trim()
+        )
+
+        .filter(Boolean);
+
+}
+
+
+/* ==================================================
+   取得表單資料
+================================================== */
+
+function getFormData() {
+
+    const name =
+        document
+            .getElementById("name")
+            .value
+            .trim();
+
+
+    const url =
+        document
+            .getElementById("url")
+            .value
+            .trim();
+
+
+    const icon =
+        document
+            .getElementById("icon")
+            .value
+            .trim() ||
+        "📚";
+
+
+    const description =
+        document
+            .getElementById("description")
+            .value
+            .trim();
+
+
+    if (!name) {
+
+        throw new Error(
+            "請輸入網站名稱"
+        );
+
+    }
+
+
+    if (!url) {
+
+        throw new Error(
+            "請輸入網站網址"
+        );
+
+    }
+
+
+    if (!selectedCategory) {
+
+        throw new Error(
+            "請選擇所屬專區"
+        );
+
+    }
+
+
+    let type = "";
+
+    let subject = "";
+
+    let stage = "";
+
+    let keywords = [];
+
+
+    if (
+        selectedCategory ===
+        "學生"
+    ) {
+
+        type = "student";
+
+        subject =
+            document
+                .getElementById(
+                    "studentSubject"
+                )
+                .value;
+
+        stage =
+            document
+                .getElementById(
+                    "studentStage"
+                )
+                .value;
+
+        keywords =
+            parseKeywords(
+                document
+                    .getElementById(
+                        "studentKeywords"
+                    )
+                    .value
+            );
+
+    }
+
+
+    if (
+        selectedCategory ===
+        "教師"
+    ) {
+
+        type = "teacher";
+
+        subject =
+            document
+                .getElementById(
+                    "teacherSubject"
+                )
+                .value;
+
+        stage =
+            document
+                .getElementById(
+                    "teacherStage"
+                )
+                .value;
+
+        keywords =
+            parseKeywords(
+                document
+                    .getElementById(
+                        "teacherKeywords"
+                    )
+                    .value
+            );
+
+    }
+
+
+    if (
+        selectedCategory ===
+        "資訊工具"
+    ) {
+
+        type = "tool";
+
+        subject =
+            document
+                .getElementById(
+                    "infoType"
+                )
+                .value;
+
+        stage = "";
+
+        keywords =
+            parseKeywords(
+                document
+                    .getElementById(
+                        "infoKeywords"
+                    )
+                    .value
+            );
+
+    }
+
+
+    return {
+
+        name,
+
+        url,
+
+        type,
+
+        category:
+            selectedCategory,
+
+        subject,
+
+        stage,
+
+        keywords,
+
+        icon,
+
+        description
+
+    };
+
+}
+
+
+/* ==================================================
+   新增
+================================================== */
+
+async function saveTool() {
+
+    try {
+
+        const data =
+            getFormData();
+
+
+        const response =
+            await fetch(
+                API_URL,
+                {
+
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json",
+
+                        "x-admin-password":
+                            adminPassword
+
+                    },
+
+                    body:
+                        JSON.stringify(
+                            data
+                        )
+
+                }
+            );
+
+
+        const result =
+            await response.json();
+
+
+        if (
+            !response.ok ||
+            !result.success
+        ) {
+
+            throw new Error(
+                result.message ||
+                "新增失敗"
+            );
+
+        }
+
+
+        showMessage(
+            "success",
+            "🎉 工具新增成功！"
+        );
+
+
+        clearForm();
+
+        await loadTools();
+
+    }
+
+    catch (error) {
+
+        showMessage(
+            "error",
+            "❌ " +
+            error.message
+        );
+
+    }
+
+}
+
+
+/* ==================================================
+   編輯
+================================================== */
+
+function editTool(id) {
+
+    const tool =
+        tools.find(
+            item =>
+                String(item.id) ===
+                String(id)
+        );
+
+
+    if (!tool) {
+
+        alert(
+            "找不到這個工具"
+        );
+
+        return;
+
+    }
+
+
+    editingId =
+        tool.id;
+
+
+    document
+        .getElementById("formTitle")
+        .textContent =
+        "✏️ 編輯工具";
+
+
+    document
+        .getElementById("saveButton")
+        .textContent =
+        "💾 儲存修改";
+
+
+    document
+        .getElementById("cancelButton")
+        .style.display =
+        "block";
+
+
+    document
+        .getElementById("name")
+        .value =
+        tool.name || "";
+
+
+    document
+        .getElementById("url")
+        .value =
+        tool.url || "";
+
+
+    document
+        .getElementById("icon")
+        .value =
+        tool.icon || "📚";
+
+
+    document
+        .getElementById("description")
+        .value =
+        tool.description || "";
+
+
+    selectCategory(
+        tool.category ||
+        "學生"
+    );
+
+
+    if (
+        tool.category ===
+        "學生"
+    ) {
+
+        document
+            .getElementById(
+                "studentSubject"
+            )
+            .value =
+            tool.subject ||
+            "國語文";
+
+
+        document
+            .getElementById(
+                "studentStage"
+            )
+            .value =
+            tool.stage ||
+            "國小高年級";
+
+
+        document
+            .getElementById(
+                "studentKeywords"
+            )
+            .value =
+            (
+                tool.keywords ||
+                []
+            ).join("、");
+
+    }
+
+
+    if (
+        tool.category ===
+        "教師"
+    ) {
+
+        document
+            .getElementById(
+                "teacherSubject"
+            )
+            .value =
+            tool.subject ||
+            "資訊";
+
+
+        document
+            .getElementById(
+                "teacherStage"
+            )
+            .value =
+            tool.stage ||
+            "高年級";
+
+
+        document
+            .getElementById(
+                "teacherKeywords"
+            )
+            .value =
+            (
+                tool.keywords ||
+                []
+            ).join("、");
+
+    }
+
+
+    if (
+        tool.category ===
+        "資訊工具"
+    ) {
+
+        document
+            .getElementById(
+                "infoType"
+            )
+            .value =
+            tool.subject ||
+            "AI工具";
+
+
+        document
+            .getElementById(
+                "infoKeywords"
+            )
+            .value =
+            (
+                tool.keywords ||
+                []
+            ).join("、");
+
+    }
+
+
+    window.scrollTo({
+
+        top: 0,
+
+        behavior: "smooth"
+
+    });
+
+}
+
+
+/* ==================================================
+   儲存修改
+================================================== */
+
+async function updateTool() {
+
+    try {
+
+        const data =
+            getFormData();
+
+
+        data.id =
+            editingId;
+
+
+        const response =
+            await fetch(
+                API_URL,
+                {
+
+                    method: "PUT",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json",
+
+                        "x-admin-password":
+                            adminPassword
+
+                    },
+
+                    body:
+                        JSON.stringify(
+                            data
+                        )
+
+                }
+            );
+
+
+        const result =
+            await response.json();
+
+
+        if (
+            !response.ok ||
+            !result.success
+        ) {
+
+            throw new Error(
+                result.message ||
+                "修改失敗"
+            );
+
+        }
+
+
+        showMessage(
+            "success",
+            "🎉 工具修改成功！"
+        );
+
+
+        cancelEdit();
+
+        await loadTools();
+
+    }
+
+    catch (error) {
+
+        showMessage(
+            "error",
+            "❌ " +
+            error.message
+        );
+
+    }
+
+}
+
+
+/* ==================================================
+   刪除
+================================================== */
+
+async function deleteTool(id) {
+
+    const tool =
+        tools.find(
+            item =>
+                String(item.id) ===
+                String(id)
+        );
+
+
+    if (!tool) return;
+
+
+    const yes =
+        confirm(
+            `確定要刪除「${tool.name}」嗎？`
+        );
+
+
+    if (!yes) return;
+
+
+    try {
+
+        const response =
+            await fetch(
+                API_URL,
+                {
+
+                    method: "DELETE",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json",
+
+                        "x-admin-password":
+                            adminPassword
+
+                    },
+
+                    body:
+                        JSON.stringify({
+
+                            id
+
+                        })
+
+                }
+            );
+
+
+        const result =
+            await response.json();
+
+
+        if (
+            !response.ok ||
+            !result.success
+        ) {
+
+            throw new Error(
+                result.message ||
+                "刪除失敗"
+            );
+
+        }
+
+
+        showMessage(
+            "success",
+            "🗑️ 工具已刪除。"
+        );
+
+
+        await loadTools();
+
+    }
+
+    catch (error) {
+
+        showMessage(
+            "error",
+            "❌ " +
+            error.message
+        );
+
+    }
+
+}
+
+
+/* ==================================================
+   載入工具
+================================================== */
+
+async function loadTools() {
+
+    try {
+
+        const response =
+            await fetch(
+                API_URL +
+                "?t=" +
+                Date.now()
+            );
+
+
+        const result =
+            await response.json();
+
+
+        if (
+            !response.ok ||
+            !result.success
+        ) {
+
+            throw new Error(
+                result.message ||
+                "讀取失敗"
+            );
+
+        }
+
+
+        tools =
+            Array.isArray(
+                result.tools
+            )
+            ? result.tools
+            : [];
+
+
+        renderTools();
+
+    }
+
+    catch (error) {
+
+        document
+            .getElementById(
+                "toolList"
+            )
+            .innerHTML =
+
+            `
+            <div style="
+                color:#dc2626;
+                padding:15px;
+            ">
+                ❌ ${escapeHtml(
+                    error.message
+                )}
+            </div>
+            `;
+
+    }
+
+}
+
+
+/* ==================================================
+   顯示工具
+================================================== */
+
+function renderTools() {
+
+    const container =
+        document.getElementById(
+            "toolList"
+        );
+
+
+    if (!tools.length) {
+
+        container.innerHTML =
+
+            `
+            <div style="
+                color:#64748b;
+                padding:20px;
+                text-align:center;
+            ">
+                目前沒有工具。
+            </div>
+            `;
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+
+        tools.map(tool => {
+
+            const keywords =
+                Array.isArray(
+                    tool.keywords
+                )
+                ? tool.keywords.join(
+                    "、"
+                )
+                : "";
+
+
+            return `
+
+                <div
+                    class="tool-item"
+                >
+
+                    <div
+                        class="tool-info"
+                    >
+
+                        <div
+                            class="tool-icon"
+                        >
+                            ${escapeHtml(
+                                tool.icon ||
+                                "📚"
+                            )}
+                        </div>
+
+
+                        <div>
+
+                            <div
+                                class="tool-name"
+                            >
+                                ${escapeHtml(
+                                    tool.name
+                                )}
+                            </div>
+
+
+                            <div
+                                class="tool-meta"
+                            >
+                                ${escapeHtml(
+                                    tool.category ||
+                                    ""
+                                )}
+
+                                ／
+
+                                ${escapeHtml(
+                                    tool.subject ||
+                                    ""
+                                )}
+
+                                ${tool.stage
+                                    ? "／ " +
+                                      escapeHtml(
+                                          tool.stage
+                                      )
+                                    : ""
+                                }
+                            </div>
+
+
+                            ${
+                                keywords
+                                ? `
+                                <div
+                                    class="tool-keywords"
+                                >
+                                    🔎 ${escapeHtml(
+                                        keywords
+                                    )}
+                                </div>
+                                `
+                                : ""
+                            }
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="tool-actions"
+                    >
+
+                        <button
+                            class="edit-btn"
+                            onclick="editTool(
+                                '${escapeJs(
+                                    tool.id
+                                )}'
+                            )"
+                        >
+                            ✏️ 編輯
+                        </button>
+
+
+                        <button
+                            class="delete-btn"
+                            onclick="deleteTool(
+                                '${escapeJs(
+                                    tool.id
+                                )}'
+                            )"
+                        >
+                            🗑️ 刪除
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }).join("");
+
+}
+
+
+/* ==================================================
+   清除表單
+================================================== */
+
+function clearForm() {
+
+    document
+        .getElementById("name")
+        .value = "";
+
+
+    document
+        .getElementById("url")
+        .value = "";
+
+
+    document
+        .getElementById("icon")
+        .value = "📚";
+
+
+    document
+        .getElementById("description")
+        .value = "";
+
+
+    document
+        .getElementById(
+            "studentKeywords"
+        )
+        .value = "";
+
+
+    document
+        .getElementById(
+            "teacherKeywords"
+        )
+        .value = "";
+
+
+    document
+        .getElementById(
+            "infoKeywords"
+        )
+        .value = "";
+
+
+    selectedCategory = "";
+
+    editingId = null;
+
+
+    document
+        .querySelectorAll(
+            ".category-option"
+        )
+        .forEach(
+            option =>
+                option.classList.remove(
+                    "active"
+                )
+        );
+
+
+    document
+        .getElementById(
+            "studentFields"
+        )
+        .style.display =
+        "none";
+
+
+    document
+        .getElementById(
+            "teacherFields"
+        )
+        .style.display =
+        "none";
+
+
+    document
+        .getElementById(
+            "infoFields"
+        )
+        .style.display =
+        "none";
+
+}
+
+
+/* ==================================================
+   取消編輯
+================================================== */
+
+function cancelEdit() {
+
+    clearForm();
+
+
+    document
+        .getElementById(
+            "formTitle"
+        )
+        .textContent =
+        "➕ 新增工具";
+
+
+    document
+        .getElementById(
+            "saveButton"
+        )
+        .textContent =
+        "💾 新增工具";
+
+
+    document
+        .getElementById(
+            "saveButton"
+        )
+        .onclick =
+        saveTool;
+
+
+    document
+        .getElementById(
+            "cancelButton"
+        )
+        .style.display =
+        "none";
+
+}
+
+
+/* ==================================================
+   訊息
+================================================== */
+
+function showMessage(
+    type,
+    text
+) {
+
+    const element =
+        document.getElementById(
+            "message"
+        );
+
+
+    element.className =
+        "message " +
+        type;
+
+
+    element.textContent =
+        text;
+
+
+    element.style.display =
+        "block";
+
+
+    setTimeout(() => {
+
+        element.style.display =
+            "none";
+
+    }, 5000);
+
+}
+
+
+/* ==================================================
+   HTML 安全
+================================================== */
+
+function escapeHtml(value) {
+
+    return String(value)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+function escapeJs(value) {
+
+    return String(value)
+
+        .replace(
+            /\\/g,
+            "\\\\"
+        )
+
+        .replace(
+            /'/g,
+            "\\'"
+        );
+
+}
+
+
+/* ==================================================
+   儲存按鈕
+================================================== */
+
+document
+    .getElementById(
+        "saveButton"
+    )
+    .onclick =
+    saveTool;
+
+
+/* ==================================================
+   Enter 登入
+================================================== */
+
+document
+    .getElementById(
+        "passwordInput"
+    )
+    .addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key ===
+                "Enter"
+            ) {
+
+                login();
+
+            }
+
+        }
+    );
+
+</script>
+
+</body>
+
+</html>
