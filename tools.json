@@ -1,34 +1,75 @@
 [
     {
         "name": "國小英語600單字",
-        "category": "英語",
-        "stage": "中高年級",
+        "category": "學生",
         "icon": "🇬🇧",
         "description": "600個核心英語單字學習工具",
-        "url": "https://splendorous-donut-50b930.netlify.app/"
+        "url": "https://splendorous-donut-50b930.netlify.app/",
+        "grade": "國小中高年級",
+        "subject": "英語",
+        "keywords": [
+            "英語",
+            "英文",
+            "單字",
+            "600單字",
+            "自學",
+            "國小"
+        ]
     },
     {
         "name": "六上數學自主學習網站",
-        "category": "數學",
-        "stage": "高年級",
+        "category": "學生",
         "icon": "🔢",
-        "description": "六年級上學期數學重點預習與自主學習工具",
-        "url": "https://mathpreview0601.netlify.app/"
+        "description": "六年級上學期數學重點預習與自主學習",
+        "url": "https://mathpreview0601.netlify.app/",
+        "grade": "國小六年級",
+        "subject": "數學",
+        "keywords": [
+            "數學",
+            "六年級",
+            "六上",
+            "預習",
+            "自學",
+            "自主學習"
+        ]
+    },
+    {
+        "name": "六上國語自學寶庫",
+        "category": "學生",
+        "icon": "📖",
+        "description": "六上國語課文重點、生字、注音、詞語、修辭與自我檢測學習平台",
+        "url": "https://lovely-hotteok-d43b24.netlify.app/",
+        "grade": "國小六年級",
+        "subject": "國語文",
+        "keywords": [
+            "國語",
+            "國語文",
+            "六年級",
+            "六上",
+            "課文",
+            "生字",
+            "注音",
+            "詞語",
+            "修辭",
+            "自學",
+            "自我檢測"
+        ]
     },
     {
         "name": "課堂互動小白板",
-        "category": "資訊科技",
-        "stage": "中高年級",
+        "category": "教師",
         "icon": "📝",
-        "description": "提供課堂即時繪圖、文字與互動學習功能",
-        "url": "https://lucent-rugelach-de9888.netlify.app/"
-    },
-    {
-        "name": "六上國語自主學習網站",
-        "category": "國語",
-        "stage": "高年級",
-        "icon": "📖",
-        "description": "六年級上學期國語自主學習與課文重點整理工具",
-        "url": "https://lovely-hotteok-d43b24.netlify.app/"
+        "description": "課堂即時繪圖、文字與學生互動協作工具",
+        "url": "https://lucent-rugelach-de9888.netlify.app/",
+        "grade": "教師",
+        "subject": "課堂教學",
+        "keywords": [
+            "小白板",
+            "課堂互動",
+            "即時協作",
+            "學生互動",
+            "教學",
+            "教師"
+        ]
     }
 ]
