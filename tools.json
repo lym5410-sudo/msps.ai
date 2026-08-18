@@ -1,34 +1,43 @@
 [
-  {
-    "name": "國小英語600單字",
-    "category": "英語",
-    "stage": "中高年級",
-    "icon": "🇬🇧",
-    "description": "600個核心英語單字學習工具",
-    "url": "https://splendorous-donut-50b930.netlify.app/"
-  },
-  {
-    "name": "六上數學自主學習網站",
-    "category": "數學",
-    "stage": "高年級",
-    "icon": "🔢",
-    "description": "六年級上學期數學重點預習與自主學習工具",
-    "url": "https://mathpreview0601.netlify.app/"
-  },
-  {
-    "name": "課堂互動小白板",
-    "category": "資訊科技",
-    "stage": "中高年級",
-    "icon": "📝",
-    "description": "提供課堂即時繪圖、文字與互動學習功能",
-    "url": "https://lucent-rugelach-de9888.netlify.app/"
-  },
-  {
-    "name": "六上國語自主學習網站",
-    "category": "國語",
-    "stage": "高年級",
-    "icon": "📖",
-    "description": "六年級上學期國語自主學習與課文重點整理工具",
-    "url": "https://lovely-hotteok-d43b24.netlify.app/"
-  }
+    {
+        "name": "國小英語600單字",
+        "category": "英語",
+        "stage": "中高年級",
+        "icon": "🇬🇧",
+        "description": "600個核心英語單字學習工具",
+        "url": "https://splendorous-donut-50b930.netlify.app/"
+    },
+    {
+        "name": "六上數學自主學習網站",
+        "category": "數學",
+        "stage": "高年級",
+        "icon": "🔢",
+        "description": "六年級上學期數學重點預習與自主學習工具",
+        "url": "https://mathpreview0601.netlify.app/"
+    },
+    {
+        "name": "課堂互動小白板",
+        "category": "資訊科技",
+        "stage": "中高年級",
+        "icon": "📝",
+        "description": "提供課堂即時繪圖、文字與互動學習功能",
+        "url": "https://lucent-rugelach-de9888.netlify.app/"
+    },
+    {
+        "name": "六上國語自主學習網站",
+        "category": "國語",
+        "stage": "高年級",
+        "icon": "📖",
+        "description": "六年級上學期國語自主學習與課文重點整理工具",
+        "url": "https://lovely-hotteok-d43b24.netlify.app/"
+    },
+    {
+        "id": "msyu2p7ozqmfa1",
+        "name": "六上自然科",
+        "url": "https://mspsai.netlify.app/",
+        "category": "自然",
+        "grade": "高年級",
+        "icon": "😂",
+        "description": "測試"
+    }
 ]
