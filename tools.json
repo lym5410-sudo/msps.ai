@@ -1,16 +1,16 @@
 {
     "name": "國小英語600單字",
     "category": "英語學習",
-    "icon": "🇬🇧",
+    "icon": "GB",
     "description": "600個核心英語單字學習工具",
-    "url": "#",
+    "url": "https://splendorous-donut-50b930.netlify.app/",
     "grade": "中高年級"
 },
 {
-    "name": "數學預習學習網站",
+    "name": "六上數學自主學習網站",
     "category": "數學學習",
     "icon": "🔢",
-    "description": "數學重點整理、預習與 AI 助教",
+    "description": "六上數學重點整理與自主學習",
     "url": "https://mathpreview0601.netlify.app/",
     "grade": "高年級"
 },
@@ -23,10 +23,10 @@
     "grade": "教師／學生"
 },
 {
-    "name": "AI 教育地圖",
-    "category": "AI 智慧工具",
+    "name": "六上國語自主學習網站",
+    "category": "國語學習",
     "icon": "🗺️",
-    "description": "探索學校資訊與教育資料",
-    "url": "#",
-    "grade": "教師"
+    "description": "六上國語重點整理與自主學習",
+    "url": "https://lovely-hotteok-d43b24.netlify.app/",
+    "grade": "高年級"
 }
