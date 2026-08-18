@@ -2279,7 +2279,8 @@ async function loginAdmin() {
             .getElementById(
                 "adminPassword"
             )
-            .value;
+            .value
+            .trim();
 
 
     if (!password) {
@@ -2325,64 +2326,37 @@ async function loginAdmin() {
                     },
 
                     body:
-                        JSON.stringify({})
+                        JSON.stringify({
+
+                            action:
+                                "login"
+
+                        })
 
                 }
             );
 
-
-        /*
-         * POST 空資料會通過密碼驗證，
-         * 但後端接下來會進行工具驗證。
-         *
-         * 因此這裡如果不是 400，
-         * 就代表密碼驗證已經通過。
-         */
 
         const data =
             await response.json();
 
 
         if (
-            response.status === 401
+            !response.ok ||
+            !data.success
         ) {
 
             throw new Error(
-                "管理密碼錯誤"
+                data.message ||
+                "登入失敗"
             );
 
         }
 
 
-        if (
-            data.message ===
-            "缺少必要欄位：name"
-        ) {
-
-            adminPassword =
-                password;
-
-        }
-        else if (
-            response.ok
-        ) {
-
-            adminPassword =
-                password;
-
-        }
-        else {
-
-            /*
-             * 其他 400 錯誤，
-             * 如果不是密碼錯誤，
-             * 仍視為密碼驗證成功。
-             */
-
-            adminPassword =
-                password;
-
-        }
+        // 登入成功
+        adminPassword =
+            password;
 
 
         closeModal(
@@ -2390,8 +2364,12 @@ async function loginAdmin() {
         );
 
 
-        await openAdminPanel();
+        showToast(
+            "🔓 登入成功"
+        );
 
+
+        await openAdminPanel();
 
     }
 
@@ -2415,8 +2393,6 @@ async function loginAdmin() {
     }
 
 }
-
-
 
 /* ==================================================
    開啟管理面板
