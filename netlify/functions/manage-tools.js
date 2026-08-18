@@ -4,6 +4,10 @@ const FILE_PATH = "tools.json";
 const BRANCH = "main";
 
 
+/* =========================================================
+   GitHub API Headers
+========================================================= */
+
 function githubHeaders() {
 
     return {
@@ -22,6 +26,41 @@ function githubHeaders() {
 }
 
 
+/* =========================================================
+   回應工具
+========================================================= */
+
+function jsonResponse(
+    statusCode,
+    data
+) {
+
+    return {
+
+        statusCode,
+
+        headers: {
+
+            "Content-Type":
+                "application/json; charset=utf-8",
+
+            "Cache-Control":
+                "no-cache"
+
+        },
+
+        body:
+            JSON.stringify(data)
+
+    };
+
+}
+
+
+/* =========================================================
+   驗證管理密碼
+========================================================= */
+
 function checkPassword(event) {
 
     const password =
@@ -37,6 +76,10 @@ function checkPassword(event) {
 
 }
 
+
+/* =========================================================
+   讀取 GitHub tools.json
+========================================================= */
 
 async function getToolsFile() {
 
@@ -81,16 +124,29 @@ async function getToolsFile() {
         .toString("utf-8");
 
 
-    const tools =
-        JSON.parse(content);
+    let tools;
+
+    try {
+
+        tools =
+            JSON.parse(content);
+
+    }
+    catch {
+
+        throw new Error(
+            "tools.json 格式錯誤，無法解析 JSON"
+        );
+
+    }
 
 
     return {
 
         tools:
             Array.isArray(tools)
-            ? tools
-            : [],
+                ? tools
+                : [],
 
         sha:
             data.sha
@@ -99,6 +155,10 @@ async function getToolsFile() {
 
 }
 
+
+/* =========================================================
+   更新 GitHub tools.json
+========================================================= */
 
 async function updateToolsFile(
     tools,
@@ -176,6 +236,10 @@ async function updateToolsFile(
 }
 
 
+/* =========================================================
+   自動建立 ID
+========================================================= */
+
 function createId() {
 
     return (
@@ -194,6 +258,284 @@ function createId() {
 }
 
 
+/* =========================================================
+   清理文字
+========================================================= */
+
+function cleanText(value) {
+
+    if (
+        value === undefined ||
+        value === null
+    ) {
+
+        return "";
+
+    }
+
+    return String(value).trim();
+
+}
+
+
+/* =========================================================
+   整理關鍵字
+========================================================= */
+
+function normalizeKeywords(
+    keywords
+) {
+
+    if (
+        Array.isArray(keywords)
+    ) {
+
+        return keywords
+
+            .map(
+                keyword =>
+                    cleanText(keyword)
+            )
+
+            .filter(
+                keyword =>
+                    keyword !== ""
+            );
+
+    }
+
+
+    if (
+        typeof keywords ===
+        "string"
+    ) {
+
+        return keywords
+
+            .split(
+                /[,，、]/
+            )
+
+            .map(
+                keyword =>
+                    keyword.trim()
+            )
+
+            .filter(
+                keyword =>
+                    keyword !== ""
+            );
+
+    }
+
+
+    return [];
+
+}
+
+
+/* =========================================================
+   整理工具資料
+========================================================= */
+
+function normalizeTool(
+    body,
+    oldTool = {}
+) {
+
+    const type =
+        cleanText(
+            body.type ||
+            oldTool.type ||
+            "student"
+        );
+
+
+    let stage =
+        cleanText(
+            body.stage ??
+            oldTool.stage ??
+            ""
+        );
+
+
+    /*
+     * 資訊工具不需要學習階段
+     */
+
+    if (
+        type === "tool"
+    ) {
+
+        stage = "";
+
+    }
+
+
+    return {
+
+        ...oldTool,
+
+        name:
+            cleanText(
+                body.name ??
+                oldTool.name
+            ),
+
+        url:
+            cleanText(
+                body.url ??
+                oldTool.url
+            ),
+
+        type,
+
+        category:
+            cleanText(
+                body.category ??
+                oldTool.category
+            ),
+
+        stage,
+
+        keywords:
+            normalizeKeywords(
+                body.keywords ??
+                oldTool.keywords
+            ),
+
+        icon:
+            cleanText(
+                body.icon ??
+                oldTool.icon
+            ),
+
+        description:
+            cleanText(
+                body.description ??
+                oldTool.description
+            )
+
+    };
+
+}
+
+
+/* =========================================================
+   驗證工具資料
+========================================================= */
+
+function validateTool(
+    tool
+) {
+
+    const requiredFields = [
+
+        "name",
+        "url",
+        "type",
+        "category",
+        "icon",
+        "description"
+
+    ];
+
+
+    for (
+        const field
+        of requiredFields
+    ) {
+
+        if (
+            !tool[field] ||
+            cleanText(
+                tool[field]
+            ) === ""
+        ) {
+
+            return {
+
+                valid: false,
+
+                message:
+                    `缺少必要欄位：${field}`
+
+            };
+
+        }
+
+    }
+
+
+    /*
+     * type 必須是三大專區之一
+     */
+
+    const validTypes = [
+
+        "student",
+        "teacher",
+        "tool"
+
+    ];
+
+
+    if (
+        !validTypes.includes(
+            tool.type
+        )
+    ) {
+
+        return {
+
+            valid: false,
+
+            message:
+                "專區類型錯誤，只能是 student、teacher 或 tool"
+
+        };
+
+    }
+
+
+    /*
+     * 學生／教師專區必須有學習階段
+     */
+
+    if (
+        (
+            tool.type === "student" ||
+            tool.type === "teacher"
+        )
+        &&
+        !tool.stage
+    ) {
+
+        return {
+
+            valid: false,
+
+            message:
+                "學生專區或教師專區需要填寫學習階段"
+
+        };
+
+    }
+
+
+    return {
+
+        valid: true
+
+    };
+
+}
+
+
+/* =========================================================
+   Netlify Function
+========================================================= */
+
 exports.handler =
     async function(event) {
 
@@ -203,13 +545,13 @@ exports.handler =
                 event.httpMethod;
 
 
-            /* =========================
+            /* =================================================
                GET
-            ========================= */
+               讀取所有工具
+            ================================================= */
 
             if (
-                method ===
-                "GET"
+                method === "GET"
             ) {
 
                 const {
@@ -218,42 +560,35 @@ exports.handler =
                     await getToolsFile();
 
 
-                return {
+                return jsonResponse(
 
-                    statusCode: 200,
+                    200,
 
-                    headers: {
+                    {
 
-                        "Content-Type":
-                            "application/json",
+                        success: true,
 
-                        "Cache-Control":
-                            "no-cache"
+                        tools
 
-                    },
+                    }
 
-                    body:
-                        JSON.stringify({
-
-                            success: true,
-
-                            tools
-
-                        })
-
-                };
+                );
 
             }
 
 
-            /* =========================
+            /* =================================================
                POST
-            ========================= */
+               登入 / 新增工具
+            ================================================= */
 
             if (
-                method ===
-                "POST"
+                method === "POST"
             ) {
+
+                /*
+                 * 所有 POST 都需要管理密碼
+                 */
 
                 if (
                     !checkPassword(
@@ -261,21 +596,20 @@ exports.handler =
                     )
                 ) {
 
-                    return {
+                    return jsonResponse(
 
-                        statusCode: 401,
+                        401,
 
-                        body:
-                            JSON.stringify({
+                        {
 
-                                success: false,
+                            success: false,
 
-                                message:
-                                    "管理密碼錯誤"
+                            message:
+                                "管理密碼錯誤"
 
-                            })
+                        }
 
-                    };
+                    );
 
                 }
 
@@ -294,94 +628,85 @@ exports.handler =
                 }
                 catch {
 
-                    return {
+                    return jsonResponse(
 
-                        statusCode: 400,
+                        400,
 
-                        body:
-                            JSON.stringify({
+                        {
 
-                                success: false,
+                            success: false,
 
-                                message:
-                                    "JSON 格式錯誤"
+                            message:
+                                "JSON 格式錯誤"
 
-                            })
+                        }
 
-                    };
+                    );
 
                 }
 
 
-                /* ===== 登入 ===== */
+                /* =============================================
+                   管理員登入
+                ============================================= */
 
                 if (
                     body.action ===
                     "login"
                 ) {
 
-                    return {
+                    return jsonResponse(
 
-                        statusCode: 200,
+                        200,
 
-                        body:
-                            JSON.stringify({
+                        {
 
-                                success: true,
+                            success: true,
 
-                                message:
-                                    "登入成功"
+                            message:
+                                "登入成功"
 
-                            })
+                        }
 
-                    };
+                    );
 
                 }
 
 
-                /* ===== 新增 ===== */
+                /* =============================================
+                   新增工具
+                ============================================= */
 
-                const required = [
-
-                    "name",
-                    "url",
-                    "type",
-                    "category",
-                    "icon",
-                    "description"
-
-                ];
+                const newTool =
+                    normalizeTool(
+                        body
+                    );
 
 
-                for (
-                    const field
-                    of required
+                const validation =
+                    validateTool(
+                        newTool
+                    );
+
+
+                if (
+                    !validation.valid
                 ) {
 
-                    if (
-                        !body[field] ||
-                        String(
-                            body[field]
-                        ).trim() === ""
-                    ) {
+                    return jsonResponse(
 
-                        return {
+                        400,
 
-                            statusCode: 400,
+                        {
 
-                            body:
-                                JSON.stringify({
+                            success: false,
 
-                                    success: false,
+                            message:
+                                validation.message
 
-                                    message:
-                                        `缺少必要欄位：${field}`
+                        }
 
-                                })
-
-                        };
-
-                    }
+                    );
 
                 }
 
@@ -393,59 +718,17 @@ exports.handler =
                     await getToolsFile();
 
 
-                const newTool = {
+                /*
+                 * 建立 ID
+                 */
 
-                    id:
-                        createId(),
+                newTool.id =
+                    createId();
 
-                    name:
-                        String(
-                            body.name
-                        ).trim(),
 
-                    url:
-                        String(
-                            body.url
-                        ).trim(),
-
-                    type:
-                        String(
-                            body.type
-                        ).trim(),
-
-                    category:
-                        String(
-                            body.category
-                        ).trim(),
-
-                    stage:
-                        body.type ===
-                        "tool"
-                        ? ""
-                        : String(
-                            body.stage ||
-                            ""
-                        ).trim(),
-
-                    keywords:
-                        Array.isArray(
-                            body.keywords
-                        )
-                        ? body.keywords
-                        : [],
-
-                    icon:
-                        String(
-                            body.icon
-                        ).trim(),
-
-                    description:
-                        String(
-                            body.description
-                        ).trim()
-
-                };
-
+                /*
+                 * 新工具放最前面
+                 */
 
                 tools.unshift(
                     newTool
@@ -463,35 +746,34 @@ exports.handler =
                 );
 
 
-                return {
+                return jsonResponse(
 
-                    statusCode: 200,
+                    200,
 
-                    body:
-                        JSON.stringify({
+                    {
 
-                            success: true,
+                        success: true,
 
-                            message:
-                                "工具新增成功",
+                        message:
+                            "工具新增成功",
 
-                            tool:
-                                newTool
+                        tool:
+                            newTool
 
-                        })
+                    }
 
-                };
+                );
 
             }
 
 
-            /* =========================
+            /* =================================================
                PUT
-            ========================= */
+               修改工具
+            ================================================= */
 
             if (
-                method ===
-                "PUT"
+                method === "PUT"
             ) {
 
                 if (
@@ -500,49 +782,74 @@ exports.handler =
                     )
                 ) {
 
-                    return {
+                    return jsonResponse(
 
-                        statusCode: 401,
+                        401,
 
-                        body:
-                            JSON.stringify({
+                        {
 
-                                success: false,
+                            success: false,
 
-                                message:
-                                    "未授權"
+                            message:
+                                "未授權"
 
-                            })
+                        }
 
-                    };
+                    );
 
                 }
 
 
-                const body =
-                    JSON.parse(
-                        event.body ||
-                        "{}"
+                let body;
+
+
+                try {
+
+                    body =
+                        JSON.parse(
+                            event.body ||
+                            "{}"
+                        );
+
+                }
+                catch {
+
+                    return jsonResponse(
+
+                        400,
+
+                        {
+
+                            success: false,
+
+                            message:
+                                "JSON 格式錯誤"
+
+                        }
+
                     );
 
+                }
 
-                if (!body.id) {
 
-                    return {
+                if (
+                    !body.id
+                ) {
 
-                        statusCode: 400,
+                    return jsonResponse(
 
-                        body:
-                            JSON.stringify({
+                        400,
 
-                                success: false,
+                        {
 
-                                message:
-                                    "缺少工具 ID"
+                            success: false,
 
-                            })
+                            message:
+                                "缺少工具 ID"
 
-                    };
+                        }
+
+                    );
 
                 }
 
@@ -556,13 +863,17 @@ exports.handler =
 
                 const index =
                     tools.findIndex(
+
                         tool =>
+
                             String(
                                 tool.id
                             ) ===
+
                             String(
                                 body.id
                             )
+
                     );
 
 
@@ -570,82 +881,72 @@ exports.handler =
                     index === -1
                 ) {
 
-                    return {
+                    return jsonResponse(
 
-                        statusCode: 404,
+                        404,
 
-                        body:
-                            JSON.stringify({
+                        {
 
-                                success: false,
+                            success: false,
 
-                                message:
-                                    "找不到工具"
+                            message:
+                                "找不到工具"
 
-                            })
+                        }
 
-                    };
+                    );
 
                 }
 
 
-                tools[index] = {
+                /*
+                 * 保留原本 ID
+                 */
 
-                    ...tools[index],
+                const updatedTool =
+                    normalizeTool(
 
-                    name:
-                        String(
-                            body.name ||
-                            ""
-                        ).trim(),
+                        body,
 
-                    url:
-                        String(
-                            body.url ||
-                            ""
-                        ).trim(),
+                        tools[index]
 
-                    type:
-                        String(
-                            body.type ||
-                            "student"
-                        ).trim(),
+                    );
 
-                    category:
-                        String(
-                            body.category ||
-                            ""
-                        ).trim(),
 
-                    stage:
-                        body.type ===
-                        "tool"
-                        ? ""
-                        : String(
-                            body.stage ||
-                            ""
-                        ).trim(),
+                updatedTool.id =
+                    tools[index].id;
 
-                    keywords:
-                        Array.isArray(
-                            body.keywords
-                        )
-                        ? body.keywords
-                        : [],
 
-                    icon:
-                        String(
-                            body.icon ||
-                            ""
-                        ).trim(),
+                const validation =
+                    validateTool(
+                        updatedTool
+                    );
 
-                    description:
-                        String(
-                            body.description ||
-                            ""
-                        ).trim()
 
-                };
+                if (
+                    !validation.valid
+                ) {
+
+                    return jsonResponse(
+
+                        400,
+
+                        {
+
+                            success: false,
+
+                            message:
+                                validation.message
+
+                        }
+
+                    );
+
+                }
+
+
+                tools[index] =
+                    updatedTool;
 
 
                 await updateToolsFile(
@@ -654,40 +955,39 @@ exports.handler =
 
                     sha,
 
-                    `修改工具：${tools[index].name}`
+                    `修改工具：${updatedTool.name}`
 
                 );
 
 
-                return {
+                return jsonResponse(
 
-                    statusCode: 200,
+                    200,
 
-                    body:
-                        JSON.stringify({
+                    {
 
-                            success: true,
+                        success: true,
 
-                            message:
-                                "工具修改成功",
+                        message:
+                            "工具修改成功",
 
-                            tool:
-                                tools[index]
+                        tool:
+                            updatedTool
 
-                        })
+                    }
 
-                };
+                );
 
             }
 
 
-            /* =========================
+            /* =================================================
                DELETE
-            ========================= */
+               刪除工具
+            ================================================= */
 
             if (
-                method ===
-                "DELETE"
+                method === "DELETE"
             ) {
 
                 if (
@@ -696,30 +996,76 @@ exports.handler =
                     )
                 ) {
 
-                    return {
+                    return jsonResponse(
 
-                        statusCode: 401,
+                        401,
 
-                        body:
-                            JSON.stringify({
+                        {
 
-                                success: false,
+                            success: false,
 
-                                message:
-                                    "未授權"
+                            message:
+                                "未授權"
 
-                            })
+                        }
 
-                    };
+                    );
 
                 }
 
 
-                const body =
-                    JSON.parse(
-                        event.body ||
-                        "{}"
+                let body;
+
+
+                try {
+
+                    body =
+                        JSON.parse(
+                            event.body ||
+                            "{}"
+                        );
+
+                }
+                catch {
+
+                    return jsonResponse(
+
+                        400,
+
+                        {
+
+                            success: false,
+
+                            message:
+                                "JSON 格式錯誤"
+
+                        }
+
                     );
+
+                }
+
+
+                if (
+                    !body.id
+                ) {
+
+                    return jsonResponse(
+
+                        400,
+
+                        {
+
+                            success: false,
+
+                            message:
+                                "缺少工具 ID"
+
+                        }
+
+                    );
+
+                }
 
 
                 const {
@@ -731,13 +1077,17 @@ exports.handler =
 
                 const index =
                     tools.findIndex(
+
                         tool =>
+
                             String(
                                 tool.id
                             ) ===
+
                             String(
                                 body.id
                             )
+
                     );
 
 
@@ -745,21 +1095,20 @@ exports.handler =
                     index === -1
                 ) {
 
-                    return {
+                    return jsonResponse(
 
-                        statusCode: 404,
+                        404,
 
-                        body:
-                            JSON.stringify({
+                        {
 
-                                success: false,
+                            success: false,
 
-                                message:
-                                    "找不到工具"
+                            message:
+                                "找不到工具"
 
-                            })
+                        }
 
-                    };
+                    );
 
                 }
 
@@ -785,65 +1134,72 @@ exports.handler =
                 );
 
 
-                return {
+                return jsonResponse(
 
-                    statusCode: 200,
+                    200,
 
-                    body:
-                        JSON.stringify({
+                    {
 
-                            success: true,
+                        success: true,
 
-                            message:
-                                "工具刪除成功"
+                        message:
+                            "工具刪除成功",
 
-                        })
+                        deleted:
+                            deleted
 
-                };
+                    }
+
+                );
 
             }
 
 
-            return {
+            /* =================================================
+               不支援的方法
+            ================================================= */
 
-                statusCode: 405,
+            return jsonResponse(
 
-                body:
-                    JSON.stringify({
+                405,
 
-                        success: false,
+                {
 
-                        message:
-                            "不支援的請求方法"
+                    success: false,
 
-                    })
+                    message:
+                        "不支援的請求方法"
 
-            };
+                }
+
+            );
 
         }
+
+
         catch (error) {
 
             console.error(
+                "manage-tools error:",
                 error
             );
 
 
-            return {
+            return jsonResponse(
 
-                statusCode: 500,
+                500,
 
-                body:
-                    JSON.stringify({
+                {
 
-                        success: false,
+                    success: false,
 
-                        message:
-                            error.message ||
-                            "伺服器錯誤"
+                    message:
+                        error.message ||
+                        "伺服器錯誤"
 
-                    })
+                }
 
-            };
+            );
 
         }
 
