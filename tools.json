@@ -30,14 +30,5 @@
         "icon": "📖",
         "description": "六年級上學期國語自主學習與課文重點整理工具",
         "url": "https://lovely-hotteok-d43b24.netlify.app/"
-    },
-    {
-        "id": "msyu2p7ozqmfa1",
-        "name": "六上自然科",
-        "url": "https://mspsai.netlify.app/",
-        "category": "自然",
-        "grade": "高年級",
-        "icon": "😂",
-        "description": "測試"
     }
 ]
