@@ -1,34 +1,58 @@
 [
-    {
-        "name": "國小英語600單字",
-        "category": "英語學習",
-        "icon": "🇬🇧",
-        "description": "600個核心英語單字學習工具",
-        "url": "https://splendorous-donut-50b930.netlify.app/",
-        "grade": "中高年級"
-    },
-    {
-        "name": "六上數學自主學習網站",
-        "category": "數學學習",
-        "icon": "🔢",
-        "description": "六上數學重點整理與自主學習",
-        "url": "https://mathpreview0601.netlify.app/",
-        "grade": "高年級"
-    },
-    {
-        "name": "課堂互動小白板",
-        "category": "課堂工具",
-        "icon": "📝",
-        "description": "課堂即時繪圖、文字與分組協作",
-        "url": "https://lucent-rugelach-de9888.netlify.app/",
-        "grade": "教師／學生"
-    },
-    {
-        "name": "六上國語自主學習網站",
-        "category": "國語學習",
-        "icon": "📖",
-        "description": "六上國語重點整理與自主學習",
-        "url": "https://lovely-hotteok-d43b24.netlify.app/",
-        "grade": "高年級"
-    }
+  {
+    "id": "english-600",
+    "name": "國小英語600單字",
+    "category": "英語學習",
+    "icon": "🇬🇧",
+    "description": "600個核心英語單字學習工具，結合單字、例句、朗讀與互動遊戲。",
+    "url": "https://splendorous-donut-50b930.netlify.app/",
+    "grade": "中高年級",
+    "audience": ["學生"],
+    "featured": true,
+    "new": false,
+    "status": "online",
+    "tags": ["英語", "單字", "朗讀", "遊戲", "自主學習"]
+  },
+  {
+    "id": "math-6up",
+    "name": "六上數學自主學習網站",
+    "category": "數學學習",
+    "icon": "🔢",
+    "description": "六年級上學期數學重點自主學習網站，提供課前預習與 AI 助教。",
+    "url": "https://mathpreview0601.netlify.app/",
+    "grade": "六年級",
+    "audience": ["學生"],
+    "featured": true,
+    "new": false,
+    "status": "online",
+    "tags": ["數學", "六年級", "預習", "AI助教", "自主學習"]
+  },
+  {
+    "id": "class-whiteboard",
+    "name": "課堂互動小白板",
+    "category": "資訊科技",
+    "icon": "📝",
+    "description": "課堂即時互動、繪圖、文字與分組協作工具，讓學生一起動手學習。",
+    "url": "https://lucent-rugelach-de9888.netlify.app/",
+    "grade": "全學段",
+    "audience": ["教師", "學生"],
+    "featured": true,
+    "new": false,
+    "status": "online",
+    "tags": ["小白板", "課堂互動", "分組協作", "資訊科技", "教學"]
+  },
+  {
+    "id": "chinese-6up",
+    "name": "六上國語自主學習網站",
+    "category": "國語學習",
+    "icon": "📖",
+    "description": "六年級上學期國語自主學習工具，協助學生進行課前預習與自主學習。",
+    "url": "https://lovely-hotteok-d43b24.netlify.app/",
+    "grade": "六年級",
+    "audience": ["學生"],
+    "featured": true,
+    "new": true,
+    "status": "online",
+    "tags": ["國語", "六年級", "預習", "閱讀", "自主學習"]
+  }
 ]
