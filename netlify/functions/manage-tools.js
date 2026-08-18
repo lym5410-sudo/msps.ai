@@ -43,7 +43,7 @@ export default async (request) => {
         // ================================
         const owner = "lym5410-sudo";
 
-        const repo = "mspsai";
+        const repo = "msps.ai";
 
         const path = "tools.json";
 
