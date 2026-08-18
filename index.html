@@ -3,14 +3,846 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIAIAI教育工具中心</title>
+
+    <title>民生國小 AI 教育工具中心</title>
+
+    <meta
+        name="description"
+        content="民生國小 AI 教育工具中心，整合學科學習、AI工具、課堂工具與學習遊戲。"
+    >
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family:
+                "Noto Sans TC",
+                "Microsoft JhengHei",
+                Arial,
+                sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at top left,
+                    #dbeafe 0%,
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at top right,
+                    #ede9fe 0%,
+                    transparent 35%
+                ),
+                #f8fafc;
+
+            color: #1e293b;
+            min-height: 100vh;
+        }
+
+        /* =========================
+           Header
+        ========================= */
+
+        header {
+            position: relative;
+            overflow: hidden;
+
+            padding: 60px 20px 80px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #312e81,
+                    #4f46e5,
+                    #7c3aed
+                );
+
+            color: white;
+            text-align: center;
+        }
+
+        header::before,
+        header::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.08);
+        }
+
+        header::before {
+            width: 300px;
+            height: 300px;
+            top: -150px;
+            left: -80px;
+        }
+
+        header::after {
+            width: 400px;
+            height: 400px;
+            right: -150px;
+            bottom: -250px;
+        }
+
+        .hero {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .hero-icon {
+            font-size: 64px;
+            margin-bottom: 10px;
+        }
+
+        .hero h1 {
+            margin: 0;
+            font-size: clamp(32px, 6vw, 56px);
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+
+        .hero p {
+            margin: 16px 0 0;
+            font-size: clamp(16px, 2vw, 21px);
+            opacity: 0.9;
+        }
+
+        .hero-subtitle {
+            margin-top: 8px;
+            font-size: 14px;
+            opacity: 0.75;
+        }
+
+        /* =========================
+           Main
+        ========================= */
+
+        main {
+            max-width: 1200px;
+            margin: -35px auto 0;
+            padding: 0 20px 60px;
+            position: relative;
+            z-index: 5;
+        }
+
+        /* =========================
+           Search
+        ========================= */
+
+        .search-box {
+            background: white;
+            border-radius: 20px;
+            padding: 10px;
+            box-shadow: 0 15px 40px rgba(15, 23, 42, 0.12);
+
+            display: flex;
+            align-items: center;
+        }
+
+        .search-icon {
+            font-size: 25px;
+            margin: 0 10px;
+        }
+
+        #searchInput {
+            border: none;
+            outline: none;
+            flex: 1;
+
+            font-size: 18px;
+            padding: 15px;
+
+            background: transparent;
+            color: #1e293b;
+        }
+
+        /* =========================
+           Category
+        ========================= */
+
+        .categories {
+            display: flex;
+            gap: 10px;
+
+            margin: 28px 0;
+
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+
+        .category-btn {
+            border: none;
+            background: white;
+
+            padding: 11px 18px;
+
+            border-radius: 999px;
+
+            font-size: 15px;
+            font-weight: 700;
+
+            cursor: pointer;
+
+            white-space: nowrap;
+
+            box-shadow:
+                0 4px 15px rgba(15, 23, 42, 0.08);
+
+            transition: 0.2s;
+        }
+
+        .category-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .category-btn.active {
+            background: #4f46e5;
+            color: white;
+        }
+
+        /* =========================
+           Section
+        ========================= */
+
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin: 35px 0 18px;
+        }
+
+        .section-title h2 {
+            margin: 0;
+            font-size: 25px;
+        }
+
+        .tool-count {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        /* =========================
+           Cards
+        ========================= */
+
+        #toolsContainer {
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(260px, 1fr)
+                );
+
+            gap: 20px;
+        }
+
+        .tool-card {
+            background: white;
+
+            border-radius: 22px;
+
+            padding: 25px;
+
+            box-shadow:
+                0 8px 25px rgba(15, 23, 42, 0.08);
+
+            border: 1px solid rgba(226,232,240,0.8);
+
+            transition:
+                transform 0.25s,
+                box-shadow 0.25s;
+
+            display: flex;
+            flex-direction: column;
+
+            min-height: 240px;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-6px);
+
+            box-shadow:
+                0 18px 40px rgba(15, 23, 42, 0.14);
+        }
+
+        .tool-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+
+        .tool-category {
+            color: #6366f1;
+
+            font-size: 13px;
+            font-weight: 800;
+
+            margin-bottom: 5px;
+        }
+
+        .tool-name {
+            font-size: 21px;
+            font-weight: 900;
+
+            margin-bottom: 10px;
+        }
+
+        .tool-description {
+            color: #64748b;
+            line-height: 1.6;
+            font-size: 14px;
+
+            flex: 1;
+        }
+
+        .tool-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-top: 20px;
+        }
+
+        .grade {
+            background: #f1f5f9;
+
+            padding: 6px 10px;
+
+            border-radius: 8px;
+
+            font-size: 12px;
+            color: #475569;
+        }
+
+        .tool-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+
+            background: #4f46e5;
+            color: white;
+
+            text-decoration: none;
+
+            padding: 9px 14px;
+
+            border-radius: 10px;
+
+            font-weight: 700;
+            font-size: 13px;
+
+            transition: 0.2s;
+        }
+
+        .tool-link:hover {
+            background: #3730a3;
+        }
+
+        /* =========================
+           Empty
+        ========================= */
+
+        .empty {
+            grid-column: 1 / -1;
+
+            text-align: center;
+
+            padding: 70px 20px;
+
+            color: #64748b;
+        }
+
+        .empty-icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+        }
+
+        /* =========================
+           Footer
+        ========================= */
+
+        footer {
+            text-align: center;
+
+            padding: 30px 20px 45px;
+
+            color: #64748b;
+
+            font-size: 13px;
+        }
+
+        footer strong {
+            color: #4f46e5;
+        }
+
+        /* =========================
+           Mobile
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            header {
+                padding: 45px 18px 70px;
+            }
+
+            .hero-icon {
+                font-size: 50px;
+            }
+
+            main {
+                padding-left: 14px;
+                padding-right: 14px;
+            }
+
+            #toolsContainer {
+                grid-template-columns: 1fr;
+            }
+
+            .tool-card {
+                min-height: 220px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<h1>🤖 民生國小 AI AI 教育工具中心民生國小 AI AI 教育工具中心</h1>
+<header>
 
-<p>AI × 教育 × 創意 × 學習</p>
+    <div class="hero">
+
+        <div class="hero-icon">
+            🤖
+        </div>
+
+        <h1>
+            AI 教育工具中心
+        </h1>
+
+        <p>
+            AI × 教育 × 創意 × 學習
+        </p>
+
+        <div class="hero-subtitle">
+            民生國小 AI 教育工具平台
+        </div>
+
+    </div>
+
+</header>
+
+
+<main>
+
+    <!-- 搜尋 -->
+
+    <div class="search-box">
+
+        <span class="search-icon">
+            🔎
+        </span>
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="搜尋你想使用的 AI 工具……"
+        >
+
+    </div>
+
+
+    <!-- 分類 -->
+
+    <div
+        class="categories"
+        id="categoryContainer"
+    ></div>
+
+
+    <!-- 工具 -->
+
+    <div class="section-title">
+
+        <h2>
+            🧰 我的 AI 工具
+        </h2>
+
+        <span
+            class="tool-count"
+            id="toolCount"
+        >
+            載入中……
+        </span>
+
+    </div>
+
+
+    <div id="toolsContainer">
+
+        <div class="empty">
+
+            <div class="empty-icon">
+                ⏳
+            </div>
+
+            正在載入工具……
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<footer>
+
+    <strong>民生國小 AI 教育工具中心</strong>
+
+    <br>
+
+    AI × 教育 × 創意 × 未來
+
+</footer>
+
+
+<script>
+
+    let tools = [];
+
+    let currentCategory = "全部";
+
+
+    /*
+     * ============================
+     * 讀取 tools.json
+     * ============================
+     */
+
+    async function loadTools() {
+
+        try {
+
+            const response =
+                await fetch("./tools.json");
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "無法讀取 tools.json"
+                );
+
+            }
+
+            tools = await response.json();
+
+            createCategories();
+
+            renderTools();
+
+        }
+
+        catch (error) {
+
+            console.error(error);
+
+            document.getElementById(
+                "toolsContainer"
+            ).innerHTML = `
+
+                <div class="empty">
+
+                    <div class="empty-icon">
+                        ⚠️
+                    </div>
+
+                    <h3>
+                        工具資料載入失敗
+                    </h3>
+
+                    <p>
+                        請確認 tools.json 是否存在。
+                    </p>
+
+                </div>
+
+            `;
+
+        }
+
+    }
+
+
+    /*
+     * ============================
+     * 建立分類按鈕
+     * ============================
+     */
+
+    function createCategories() {
+
+        const container =
+            document.getElementById(
+                "categoryContainer"
+            );
+
+        const categories = [
+            "全部",
+            ...new Set(
+                tools.map(
+                    tool => tool.category
+                )
+            )
+        ];
+
+        container.innerHTML = "";
+
+        categories.forEach(
+            category => {
+
+                const button =
+                    document.createElement(
+                        "button"
+                    );
+
+                button.className =
+                    "category-btn";
+
+                if (
+                    category ===
+                    currentCategory
+                ) {
+
+                    button.classList.add(
+                        "active"
+                    );
+
+                }
+
+                button.textContent =
+                    category;
+
+                button.onclick = () => {
+
+                    currentCategory =
+                        category;
+
+                    document
+                        .querySelectorAll(
+                            ".category-btn"
+                        )
+                        .forEach(
+                            btn =>
+                                btn.classList.remove(
+                                    "active"
+                                )
+                        );
+
+                    button.classList.add(
+                        "active"
+                    );
+
+                    renderTools();
+
+                };
+
+                container.appendChild(
+                    button
+                );
+
+            }
+        );
+
+    }
+
+
+    /*
+     * ============================
+     * 顯示工具
+     * ============================
+     */
+
+    function renderTools() {
+
+        const container =
+            document.getElementById(
+                "toolsContainer"
+            );
+
+        const keyword =
+            document
+                .getElementById(
+                    "searchInput"
+                )
+                .value
+                .trim()
+                .toLowerCase();
+
+
+        const filteredTools =
+            tools.filter(tool => {
+
+                const matchCategory =
+                    currentCategory ===
+                    "全部" ||
+                    tool.category ===
+                    currentCategory;
+
+                const searchText = (
+
+                    tool.name +
+                    " " +
+                    tool.category +
+                    " " +
+                    tool.description +
+                    " " +
+                    tool.grade
+
+                ).toLowerCase();
+
+                const matchSearch =
+                    searchText.includes(
+                        keyword
+                    );
+
+                return (
+                    matchCategory &&
+                    matchSearch
+                );
+
+            });
+
+
+        document.getElementById(
+            "toolCount"
+        ).textContent =
+            `共 ${filteredTools.length} 個工具`;
+
+
+        if (
+            filteredTools.length === 0
+        ) {
+
+            container.innerHTML = `
+
+                <div class="empty">
+
+                    <div class="empty-icon">
+                        🔍
+                    </div>
+
+                    <h3>
+                        找不到符合的工具
+                    </h3>
+
+                    <p>
+                        試試其他關鍵字或分類。
+                    </p>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        container.innerHTML =
+            filteredTools
+                .map(tool => `
+
+                    <article
+                        class="tool-card"
+                    >
+
+                        <div class="tool-icon">
+                            ${tool.icon}
+                        </div>
+
+                        <div class="tool-category">
+                            ${tool.category}
+                        </div>
+
+                        <div class="tool-name">
+                            ${tool.name}
+                        </div>
+
+                        <div class="tool-description">
+                            ${tool.description}
+                        </div>
+
+                        <div class="tool-footer">
+
+                            <span class="grade">
+                                ${tool.grade}
+                            </span>
+
+                            ${
+                                tool.url !== "#"
+
+                                ? `
+
+                                    <a
+                                        class="tool-link"
+                                        href="${tool.url}"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        🚀 開始使用
+                                    </a>
+
+                                `
+
+                                : `
+
+                                    <span
+                                        class="grade"
+                                    >
+                                        🚧 建置中
+                                    </span>
+
+                                `
+                            }
+
+                        </div>
+
+                    </article>
+
+                `)
+                .join("");
+
+    }
+
+
+    /*
+     * ============================
+     * 搜尋
+     * ============================
+     */
+
+    document
+        .getElementById(
+            "searchInput"
+        )
+        .addEventListener(
+            "input",
+            renderTools
+        );
+
+
+    /*
+     * ============================
+     * 啟動
+     * ============================
+     */
+
+    loadTools();
+
+</script>
 
 </body>
 </html>
