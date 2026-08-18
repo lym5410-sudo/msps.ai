@@ -4,20 +4,23 @@ const FILE_PATH = "tools.json";
 const BRANCH = "main";
 
 
-// ========================================
-// GitHub API
-// ========================================
+function githubHeaders() {
 
-const githubHeaders = () => ({
-    "Authorization": `Bearer ${process.env.GITHUB_TOKEN}`,
-    "Accept": "application/vnd.github+json",
-    "X-GitHub-Api-Version": "2022-11-28"
-});
+    return {
 
+        "Authorization":
+            `Bearer ${process.env.GITHUB_TOKEN}`,
 
-// ========================================
-// 驗證管理密碼
-// ========================================
+        "Accept":
+            "application/vnd.github+json",
+
+        "X-GitHub-Api-Version":
+            "2022-11-28"
+
+    };
+
+}
+
 
 function checkPassword(event) {
 
@@ -25,28 +28,28 @@ function checkPassword(event) {
         event.headers["x-admin-password"] ||
         event.headers["X-Admin-Password"];
 
-    if (!password) {
-        return false;
-    }
 
-    return password === process.env.ADMIN_PASSWORD;
+    return (
+        password &&
+        password ===
+            process.env.ADMIN_PASSWORD
+    );
+
 }
 
-
-// ========================================
-// 取得 tools.json
-// ========================================
 
 async function getToolsFile() {
 
     const url =
         `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${FILE_PATH}?ref=${BRANCH}`;
 
+
     const response =
         await fetch(
             url,
             {
-                headers: githubHeaders()
+                headers:
+                    githubHeaders()
             }
         );
 
@@ -59,6 +62,7 @@ async function getToolsFile() {
         throw new Error(
             `GitHub 讀取失敗：${response.status} ${text}`
         );
+
     }
 
 
@@ -68,40 +72,33 @@ async function getToolsFile() {
 
     const content =
         Buffer.from(
-            data.content.replace(/\n/g, ""),
+            data.content.replace(
+                /\n/g,
+                ""
+            ),
             "base64"
-        ).toString("utf-8");
+        )
+        .toString("utf-8");
 
 
-    let tools;
-
-    try {
-
-        tools =
-            JSON.parse(content);
-
-    } catch {
-
-        throw new Error(
-            "tools.json 格式錯誤"
-        );
-
-    }
+    const tools =
+        JSON.parse(content);
 
 
     return {
-        tools: Array.isArray(tools)
+
+        tools:
+            Array.isArray(tools)
             ? tools
             : [],
-        sha: data.sha
+
+        sha:
+            data.sha
+
     };
 
 }
 
-
-// ========================================
-// 更新 tools.json
-// ========================================
 
 async function updateToolsFile(
     tools,
@@ -121,7 +118,8 @@ async function updateToolsFile(
                 4
             ),
             "utf-8"
-        ).toString("base64");
+        )
+        .toString("base64");
 
 
     const response =
@@ -129,12 +127,16 @@ async function updateToolsFile(
             url,
             {
 
-                method: "PUT",
+                method:
+                    "PUT",
 
                 headers: {
+
                     ...githubHeaders(),
+
                     "Content-Type":
                         "application/json"
+
                 },
 
                 body:
@@ -146,7 +148,8 @@ async function updateToolsFile(
 
                         sha,
 
-                        branch: BRANCH
+                        branch:
+                            BRANCH
 
                     })
 
@@ -162,7 +165,7 @@ async function updateToolsFile(
 
         throw new Error(
             data.message ||
-            `GitHub 更新失敗：${response.status}`
+            "GitHub 更新失敗"
         );
 
     }
@@ -173,25 +176,23 @@ async function updateToolsFile(
 }
 
 
-// ========================================
-// 建立 ID
-// ========================================
-
 function createId() {
 
     return (
-        Date.now().toString(36) +
+
+        Date.now()
+            .toString(36)
+
+        +
+
         Math.random()
             .toString(36)
             .substring(2, 8)
+
     );
 
 }
 
-
-// ========================================
-// Netlify Function
-// ========================================
 
 exports.handler =
     async function(event) {
@@ -202,12 +203,14 @@ exports.handler =
                 event.httpMethod;
 
 
-            // ====================================
-            // GET
-            // 公開讀取工具
-            // ====================================
+            /* =========================
+               GET
+            ========================= */
 
-            if (method === "GET") {
+            if (
+                method ===
+                "GET"
+            ) {
 
                 const {
                     tools
@@ -220,10 +223,13 @@ exports.handler =
                     statusCode: 200,
 
                     headers: {
+
                         "Content-Type":
                             "application/json",
+
                         "Cache-Control":
                             "no-cache"
+
                     },
 
                     body:
@@ -240,25 +246,53 @@ exports.handler =
             }
 
 
-            // ====================================
-            // POST
-            // 登入 / 新增
-            // ====================================
+            /* =========================
+               POST
+            ========================= */
 
-            if (method === "POST") {
+            if (
+                method ===
+                "POST"
+            ) {
 
-                let body = {};
+                if (
+                    !checkPassword(
+                        event
+                    )
+                ) {
+
+                    return {
+
+                        statusCode: 401,
+
+                        body:
+                            JSON.stringify({
+
+                                success: false,
+
+                                message:
+                                    "管理密碼錯誤"
+
+                            })
+
+                    };
+
+                }
+
+
+                let body;
+
 
                 try {
 
                     body =
-                        event.body
-                            ? JSON.parse(
-                                event.body
-                            )
-                            : {};
+                        JSON.parse(
+                            event.body ||
+                            "{}"
+                        );
 
-                } catch {
+                }
+                catch {
 
                     return {
 
@@ -279,39 +313,12 @@ exports.handler =
                 }
 
 
-                // =================================
-                // 真正的登入
-                // =================================
+                /* ===== 登入 ===== */
 
                 if (
                     body.action ===
                     "login"
                 ) {
-
-                    if (
-                        !checkPassword(
-                            event
-                        )
-                    ) {
-
-                        return {
-
-                            statusCode: 401,
-
-                            body:
-                                JSON.stringify({
-
-                                    success: false,
-
-                                    message:
-                                        "管理密碼錯誤"
-
-                                })
-
-                        };
-
-                    }
-
 
                     return {
 
@@ -332,59 +339,23 @@ exports.handler =
                 }
 
 
-                // =================================
-                // 新增工具前驗證
-                // =================================
+                /* ===== 新增 ===== */
 
-                if (
-                    !checkPassword(
-                        event
-                    )
-                ) {
+                const required = [
 
-                    return {
-
-                        statusCode: 401,
-
-                        body:
-                            JSON.stringify({
-
-                                success: false,
-
-                                message:
-                                    "未授權"
-
-                            })
-
-                    };
-
-                }
-
-
-                const {
-                    tools,
-                    sha
-                } =
-                    await getToolsFile();
-
-
-                // =================================
-                // 欄位驗證
-                // =================================
-
-                const requiredFields = [
                     "name",
                     "url",
+                    "type",
                     "category",
-                    "grade",
                     "icon",
                     "description"
+
                 ];
 
 
                 for (
                     const field
-                    of requiredFields
+                    of required
                 ) {
 
                     if (
@@ -415,9 +386,12 @@ exports.handler =
                 }
 
 
-                // =================================
-                // 建立新工具
-                // =================================
+                const {
+                    tools,
+                    sha
+                } =
+                    await getToolsFile();
+
 
                 const newTool = {
 
@@ -434,15 +408,31 @@ exports.handler =
                             body.url
                         ).trim(),
 
+                    type:
+                        String(
+                            body.type
+                        ).trim(),
+
                     category:
                         String(
                             body.category
                         ).trim(),
 
-                    grade:
-                        String(
-                            body.grade
+                    stage:
+                        body.type ===
+                        "tool"
+                        ? ""
+                        : String(
+                            body.stage ||
+                            ""
                         ).trim(),
+
+                    keywords:
+                        Array.isArray(
+                            body.keywords
+                        )
+                        ? body.keywords
+                        : [],
 
                     icon:
                         String(
@@ -457,15 +447,19 @@ exports.handler =
                 };
 
 
-                tools.push(
+                tools.unshift(
                     newTool
                 );
 
 
                 await updateToolsFile(
+
                     tools,
+
                     sha,
+
                     `新增工具：${newTool.name}`
+
                 );
 
 
@@ -491,12 +485,14 @@ exports.handler =
             }
 
 
-            // ====================================
-            // PUT
-            // 編輯工具
-            // ====================================
+            /* =========================
+               PUT
+            ========================= */
 
-            if (method === "PUT") {
+            if (
+                method ===
+                "PUT"
+            ) {
 
                 if (
                     !checkPassword(
@@ -523,34 +519,11 @@ exports.handler =
                 }
 
 
-                let body;
-
-                try {
-
-                    body =
-                        JSON.parse(
-                            event.body || "{}"
-                        );
-
-                } catch {
-
-                    return {
-
-                        statusCode: 400,
-
-                        body:
-                            JSON.stringify({
-
-                                success: false,
-
-                                message:
-                                    "JSON 格式錯誤"
-
-                            })
-
-                    };
-
-                }
+                const body =
+                    JSON.parse(
+                        event.body ||
+                        "{}"
+                    );
 
 
                 if (!body.id) {
@@ -593,7 +566,9 @@ exports.handler =
                     );
 
 
-                if (index === -1) {
+                if (
+                    index === -1
+                ) {
 
                     return {
 
@@ -605,7 +580,7 @@ exports.handler =
                                 success: false,
 
                                 message:
-                                    "找不到指定工具"
+                                    "找不到工具"
 
                             })
 
@@ -614,51 +589,73 @@ exports.handler =
                 }
 
 
-                const updatedTool = {
+                tools[index] = {
 
                     ...tools[index],
 
                     name:
                         String(
-                            body.name
+                            body.name ||
+                            ""
                         ).trim(),
 
                     url:
                         String(
-                            body.url
+                            body.url ||
+                            ""
+                        ).trim(),
+
+                    type:
+                        String(
+                            body.type ||
+                            "student"
                         ).trim(),
 
                     category:
                         String(
-                            body.category
+                            body.category ||
+                            ""
                         ).trim(),
 
-                    grade:
-                        String(
-                            body.grade
+                    stage:
+                        body.type ===
+                        "tool"
+                        ? ""
+                        : String(
+                            body.stage ||
+                            ""
                         ).trim(),
+
+                    keywords:
+                        Array.isArray(
+                            body.keywords
+                        )
+                        ? body.keywords
+                        : [],
 
                     icon:
                         String(
-                            body.icon
+                            body.icon ||
+                            ""
                         ).trim(),
 
                     description:
                         String(
-                            body.description
+                            body.description ||
+                            ""
                         ).trim()
 
                 };
 
 
-                tools[index] =
-                    updatedTool;
-
-
                 await updateToolsFile(
+
                     tools,
+
                     sha,
-                    `修改工具：${updatedTool.name}`
+
+                    `修改工具：${tools[index].name}`
+
                 );
 
 
@@ -675,7 +672,7 @@ exports.handler =
                                 "工具修改成功",
 
                             tool:
-                                updatedTool
+                                tools[index]
 
                         })
 
@@ -684,12 +681,14 @@ exports.handler =
             }
 
 
-            // ====================================
-            // DELETE
-            // 刪除工具
-            // ====================================
+            /* =========================
+               DELETE
+            ========================= */
 
-            if (method === "DELETE") {
+            if (
+                method ===
+                "DELETE"
+            ) {
 
                 if (
                     !checkPassword(
@@ -716,55 +715,11 @@ exports.handler =
                 }
 
 
-                let body;
-
-                try {
-
-                    body =
-                        JSON.parse(
-                            event.body || "{}"
-                        );
-
-                } catch {
-
-                    return {
-
-                        statusCode: 400,
-
-                        body:
-                            JSON.stringify({
-
-                                success: false,
-
-                                message:
-                                    "JSON 格式錯誤"
-
-                            })
-
-                    };
-
-                }
-
-
-                if (!body.id) {
-
-                    return {
-
-                        statusCode: 400,
-
-                        body:
-                            JSON.stringify({
-
-                                success: false,
-
-                                message:
-                                    "缺少工具 ID"
-
-                            })
-
-                    };
-
-                }
+                const body =
+                    JSON.parse(
+                        event.body ||
+                        "{}"
+                    );
 
 
                 const {
@@ -786,7 +741,9 @@ exports.handler =
                     );
 
 
-                if (index === -1) {
+                if (
+                    index === -1
+                ) {
 
                     return {
 
@@ -798,7 +755,7 @@ exports.handler =
                                 success: false,
 
                                 message:
-                                    "找不到指定工具"
+                                    "找不到工具"
 
                             })
 
@@ -807,7 +764,7 @@ exports.handler =
                 }
 
 
-                const deletedTool =
+                const deleted =
                     tools[index];
 
 
@@ -818,9 +775,13 @@ exports.handler =
 
 
                 await updateToolsFile(
+
                     tools,
+
                     sha,
-                    `刪除工具：${deletedTool.name}`
+
+                    `刪除工具：${deleted.name}`
+
                 );
 
 
@@ -843,10 +804,6 @@ exports.handler =
             }
 
 
-            // ====================================
-            // 不支援的方法
-            // ====================================
-
             return {
 
                 statusCode: 405,
@@ -864,11 +821,9 @@ exports.handler =
             };
 
         }
-
         catch (error) {
 
             console.error(
-                "manage-tools error:",
                 error
             );
 
@@ -884,7 +839,7 @@ exports.handler =
 
                         message:
                             error.message ||
-                            "伺服器發生錯誤"
+                            "伺服器錯誤"
 
                     })
 
