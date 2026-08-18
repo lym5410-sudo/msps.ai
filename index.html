@@ -14,15 +14,15 @@
 
 <meta
     name="description"
-    content="民生國小 AI 教育工具中心，整合學科學習、AI工具、課堂工具與學習遊戲。"
+    content="民生國小 AI 教育工具中心，依學習領域與學習階段快速找到適合的學習工具。"
 >
 
 
 <style>
 
-/* =================================
-   基礎
-================================= */
+/* =========================
+   基本設定
+========================= */
 
 * {
     box-sizing: border-box;
@@ -43,31 +43,27 @@ body {
         sans-serif;
 
     background:
-
         radial-gradient(
             circle at top left,
             #dbeafe 0%,
             transparent 35%
         ),
-
         radial-gradient(
             circle at top right,
             #ede9fe 0%,
             transparent 35%
         ),
-
         #f8fafc;
 
     color: #1e293b;
 
     min-height: 100vh;
-
 }
 
 
-/* =================================
+/* =========================
    Header
-================================= */
+========================= */
 
 header {
 
@@ -75,11 +71,9 @@ header {
 
     overflow: hidden;
 
-    padding:
-        60px 20px 95px;
+    padding: 55px 20px 75px;
 
     background:
-
         linear-gradient(
             135deg,
             #312e81,
@@ -90,46 +84,44 @@ header {
     color: white;
 
     text-align: center;
-
 }
 
 
-header::before,
+header::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 300px;
+    height: 300px;
+
+    top: -150px;
+    left: -80px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255,255,255,0.08);
+}
+
+
 header::after {
 
     content: "";
 
     position: absolute;
 
+    width: 400px;
+    height: 400px;
+
+    right: -150px;
+    bottom: -250px;
+
     border-radius: 50%;
 
     background:
         rgba(255,255,255,0.08);
-
-    pointer-events: none;
-
-}
-
-
-header::before {
-
-    width: 320px;
-    height: 320px;
-
-    top: -160px;
-    left: -100px;
-
-}
-
-
-header::after {
-
-    width: 450px;
-    height: 450px;
-
-    right: -180px;
-    bottom: -280px;
-
 }
 
 
@@ -142,38 +134,14 @@ header::after {
     max-width: 900px;
 
     margin: auto;
-
 }
 
 
 .hero-icon {
 
-    font-size: 68px;
+    font-size: 60px;
 
     margin-bottom: 10px;
-
-    animation:
-        floatRobot
-        3s
-        ease-in-out
-        infinite;
-
-}
-
-
-@keyframes floatRobot {
-
-    0%,
-    100% {
-        transform:
-            translateY(0);
-    }
-
-    50% {
-        transform:
-            translateY(-8px);
-    }
-
 }
 
 
@@ -185,20 +153,19 @@ header::after {
         clamp(
             32px,
             6vw,
-            56px
+            54px
         );
 
     font-weight: 900;
 
     letter-spacing: 2px;
-
 }
 
 
 .hero p {
 
     margin:
-        16px 0 0;
+        15px 0 0;
 
     font-size:
         clamp(
@@ -207,46 +174,43 @@ header::after {
             21px
         );
 
-    opacity: 0.92;
-
+    opacity: 0.9;
 }
 
 
 .hero-subtitle {
 
-    margin-top: 10px;
+    margin-top: 8px;
 
     font-size: 14px;
 
-    opacity: 0.78;
-
+    opacity: 0.75;
 }
 
 
-/* =================================
+/* =========================
    Main
-================================= */
+========================= */
 
 main {
 
-    max-width: 1250px;
+    max-width: 1200px;
 
     margin:
-        -40px auto 0;
+        -35px auto 0;
 
     padding:
-        0 20px 70px;
+        0 20px 60px;
 
     position: relative;
 
     z-index: 5;
-
 }
 
 
-/* =================================
+/* =========================
    搜尋
-================================= */
+========================= */
 
 .search-box {
 
@@ -254,8 +218,7 @@ main {
 
     border-radius: 20px;
 
-    padding:
-        10px 15px;
+    padding: 10px;
 
     box-shadow:
         0 15px 40px
@@ -263,22 +226,12 @@ main {
             15,
             23,
             42,
-            0.13
+            0.12
         );
 
     display: flex;
 
     align-items: center;
-
-    border:
-        1px solid
-        rgba(
-            226,
-            232,
-            240,
-            0.8
-        );
-
 }
 
 
@@ -288,7 +241,6 @@ main {
 
     margin:
         0 10px;
-
 }
 
 
@@ -304,12 +256,9 @@ main {
 
     padding: 15px;
 
-    background:
-        transparent;
+    background: transparent;
 
-    color:
-        #1e293b;
-
+    color: #1e293b;
 }
 
 
@@ -317,45 +266,60 @@ main {
 
     color:
         #94a3b8;
-
 }
 
 
-/* =================================
-   統計
-================================= */
+/* =========================
+   分類區
+========================= */
 
-.stats {
+.filter-section {
 
-    display: grid;
-
-    grid-template-columns:
-        repeat(
-            3,
-            1fr
-        );
-
-    gap: 15px;
-
-    margin:
-        25px 0 35px;
-
+    margin-top: 30px;
 }
 
 
-.stat-card {
+.filter-title {
+
+    font-size: 18px;
+
+    font-weight: 900;
+
+    margin-bottom: 12px;
+}
+
+
+.filter-buttons {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
+}
+
+
+.filter-btn {
+
+    border: none;
 
     background: white;
 
-    border-radius: 20px;
+    color: #475569;
 
     padding:
-        20px;
+        10px 17px;
 
-    text-align: center;
+    border-radius: 999px;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    cursor: pointer;
 
     box-shadow:
-        0 8px 25px
+        0 4px 15px
         rgba(
             15,
             23,
@@ -363,58 +327,42 @@ main {
             0.07
         );
 
-    border:
-        1px solid
-        #e2e8f0;
-
+    transition:
+        0.2s;
 }
 
 
-.stat-icon {
+.filter-btn:hover {
 
-    font-size: 28px;
-
+    transform:
+        translateY(-2px);
 }
 
 
-.stat-number {
+.filter-btn.active {
 
-    font-size: 28px;
-
-    font-weight: 900;
-
-    margin:
-        4px 0;
-
-    color:
+    background:
         #4f46e5;
 
-}
-
-
-.stat-label {
-
-    font-size: 13px;
-
     color:
-        #64748b;
+        white;
 
+    box-shadow:
+        0 7px 18px
+        rgba(
+            79,
+            70,
+            229,
+            0.25
+        );
 }
 
 
-/* =================================
-   Section
-================================= */
+/* =========================
+   工具標題
+========================= */
 
-.section {
-
-    margin:
-        35px 0;
-
-}
-
-
-.section-header {
+.tools-header {
 
     display: flex;
 
@@ -424,455 +372,63 @@ main {
     align-items:
         center;
 
-    margin-bottom:
-        18px;
-
+    margin:
+        38px 0 18px;
 }
 
 
-.section-header h2 {
+.tools-header h2 {
 
     margin: 0;
 
     font-size: 25px;
-
 }
 
 
-.section-description {
+.tool-count {
 
     color:
         #64748b;
 
     font-size:
         14px;
-
 }
 
 
-/* =================================
-   精選
-================================= */
-
-.featured-grid {
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(
-            auto-fit,
-            minmax(
-                250px,
-                1fr
-            )
-        );
-
-    gap: 18px;
-
-}
-
-
-.featured-card {
-
-    position: relative;
-
-    background:
-        linear-gradient(
-            135deg,
-            #ffffff,
-            #f5f3ff
-        );
-
-    border-radius:
-        22px;
-
-    padding:
-        22px;
-
-    border:
-        1px solid
-        #ddd6fe;
-
-    box-shadow:
-        0 8px 25px
-        rgba(
-            15,
-            23,
-            42,
-            0.07
-        );
-
-    cursor: pointer;
-
-    transition:
-        0.25s;
-
-}
-
-
-.featured-card:hover {
-
-    transform:
-        translateY(-5px);
-
-    box-shadow:
-        0 16px 35px
-        rgba(
-            15,
-            23,
-            42,
-            0.12
-        );
-
-}
-
-
-.featured-icon {
-
-    font-size:
-        45px;
-
-    margin-bottom:
-        12px;
-
-}
-
-
-.featured-name {
-
-    font-size:
-        18px;
-
-    font-weight:
-        900;
-
-    margin-bottom:
-        6px;
-
-}
-
-
-.featured-description {
-
-    color:
-        #64748b;
-
-    font-size:
-        13px;
-
-    line-height:
-        1.6;
-
-}
-
-
-/* =================================
-   學習領域
-================================= */
-
-.category-grid {
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(
-            auto-fit,
-            minmax(
-                160px,
-                1fr
-            )
-        );
-
-    gap:
-        15px;
-
-}
-
-
-.domain-card {
-
-    background: white;
-
-    border-radius:
-        18px;
-
-    padding:
-        22px 15px;
-
-    text-align:
-        center;
-
-    cursor:
-        pointer;
-
-    border:
-        1px solid
-        #e2e8f0;
-
-    box-shadow:
-        0 6px 18px
-        rgba(
-            15,
-            23,
-            42,
-            0.06
-        );
-
-    transition:
-        0.2s;
-
-}
-
-
-.domain-card:hover {
-
-    transform:
-        translateY(-4px);
-
-    border-color:
-        #a5b4fc;
-
-}
-
-
-.domain-icon {
-
-    font-size:
-        35px;
-
-}
-
-
-.domain-name {
-
-    margin-top:
-        8px;
-
-    font-weight:
-        800;
-
-}
-
-
-.domain-count {
-
-    margin-top:
-        4px;
-
-    font-size:
-        12px;
-
-    color:
-        #64748b;
-
-}
-
-
-/* =================================
-   快速篩選
-================================= */
-
-.quick-filters {
-
-    display: flex;
-
-    flex-wrap: wrap;
-
-    gap:
-        10px;
-
-    margin:
-        20px 0 5px;
-
-}
-
-
-.quick-btn {
-
-    border: none;
-
-    padding:
-        9px 15px;
-
-    border-radius:
-        999px;
-
-    background:
-        white;
-
-    color:
-        #475569;
-
-    font-weight:
-        700;
-
-    cursor:
-        pointer;
-
-    box-shadow:
-        0 4px 15px
-        rgba(
-            15,
-            23,
-            42,
-            0.07
-        );
-
-    transition:
-        0.2s;
-
-}
-
-
-.quick-btn:hover {
-
-    transform:
-        translateY(-2px);
-
-}
-
-
-.quick-btn.active {
-
-    background:
-        #4f46e5;
-
-    color:
-        white;
-
-}
-
-
-/* =================================
-   分類
-================================= */
-
-.categories {
-
-    display:
-        flex;
-
-    gap:
-        10px;
-
-    margin:
-        20px 0 28px;
-
-    overflow-x:
-        auto;
-
-    padding-bottom:
-        5px;
-
-}
-
-
-.category-btn {
-
-    border:
-        none;
-
-    background:
-        white;
-
-    padding:
-        11px 18px;
-
-    border-radius:
-        999px;
-
-    font-size:
-        15px;
-
-    font-weight:
-        700;
-
-    cursor:
-        pointer;
-
-    white-space:
-        nowrap;
-
-    box-shadow:
-        0 4px 15px
-        rgba(
-            15,
-            23,
-            42,
-            0.08
-        );
-
-    transition:
-        0.2s;
-
-}
-
-
-.category-btn:hover {
-
-    transform:
-        translateY(-2px);
-
-}
-
-
-.category-btn.active {
-
-    background:
-        #4f46e5;
-
-    color:
-        white;
-
-}
-
-
-/* =================================
+/* =========================
    工具卡片
-================================= */
+========================= */
 
 #toolsContainer {
 
-    display:
-        grid;
+    display: grid;
 
     grid-template-columns:
         repeat(
             auto-fit,
             minmax(
-                280px,
+                270px,
                 1fr
             )
         );
 
-    gap:
-        22px;
-
+    gap: 20px;
 }
 
 
 .tool-card {
 
-    position:
-        relative;
-
     background:
         white;
 
     border-radius:
-        24px;
+        22px;
 
     padding:
-        25px;
+        24px;
 
-    box-shadow:
-        0 8px 25px
-        rgba(
-            15,
-            23,
-            42,
-            0.08
-        );
+    min-height:
+        245px;
 
     border:
         1px solid
@@ -880,11 +436,17 @@ main {
             226,
             232,
             240,
-            0.85
+            0.9
         );
 
-    transition:
-        0.25s;
+    box-shadow:
+        0 8px 25px
+        rgba(
+            15,
+            23,
+            42,
+            0.08
+        );
 
     display:
         flex;
@@ -892,169 +454,42 @@ main {
     flex-direction:
         column;
 
-    min-height:
-        285px;
-
-    overflow:
-        hidden;
-
-}
-
-
-.tool-card::before {
-
-    content:
-        "";
-
-    position:
-        absolute;
-
-    top:
-        0;
-
-    left:
-        0;
-
-    right:
-        0;
-
-    height:
-        4px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #4f46e5,
-            #7c3aed
-        );
-
+    transition:
+        transform 0.25s,
+        box-shadow 0.25s;
 }
 
 
 .tool-card:hover {
 
     transform:
-        translateY(-7px);
+        translateY(-6px);
 
     box-shadow:
-        0 20px 45px
+        0 18px 40px
         rgba(
             15,
             23,
             42,
-            0.15
+            0.14
         );
-
-}
-
-
-.badges {
-
-    position:
-        absolute;
-
-    top:
-        17px;
-
-    right:
-        17px;
-
-    display:
-        flex;
-
-    gap:
-        5px;
-
-}
-
-
-.badge {
-
-    padding:
-        5px 8px;
-
-    border-radius:
-        999px;
-
-    font-size:
-        11px;
-
-    font-weight:
-        900;
-
-}
-
-
-.badge-featured {
-
-    background:
-        #fef3c7;
-
-    color:
-        #92400e;
-
-}
-
-
-.badge-new {
-
-    background:
-        #dcfce7;
-
-    color:
-        #166534;
-
-}
-
-
-.badge-online {
-
-    background:
-        #ecfdf5;
-
-    color:
-        #047857;
-
 }
 
 
 .tool-icon {
 
-    width:
-        65px;
-
-    height:
-        65px;
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
-
-    background:
-        linear-gradient(
-            135deg,
-            #eef2ff,
-            #f5f3ff
-        );
-
-    border-radius:
-        18px;
-
     font-size:
-        38px;
+        48px;
 
     margin-bottom:
-        16px;
-
+        12px;
 }
 
 
 .tool-category {
+
+    display:
+        inline-block;
 
     color:
         #6366f1;
@@ -1067,7 +502,6 @@ main {
 
     margin-bottom:
         6px;
-
 }
 
 
@@ -1080,11 +514,10 @@ main {
         900;
 
     line-height:
-        1.35;
+        1.4;
 
     margin-bottom:
-        10px;
-
+        9px;
 }
 
 
@@ -1093,56 +526,14 @@ main {
     color:
         #64748b;
 
-    line-height:
-        1.65;
-
     font-size:
         14px;
 
+    line-height:
+        1.65;
+
     flex:
         1;
-
-}
-
-
-.tags {
-
-    display:
-        flex;
-
-    flex-wrap:
-        wrap;
-
-    gap:
-        5px;
-
-    margin-top:
-        15px;
-
-}
-
-
-.tag {
-
-    background:
-        #f8fafc;
-
-    border:
-        1px solid
-        #e2e8f0;
-
-    color:
-        #64748b;
-
-    border-radius:
-        7px;
-
-    padding:
-        4px 7px;
-
-    font-size:
-        11px;
-
 }
 
 
@@ -1162,54 +553,19 @@ main {
 
     margin-top:
         20px;
-
 }
 
 
-.tool-meta {
-
-    display:
-        flex;
-
-    flex-wrap:
-        wrap;
-
-    gap:
-        6px;
-
-}
-
-
-.grade {
+.stage {
 
     background:
         #f1f5f9;
 
-    padding:
-        6px 9px;
-
-    border-radius:
-        8px;
-
-    font-size:
-        12px;
-
     color:
         #475569;
 
-}
-
-
-.audience {
-
-    background:
-        #eef2ff;
-
-    color:
-        #4f46e5;
-
     padding:
-        6px 9px;
+        6px 10px;
 
     border-radius:
         8px;
@@ -1219,7 +575,6 @@ main {
 
     font-weight:
         700;
-
 }
 
 
@@ -1229,9 +584,6 @@ main {
         inline-flex;
 
     align-items:
-        center;
-
-    justify-content:
         center;
 
     gap:
@@ -1247,23 +599,19 @@ main {
         none;
 
     padding:
-        10px 15px;
+        9px 14px;
 
     border-radius:
-        11px;
-
-    font-weight:
-        800;
+        10px;
 
     font-size:
         13px;
 
-    white-space:
-        nowrap;
+    font-weight:
+        800;
 
     transition:
         0.2s;
-
 }
 
 
@@ -1271,16 +619,34 @@ main {
 
     background:
         #3730a3;
-
-    transform:
-        translateY(-1px);
-
 }
 
 
-/* =================================
-   Empty
-================================= */
+.building {
+
+    background:
+        #f1f5f9;
+
+    color:
+        #64748b;
+
+    padding:
+        8px 12px;
+
+    border-radius:
+        9px;
+
+    font-size:
+        12px;
+
+    font-weight:
+        700;
+}
+
+
+/* =========================
+   找不到工具
+========================= */
 
 .empty {
 
@@ -1295,7 +661,6 @@ main {
 
     color:
         #64748b;
-
 }
 
 
@@ -1306,13 +671,12 @@ main {
 
     margin-bottom:
         15px;
-
 }
 
 
-/* =================================
+/* =========================
    Footer
-================================= */
+========================= */
 
 footer {
 
@@ -1327,7 +691,6 @@ footer {
 
     font-size:
         13px;
-
 }
 
 
@@ -1335,29 +698,30 @@ footer strong {
 
     color:
         #4f46e5;
-
 }
 
 
-/* =================================
-   Mobile
-================================= */
+/* =========================
+   手機版
+========================= */
 
-@media (max-width: 600px) {
+@media (
+    max-width: 600px
+) {
 
     header {
 
         padding:
-            45px 18px 75px;
-
+            45px 18px 65px;
     }
+
 
     .hero-icon {
 
         font-size:
             50px;
-
     }
+
 
     main {
 
@@ -1366,28 +730,26 @@ footer strong {
 
         padding-right:
             14px;
-
     }
 
-    .stats {
-
-        grid-template-columns:
-            1fr;
-
-    }
 
     #toolsContainer {
 
         grid-template-columns:
             1fr;
-
     }
 
-    .tool-card {
 
-        min-height:
-            270px;
+    .tools-header {
 
+        align-items:
+            flex-start;
+
+        gap:
+            10px;
+
+        flex-direction:
+            column;
     }
 
 }
@@ -1399,6 +761,10 @@ footer strong {
 
 <body>
 
+
+<!-- =========================
+     Header
+========================= -->
 
 <header>
 
@@ -1429,9 +795,9 @@ AI × 教育 × 創意 × 學習
 <main>
 
 
-<!-- =================================
+<!-- =========================
      搜尋
-================================= -->
+========================= -->
 
 <div class="search-box">
 
@@ -1442,208 +808,63 @@ AI × 教育 × 創意 × 學習
 <input
     type="text"
     id="searchInput"
-    placeholder="搜尋工具、學科、年級、關鍵字……"
+    placeholder="搜尋工具名稱、學習領域或學習階段……"
 >
 
 </div>
 
 
 
-<!-- =================================
-     統計
-================================= -->
-
-<div class="stats">
-
-<div class="stat-card">
-
-<div class="stat-icon">
-🧰
-</div>
-
-<div
-    class="stat-number"
-    id="totalCount"
->
-0
-</div>
-
-<div class="stat-label">
-全部工具
-</div>
-
-</div>
-
-
-<div class="stat-card">
-
-<div class="stat-icon">
-⭐
-</div>
-
-<div
-    class="stat-number"
-    id="featuredCount"
->
-0
-</div>
-
-<div class="stat-label">
-精選工具
-</div>
-
-</div>
-
-
-<div class="stat-card">
-
-<div class="stat-icon">
-🟢
-</div>
-
-<div
-    class="stat-number"
-    id="onlineCount"
->
-0
-</div>
-
-<div class="stat-label">
-線上工具
-</div>
-
-</div>
-
-</div>
-
-
-
-<!-- =================================
-     精選工具
-================================= -->
-
-<section class="section">
-
-<div class="section-header">
-
-<h2>
-⭐ 精選工具
-</h2>
-
-<span class="section-description">
-推薦使用
-</span>
-
-</div>
-
-
-<div
-    class="featured-grid"
-    id="featuredContainer"
-></div>
-
-</section>
-
-
-
-<!-- =================================
+<!-- =========================
      學習領域
-================================= -->
+========================= -->
 
-<section class="section">
+<section class="filter-section">
 
-<div class="section-header">
-
-<h2>
+<div class="filter-title">
 📚 學習領域
-</h2>
-
-<span class="section-description">
-探索不同學習工具
-</span>
-
 </div>
 
-
 <div
-    class="category-grid"
-    id="domainContainer"
-></div>
-
-</section>
-
-
-
-<!-- =================================
-     篩選
-================================= -->
-
-<div class="quick-filters">
-
-<button
-    class="quick-btn active"
-    data-filter="all"
->
-🧰 全部
-</button>
-
-<button
-    class="quick-btn"
-    data-filter="featured"
->
-⭐ 精選
-</button>
-
-<button
-    class="quick-btn"
-    data-filter="new"
->
-🆕 最新
-</button>
-
-<button
-    class="quick-btn"
-    data-filter="teacher"
->
-👨‍🏫 教師
-</button>
-
-<button
-    class="quick-btn"
-    data-filter="student"
->
-👦 學生
-</button>
-
-</div>
-
-
-
-<!-- =================================
-     分類
-================================= -->
-
-<div
-    class="categories"
+    class="filter-buttons"
     id="categoryContainer"
 ></div>
 
+</section>
 
 
-<!-- =================================
+
+<!-- =========================
+     學習階段
+========================= -->
+
+<section class="filter-section">
+
+<div class="filter-title">
+🏫 學習階段
+</div>
+
+<div
+    class="filter-buttons"
+    id="stageContainer"
+></div>
+
+</section>
+
+
+
+<!-- =========================
      工具
-================================= -->
+========================= -->
 
-<section class="section">
-
-<div class="section-header">
+<div class="tools-header">
 
 <h2>
-🧰 全部 AI 工具
+🧰 學習工具
 </h2>
 
 <span
-    class="section-description"
+    class="tool-count"
     id="toolCount"
 >
 載入中……
@@ -1665,8 +886,6 @@ AI × 教育 × 創意 × 學習
 </div>
 
 </div>
-
-</section>
 
 
 </main>
@@ -1690,1008 +909,547 @@ AI × 教育 × 創意 × 未來
 <script>
 
 
-/* =================================
+/* =========================
    全域資料
-================================= */
+========================= */
 
 let tools = [];
 
 let currentCategory = "全部";
 
-let currentFilter = "all";
+let currentStage = "全部";
 
 
-
-/* =================================
-   讀取 JSON
-================================= */
+/* =========================
+   讀取 tools.json
+========================= */
 
 async function loadTools() {
 
-try {
+    try {
 
-const response =
-    await fetch(
-        "./tools.json"
-    );
+        const response =
+            await fetch(
+                "./tools.json"
+            );
 
 
-if (!response.ok) {
+        if (!response.ok) {
 
-throw new Error(
-    "無法讀取 tools.json"
-);
-
-}
-
-
-tools =
-    await response.json();
-
-
-updateStats();
-
-createCategories();
-
-createFeatured();
-
-createDomains();
-
-renderTools();
-
-
-}
-
-catch(error) {
-
-console.error(error);
-
-
-document.getElementById(
-    "toolsContainer"
-).innerHTML = `
-
-<div class="empty">
-
-<div class="empty-icon">
-⚠️
-</div>
-
-<h3>
-工具資料載入失敗
-</h3>
-
-<p>
-請確認 tools.json 是否存在，
-並檢查 JSON 格式。
-</p>
-
-</div>
-
-`;
-
-}
-
-}
-
-
-/* =================================
-   統計
-================================= */
-
-function updateStats() {
-
-
-document.getElementById(
-    "totalCount"
-).textContent =
-    tools.length;
-
-
-document.getElementById(
-    "featuredCount"
-).textContent =
-
-tools.filter(
-    tool =>
-        tool.featured === true
-).length;
-
-
-document.getElementById(
-    "onlineCount"
-).textContent =
-
-tools.filter(
-    tool =>
-        tool.status === "online"
-).length;
-
-}
-
-
-
-/* =================================
-   精選工具
-================================= */
-
-function createFeatured() {
-
-
-const container =
-    document.getElementById(
-        "featuredContainer"
-    );
-
-
-const featured =
-    tools.filter(
-        tool =>
-            tool.featured === true
-    );
-
-
-if (
-    featured.length === 0
-) {
-
-container.innerHTML = `
-
-<div class="empty">
-
-目前尚無精選工具。
-
-</div>
-
-`;
-
-return;
-
-}
-
-
-container.innerHTML =
-
-featured
-.slice(0, 4)
-.map(tool => `
-
-<div
-    class="featured-card"
-    onclick="openTool('${tool.url}')"
->
-
-<div class="featured-icon">
-${tool.icon || "🤖"}
-</div>
-
-<div class="featured-name">
-${tool.name}
-</div>
-
-<div class="featured-description">
-${tool.description}
-</div>
-
-</div>
-
-`)
-.join("");
-
-}
-
-
-
-/* =================================
-   學習領域
-================================= */
-
-function createDomains() {
-
-
-const container =
-    document.getElementById(
-        "domainContainer"
-    );
-
-
-const domainIcons = {
-
-"國語學習": "📖",
-
-"數學學習": "🔢",
-
-"英語學習": "🇬🇧",
-
-"資訊科技": "💻",
-
-"AI工具": "🤖",
-
-"創意設計": "🎨"
-
-};
-
-
-const counts = {};
-
-
-tools.forEach(
-    tool => {
-
-        if (
-            !tool.category
-        ) return;
-
-        counts[
-            tool.category
-        ] =
-            (
-                counts[
-                    tool.category
-                ] || 0
-            ) + 1;
-
-    }
-);
-
-
-container.innerHTML =
-
-Object.keys(counts)
-.map(category => `
-
-<div
-    class="domain-card"
-    onclick="selectCategory('${category}')"
->
-
-<div class="domain-icon">
-
-${domainIcons[category] || "📚"}
-
-</div>
-
-<div class="domain-name">
-${category}
-</div>
-
-<div class="domain-count">
-${counts[category]} 個工具
-</div>
-
-</div>
-
-`)
-.join("");
-
-}
-
-
-
-/* =================================
-   選擇領域
-================================= */
-
-function selectCategory(category) {
-
-
-currentCategory =
-    category;
-
-
-document
-.querySelectorAll(
-    ".category-btn"
-)
-.forEach(btn => {
-
-btn.classList.remove(
-    "active"
-);
-
-});
-
-
-const buttons =
-    document
-    .querySelectorAll(
-        ".category-btn"
-    );
-
-
-buttons.forEach(
-    button => {
-
-        if (
-            button.textContent ===
-            category
-        ) {
-
-            button.classList.add(
-                "active"
+            throw new Error(
+                "無法讀取 tools.json"
             );
 
         }
 
+
+        tools =
+            await response.json();
+
+
+        createCategories();
+
+        createStages();
+
+        renderTools();
+
     }
-);
+
+    catch (error) {
+
+        console.error(error);
 
 
-renderTools();
+        document.getElementById(
+            "toolsContainer"
+        ).innerHTML = `
 
+        <div class="empty">
 
-document
-.getElementById(
-    "toolsContainer"
-)
-.scrollIntoView({
-    behavior: "smooth"
-});
+            <div class="empty-icon">
+                ⚠️
+            </div>
 
-}
+            <h3>
+                工具資料載入失敗
+            </h3>
 
+            <p>
+                請確認 tools.json 是否存在，
+                並檢查 JSON 格式。
+            </p>
 
+        </div>
 
-/* =================================
-   開啟工具
-================================= */
+        `;
 
-function openTool(url) {
-
-if (
-    url &&
-    url !== "#" &&
-    !url.includes("請填入")
-) {
-
-window.open(
-    url,
-    "_blank"
-);
-
-}
+    }
 
 }
 
 
-
-/* =================================
-   建立分類
-================================= */
+/* =========================
+   建立學習領域
+========================= */
 
 function createCategories() {
 
+    const container =
+        document.getElementById(
+            "categoryContainer"
+        );
 
-const container =
-    document.getElementById(
-        "categoryContainer"
+
+    const categories = [
+
+        "全部",
+
+        ...new Set(
+
+            tools
+                .map(
+                    tool =>
+                        tool.category
+                )
+                .filter(Boolean)
+
+        )
+
+    ];
+
+
+    container.innerHTML = "";
+
+
+    categories.forEach(
+        category => {
+
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+
+            button.className =
+                "filter-btn";
+
+
+            if (
+                category ===
+                currentCategory
+            ) {
+
+                button.classList.add(
+                    "active"
+                );
+
+            }
+
+
+            button.textContent =
+                category;
+
+
+            button.onclick = () => {
+
+                currentCategory =
+                    category;
+
+
+                updateFilterButtons(
+                    "categoryContainer",
+                    category
+                );
+
+
+                renderTools();
+
+            };
+
+
+            container.appendChild(
+                button
+            );
+
+        }
     );
-
-
-const categories = [
-
-"全部",
-
-...new Set(
-
-tools
-.map(
-    tool =>
-        tool.category
-)
-.filter(Boolean)
-
-)
-
-];
-
-
-container.innerHTML = "";
-
-
-categories.forEach(
-    category => {
-
-
-const button =
-    document.createElement(
-        "button"
-    );
-
-
-button.className =
-    "category-btn";
-
-
-if (
-    category ===
-    currentCategory
-) {
-
-button.classList.add(
-    "active"
-);
 
 }
 
 
-button.textContent =
-    category;
+/* =========================
+   建立學習階段
+========================= */
+
+function createStages() {
+
+    const container =
+        document.getElementById(
+            "stageContainer"
+        );
 
 
-button.addEventListener(
-    "click",
-    () => {
+    const stages = [
+
+        "全部",
+
+        ...new Set(
+
+            tools
+                .map(
+                    tool =>
+                        tool.stage
+                )
+                .filter(Boolean)
+
+        )
+
+    ];
 
 
-    currentCategory =
-        category;
+    container.innerHTML = "";
 
+
+    stages.forEach(
+        stage => {
+
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+
+            button.className =
+                "filter-btn";
+
+
+            if (
+                stage ===
+                currentStage
+            ) {
+
+                button.classList.add(
+                    "active"
+                );
+
+            }
+
+
+            button.textContent =
+                stage;
+
+
+            button.onclick = () => {
+
+                currentStage =
+                    stage;
+
+
+                updateFilterButtons(
+                    "stageContainer",
+                    stage
+                );
+
+
+                renderTools();
+
+            };
+
+
+            container.appendChild(
+                button
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================
+   更新按鈕
+========================= */
+
+function updateFilterButtons(
+    containerId,
+    selected
+) {
 
     document
-    .querySelectorAll(
-        ".category-btn"
-    )
-    .forEach(
-        btn =>
-            btn.classList
-            .remove(
-                "active"
-            )
-    );
+        .getElementById(
+            containerId
+        )
+        .querySelectorAll(
+            ".filter-btn"
+        )
+        .forEach(
+            button => {
 
+                button.classList.toggle(
+                    "active",
+                    button.textContent ===
+                    selected
+                );
 
-    button.classList.add(
-        "active"
-    );
-
-
-    renderTools();
-
-    }
-);
-
-
-container.appendChild(
-    button
-);
-
-
-}
-);
+            }
+        );
 
 }
 
 
-
-/* =================================
-   快速篩選
-================================= */
-
-function matchQuickFilter(tool) {
-
-
-switch(
-    currentFilter
-) {
-
-
-case "featured":
-
-return (
-    tool.featured === true
-);
-
-
-case "new":
-
-return (
-    tool.new === true
-);
-
-
-case "teacher":
-
-return (
-    Array.isArray(
-        tool.audience
-    )
-    &&
-    tool.audience.includes(
-        "教師"
-    )
-);
-
-
-case "student":
-
-return (
-    Array.isArray(
-        tool.audience
-    )
-    &&
-    tool.audience.includes(
-        "學生"
-    )
-);
-
-
-default:
-
-return true;
-
-}
-
-}
-
-
-
-/* =================================
+/* =========================
    篩選工具
-================================= */
+========================= */
 
 function getFilteredTools() {
 
+    const keyword =
 
-const keyword =
-
-document
-.getElementById(
-    "searchInput"
-)
-.value
-.trim()
-.toLowerCase();
-
-
-return tools.filter(
-    tool => {
+        document
+            .getElementById(
+                "searchInput"
+            )
+            .value
+            .trim()
+            .toLowerCase();
 
 
-const matchCategory =
-
-currentCategory ===
-"全部"
-
-||
-
-tool.category ===
-currentCategory;
+    return tools.filter(
+        tool => {
 
 
-const searchText = [
+            const matchCategory =
 
-tool.name,
+                currentCategory ===
+                "全部"
 
-tool.category,
+                ||
 
-tool.description,
-
-tool.grade,
-
-...(tool.tags || []),
-
-...(tool.audience || [])
-
-]
-
-.filter(Boolean)
-
-.join(" ")
-
-.toLowerCase();
+                tool.category ===
+                currentCategory;
 
 
-const matchSearch =
+            const matchStage =
 
-searchText.includes(
-    keyword
-);
+                currentStage ===
+                "全部"
+
+                ||
+
+                tool.stage ===
+                currentStage;
 
 
-const matchFilter =
-    matchQuickFilter(
-        tool
+            const searchText = [
+
+                tool.name,
+
+                tool.category,
+
+                tool.stage,
+
+                tool.description
+
+            ]
+
+            .filter(Boolean)
+
+            .join(" ")
+
+            .toLowerCase();
+
+
+            const matchSearch =
+
+                searchText.includes(
+                    keyword
+                );
+
+
+            return (
+
+                matchCategory &&
+
+                matchStage &&
+
+                matchSearch
+
+            );
+
+        }
     );
 
-
-return (
-
-matchCategory &&
-
-matchSearch &&
-
-matchFilter
-
-);
-
-}
-
-);
-
 }
 
 
-
-/* =================================
+/* =========================
    工具卡片
-================================= */
+========================= */
 
 function createToolCard(tool) {
 
+    const isAvailable =
 
-const badges = [];
+        tool.url &&
+
+        tool.url !== "#";
 
 
-if (
-    tool.featured
-) {
+    return `
 
-badges.push(`
+    <article class="tool-card">
 
-<span class="badge badge-featured">
-⭐ 精選
-</span>
 
-`);
+        <div class="tool-icon">
+            ${tool.icon || "🤖"}
+        </div>
+
+
+        <div class="tool-category">
+            ${tool.category || "其他"}
+        </div>
+
+
+        <div class="tool-name">
+            ${tool.name || "未命名工具"}
+        </div>
+
+
+        <div class="tool-description">
+            ${tool.description || ""}
+        </div>
+
+
+        <div class="tool-footer">
+
+
+            <span class="stage">
+                🏫 ${tool.stage || "全學段"}
+            </span>
+
+
+            ${
+                isAvailable
+
+                ?
+
+                `
+
+                <a
+                    class="tool-link"
+                    href="${tool.url}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    🚀 開始使用
+                </a>
+
+                `
+
+                :
+
+                `
+
+                <span class="building">
+                    🚧 建置中
+                </span>
+
+                `
+            }
+
+
+        </div>
+
+
+    </article>
+
+    `;
 
 }
 
 
-if (
-    tool.new
-) {
-
-badges.push(`
-
-<span class="badge badge-new">
-🆕 最新
-</span>
-
-`);
-
-}
-
-
-if (
-    tool.status ===
-    "online"
-) {
-
-badges.push(`
-
-<span class="badge badge-online">
-🟢 線上
-</span>
-
-`);
-
-}
-
-
-const audience =
-    Array.isArray(
-        tool.audience
-    )
-        ? tool.audience
-        : [];
-
-
-const audienceText =
-    audience
-    .map(
-        item =>
-            item === "教師"
-                ? "👨‍🏫 教師"
-                : "👦 學生"
-    )
-    .join(" · ");
-
-
-const tags =
-    Array.isArray(
-        tool.tags
-    )
-        ? tool.tags
-        : [];
-
-
-const tagsHTML =
-
-tags.length
-
-? `
-
-<div class="tags">
-
-${tags
-.slice(0,4)
-.map(
-    tag =>
-        `<span class="tag">
-        #${tag}
-        </span>`
-)
-.join("")
-}
-
-</div>
-
-`
-
-: "";
-
-
-const isAvailable =
-
-tool.url &&
-
-tool.url !== "#" &&
-
-!tool.url.includes(
-    "請填入"
-);
-
-
-const actionHTML =
-
-isAvailable
-
-? `
-
-<a
-    class="tool-link"
-    href="${tool.url}"
-    target="_blank"
-    rel="noopener noreferrer"
->
-🚀 開始使用
-</a>
-
-`
-
-: `
-
-<span class="grade">
-🚧 建置中
-</span>
-
-`;
-
-
-return `
-
-<article class="tool-card">
-
-
-<div class="badges">
-
-${badges.join("")}
-
-</div>
-
-
-<div class="tool-icon">
-
-${tool.icon || "🤖"}
-
-</div>
-
-
-<div class="tool-category">
-
-${tool.category || "其他"}
-
-</div>
-
-
-<div class="tool-name">
-
-${tool.name || "未命名工具"}
-
-</div>
-
-
-<div class="tool-description">
-
-${tool.description || ""}
-
-</div>
-
-
-${tagsHTML}
-
-
-<div class="tool-footer">
-
-
-<div class="tool-meta">
-
-
-${
-tool.grade
-
-? `
-
-<span class="grade">
-🏫 ${tool.grade}
-</span>
-
-`
-
-: ""
-
-}
-
-
-${
-audienceText
-
-? `
-
-<span class="audience">
-${audienceText}
-</span>
-
-`
-
-: ""
-
-}
-
-
-</div>
-
-
-${actionHTML}
-
-
-</div>
-
-
-</article>
-
-`;
-
-}
-
-
-
-/* =================================
+/* =========================
    顯示工具
-================================= */
+========================= */
 
 function renderTools() {
 
+    const container =
+        document.getElementById(
+            "toolsContainer"
+        );
 
-const container =
+
+    const filteredTools =
+        getFilteredTools();
+
+
     document.getElementById(
-        "toolsContainer"
-    );
+        "toolCount"
+    ).textContent =
+
+        `共 ${filteredTools.length} 個工具`;
 
 
-const filteredTools =
-    getFilteredTools();
+    if (
+        filteredTools.length === 0
+    ) {
 
+        container.innerHTML = `
 
-document.getElementById(
-    "toolCount"
-).textContent =
+        <div class="empty">
 
-`共 ${filteredTools.length} 個工具`;
+            <div class="empty-icon">
+                🔍
+            </div>
 
+            <h3>
+                找不到符合的工具
+            </h3>
 
-if (
-    filteredTools.length === 0
-) {
+            <p>
+                請換一個學習領域、學習階段或關鍵字。
+            </p>
 
-container.innerHTML = `
+        </div>
 
-<div class="empty">
+        `;
 
-<div class="empty-icon">
-🔍
-</div>
-
-<h3>
-找不到符合的工具
-</h3>
-
-<p>
-試試其他關鍵字、分類或篩選條件。
-</p>
-
-</div>
-
-`;
-
-return;
-
-}
-
-
-container.innerHTML =
-
-filteredTools
-.map(
-    createToolCard
-)
-.join("");
-
-}
-
-
-
-/* =================================
-   快速按鈕
-================================= */
-
-document
-.querySelectorAll(
-    ".quick-btn"
-)
-.forEach(
-    button => {
-
-
-button.addEventListener(
-    "click",
-    () => {
-
-
-    currentFilter =
-        button.dataset.filter;
-
-
-    document
-    .querySelectorAll(
-        ".quick-btn"
-    )
-    .forEach(
-        btn =>
-            btn.classList
-            .remove(
-                "active"
-            )
-    );
-
-
-    button.classList.add(
-        "active"
-    );
-
-
-    renderTools();
+        return;
 
     }
-);
+
+
+    container.innerHTML =
+
+        filteredTools
+            .map(
+                createToolCard
+            )
+            .join("");
 
 }
-);
 
 
-
-/* =================================
+/* =========================
    搜尋
-================================= */
+========================= */
 
 document
-.getElementById(
-    "searchInput"
-)
-.addEventListener(
-    "input",
-    renderTools
-);
+    .getElementById(
+        "searchInput"
+    )
+    .addEventListener(
+        "input",
+        renderTools
+    );
 
 
-
-/* =================================
+/* =========================
    啟動
-================================= */
+========================= */
 
 loadTools();
-
 
 </script>
 
