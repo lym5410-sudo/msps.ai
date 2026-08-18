@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,12 +13,19 @@
     >
 
     <style>
+
         * {
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
+
             margin: 0;
+
             font-family:
                 "Noto Sans TC",
                 "Microsoft JhengHei",
@@ -38,18 +46,23 @@
                 #f8fafc;
 
             color: #1e293b;
+
             min-height: 100vh;
+
         }
+
 
         /* =========================
            Header
         ========================= */
 
         header {
+
             position: relative;
+
             overflow: hidden;
 
-            padding: 60px 20px 80px;
+            padding: 60px 20px 90px;
 
             background:
                 linear-gradient(
@@ -60,128 +73,305 @@
                 );
 
             color: white;
+
             text-align: center;
+
         }
+
 
         header::before,
         header::after {
+
             content: "";
+
             position: absolute;
+
             border-radius: 50%;
-            background: rgba(255,255,255,0.08);
+
+            background:
+                rgba(255,255,255,0.08);
+
+            pointer-events: none;
+
         }
+
 
         header::before {
-            width: 300px;
-            height: 300px;
-            top: -150px;
-            left: -80px;
+
+            width: 320px;
+            height: 320px;
+
+            top: -170px;
+            left: -100px;
+
         }
+
 
         header::after {
-            width: 400px;
-            height: 400px;
-            right: -150px;
-            bottom: -250px;
+
+            width: 450px;
+            height: 450px;
+
+            right: -180px;
+            bottom: -280px;
+
         }
+
 
         .hero {
+
             position: relative;
+
             z-index: 2;
+
             max-width: 900px;
+
             margin: auto;
+
         }
+
 
         .hero-icon {
-            font-size: 64px;
+
+            font-size: 68px;
+
             margin-bottom: 10px;
+
+            animation:
+                floatRobot 3s ease-in-out infinite;
+
         }
+
+
+        @keyframes floatRobot {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
+
+        }
+
 
         .hero h1 {
+
             margin: 0;
-            font-size: clamp(32px, 6vw, 56px);
+
+            font-size:
+                clamp(32px, 6vw, 56px);
+
             font-weight: 900;
+
             letter-spacing: 2px;
+
         }
+
 
         .hero p {
+
             margin: 16px 0 0;
-            font-size: clamp(16px, 2vw, 21px);
-            opacity: 0.9;
+
+            font-size:
+                clamp(16px, 2vw, 21px);
+
+            opacity: 0.92;
+
         }
 
+
         .hero-subtitle {
-            margin-top: 8px;
+
+            margin-top: 10px;
+
             font-size: 14px;
-            opacity: 0.75;
+
+            opacity: 0.78;
+
         }
+
 
         /* =========================
            Main
         ========================= */
 
         main {
-            max-width: 1200px;
-            margin: -35px auto 0;
-            padding: 0 20px 60px;
+
+            max-width: 1250px;
+
+            margin: -40px auto 0;
+
+            padding:
+                0 20px 60px;
+
             position: relative;
+
             z-index: 5;
+
         }
+
 
         /* =========================
            Search
         ========================= */
 
         .search-box {
+
             background: white;
+
             border-radius: 20px;
-            padding: 10px;
-            box-shadow: 0 15px 40px rgba(15, 23, 42, 0.12);
+
+            padding: 10px 15px;
+
+            box-shadow:
+                0 15px 40px
+                rgba(15,23,42,0.13);
 
             display: flex;
+
             align-items: center;
+
+            border:
+                1px solid
+                rgba(226,232,240,0.8);
+
         }
+
 
         .search-icon {
+
             font-size: 25px;
-            margin: 0 10px;
+
+            margin:
+                0 10px;
+
         }
 
+
         #searchInput {
+
             border: none;
+
             outline: none;
+
             flex: 1;
 
             font-size: 18px;
+
             padding: 15px;
 
             background: transparent;
+
             color: #1e293b;
+
         }
+
+
+        #searchInput::placeholder {
+
+            color: #94a3b8;
+
+        }
+
+
+        /* =========================
+           Quick Filters
+        ========================= */
+
+        .quick-filters {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 10px;
+
+            margin:
+                20px 0 5px;
+
+        }
+
+
+        .quick-btn {
+
+            border: none;
+
+            padding:
+                9px 15px;
+
+            border-radius: 999px;
+
+            background: white;
+
+            color: #475569;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 4px 15px
+                rgba(15,23,42,0.07);
+
+            transition:
+                0.2s;
+
+        }
+
+
+        .quick-btn:hover {
+
+            transform:
+                translateY(-2px);
+
+        }
+
+
+        .quick-btn.active {
+
+            background: #4f46e5;
+
+            color: white;
+
+        }
+
 
         /* =========================
            Category
         ========================= */
 
         .categories {
+
             display: flex;
+
             gap: 10px;
 
-            margin: 28px 0;
+            margin:
+                20px 0 28px;
 
             overflow-x: auto;
+
             padding-bottom: 5px;
+
         }
 
+
         .category-btn {
+
             border: none;
+
             background: white;
 
-            padding: 11px 18px;
+            padding:
+                11px 18px;
 
             border-radius: 999px;
 
             font-size: 15px;
+
             font-weight: 700;
 
             cursor: pointer;
@@ -189,195 +379,508 @@
             white-space: nowrap;
 
             box-shadow:
-                0 4px 15px rgba(15, 23, 42, 0.08);
+                0 4px 15px
+                rgba(15,23,42,0.08);
 
-            transition: 0.2s;
+            transition:
+                0.2s;
+
         }
+
 
         .category-btn:hover {
-            transform: translateY(-2px);
+
+            transform:
+                translateY(-2px);
+
         }
+
 
         .category-btn.active {
-            background: #4f46e5;
+
+            background:
+                #4f46e5;
+
             color: white;
+
         }
 
+
         /* =========================
-           Section
+           Section Header
         ========================= */
 
         .section-title {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
 
-            margin: 35px 0 18px;
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items:
+                center;
+
+            margin:
+                30px 0 18px;
+
         }
+
 
         .section-title h2 {
+
             margin: 0;
+
             font-size: 25px;
+
         }
 
+
         .tool-count {
-            color: #64748b;
+
+            color:
+                #64748b;
+
             font-size: 14px;
+
         }
+
 
         /* =========================
            Cards
         ========================= */
 
         #toolsContainer {
+
             display: grid;
 
             grid-template-columns:
                 repeat(
                     auto-fit,
-                    minmax(260px, 1fr)
+                    minmax(280px, 1fr)
                 );
 
-            gap: 20px;
+            gap: 22px;
+
         }
 
+
         .tool-card {
+
+            position: relative;
+
             background: white;
 
-            border-radius: 22px;
+            border-radius: 24px;
 
             padding: 25px;
 
             box-shadow:
-                0 8px 25px rgba(15, 23, 42, 0.08);
+                0 8px 25px
+                rgba(15,23,42,0.08);
 
-            border: 1px solid rgba(226,232,240,0.8);
+            border:
+                1px solid
+                rgba(226,232,240,0.85);
 
             transition:
                 transform 0.25s,
                 box-shadow 0.25s;
 
             display: flex;
+
             flex-direction: column;
 
-            min-height: 240px;
+            min-height: 285px;
+
+            overflow: hidden;
+
         }
+
+
+        .tool-card::before {
+
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+
+            left: 0;
+
+            right: 0;
+
+            height: 4px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #4f46e5,
+                    #7c3aed
+                );
+
+        }
+
 
         .tool-card:hover {
-            transform: translateY(-6px);
+
+            transform:
+                translateY(-7px);
 
             box-shadow:
-                0 18px 40px rgba(15, 23, 42, 0.14);
+                0 20px 45px
+                rgba(15,23,42,0.15);
+
         }
 
-        .tool-icon {
-            font-size: 48px;
-            margin-bottom: 12px;
+
+        /* =========================
+           Badges
+        ========================= */
+
+        .badges {
+
+            position: absolute;
+
+            top: 17px;
+
+            right: 17px;
+
+            display: flex;
+
+            gap: 5px;
+
         }
 
-        .tool-category {
-            color: #6366f1;
 
-            font-size: 13px;
-            font-weight: 800;
+        .badge {
 
-            margin-bottom: 5px;
-        }
+            padding:
+                5px 8px;
 
-        .tool-name {
-            font-size: 21px;
+            border-radius: 999px;
+
+            font-size: 11px;
+
             font-weight: 900;
 
-            margin-bottom: 10px;
         }
 
+
+        .badge-featured {
+
+            background:
+                #fef3c7;
+
+            color:
+                #92400e;
+
+        }
+
+
+        .badge-new {
+
+            background:
+                #dcfce7;
+
+            color:
+                #166534;
+
+        }
+
+
+        .badge-online {
+
+            background:
+                #ecfdf5;
+
+            color:
+                #047857;
+
+        }
+
+
+        /* =========================
+           Icon
+        ========================= */
+
+        .tool-icon {
+
+            width: 65px;
+
+            height: 65px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #eef2ff,
+                    #f5f3ff
+                );
+
+            border-radius: 18px;
+
+            font-size: 38px;
+
+            margin-bottom: 16px;
+
+        }
+
+
+        .tool-category {
+
+            color:
+                #6366f1;
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+            margin-bottom: 6px;
+
+        }
+
+
+        .tool-name {
+
+            font-size: 21px;
+
+            font-weight: 900;
+
+            line-height: 1.35;
+
+            margin-bottom: 10px;
+
+        }
+
+
         .tool-description {
-            color: #64748b;
-            line-height: 1.6;
+
+            color:
+                #64748b;
+
+            line-height: 1.65;
+
             font-size: 14px;
 
             flex: 1;
+
         }
+
+
+        /* =========================
+           Tags
+        ========================= */
+
+        .tags {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 5px;
+
+            margin-top: 15px;
+
+        }
+
+
+        .tag {
+
+            background:
+                #f8fafc;
+
+            border:
+                1px solid
+                #e2e8f0;
+
+            color:
+                #64748b;
+
+            border-radius: 7px;
+
+            padding:
+                4px 7px;
+
+            font-size: 11px;
+
+        }
+
+
+        /* =========================
+           Footer
+        ========================= */
 
         .tool-footer {
+
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+
+            justify-content:
+                space-between;
+
+            align-items:
+                center;
+
+            gap: 10px;
 
             margin-top: 20px;
+
         }
 
-        .grade {
-            background: #f1f5f9;
 
-            padding: 6px 10px;
+        .tool-meta {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 6px;
+
+        }
+
+
+        .grade {
+
+            background:
+                #f1f5f9;
+
+            padding:
+                6px 9px;
 
             border-radius: 8px;
 
             font-size: 12px;
-            color: #475569;
+
+            color:
+                #475569;
+
         }
 
+
+        .audience {
+
+            background:
+                #eef2ff;
+
+            color:
+                #4f46e5;
+
+            padding:
+                6px 9px;
+
+            border-radius: 8px;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+        }
+
+
         .tool-link {
+
             display: inline-flex;
+
             align-items: center;
+
+            justify-content: center;
+
             gap: 5px;
 
-            background: #4f46e5;
+            background:
+                #4f46e5;
+
             color: white;
 
             text-decoration: none;
 
-            padding: 9px 14px;
+            padding:
+                10px 15px;
 
-            border-radius: 10px;
+            border-radius: 11px;
 
-            font-weight: 700;
+            font-weight: 800;
+
             font-size: 13px;
 
-            transition: 0.2s;
+            white-space: nowrap;
+
+            transition:
+                0.2s;
+
         }
 
+
         .tool-link:hover {
-            background: #3730a3;
+
+            background:
+                #3730a3;
+
+            transform:
+                translateY(-1px);
+
         }
+
 
         /* =========================
            Empty
         ========================= */
 
         .empty {
-            grid-column: 1 / -1;
+
+            grid-column:
+                1 / -1;
 
             text-align: center;
 
-            padding: 70px 20px;
+            padding:
+                70px 20px;
 
-            color: #64748b;
+            color:
+                #64748b;
+
         }
+
 
         .empty-icon {
+
             font-size: 60px;
+
             margin-bottom: 15px;
+
         }
+
 
         /* =========================
            Footer
         ========================= */
 
         footer {
+
             text-align: center;
 
-            padding: 30px 20px 45px;
+            padding:
+                30px 20px 45px;
 
-            color: #64748b;
+            color:
+                #64748b;
 
             font-size: 13px;
+
         }
 
+
         footer strong {
-            color: #4f46e5;
+
+            color:
+                #4f46e5;
+
         }
+
 
         /* =========================
            Mobile
@@ -386,30 +889,55 @@
         @media (max-width: 600px) {
 
             header {
-                padding: 45px 18px 70px;
+
+                padding:
+                    45px 18px 75px;
+
             }
 
             .hero-icon {
+
                 font-size: 50px;
+
             }
 
             main {
+
                 padding-left: 14px;
+
                 padding-right: 14px;
+
             }
 
             #toolsContainer {
-                grid-template-columns: 1fr;
+
+                grid-template-columns:
+                    1fr;
+
             }
 
             .tool-card {
-                min-height: 220px;
+
+                min-height: 270px;
+
             }
+
+            .tool-footer {
+
+                align-items:
+                    flex-end;
+
+            }
+
         }
+
     </style>
+
 </head>
 
+
 <body>
+
 
 <header>
 
@@ -436,9 +964,13 @@
 </header>
 
 
+
 <main>
 
-    <!-- 搜尋 -->
+
+    <!-- =====================
+         搜尋
+    ====================== -->
 
     <div class="search-box">
 
@@ -449,13 +981,61 @@
         <input
             type="text"
             id="searchInput"
-            placeholder="搜尋你想使用的 AI 工具……"
+            placeholder="搜尋工具、學科、年級、關鍵字……"
         >
 
     </div>
 
 
-    <!-- 分類 -->
+
+    <!-- =====================
+         快速篩選
+    ====================== -->
+
+    <div class="quick-filters">
+
+        <button
+            class="quick-btn active"
+            data-filter="all"
+        >
+            🧰 全部
+        </button>
+
+        <button
+            class="quick-btn"
+            data-filter="featured"
+        >
+            ⭐ 精選
+        </button>
+
+        <button
+            class="quick-btn"
+            data-filter="new"
+        >
+            🆕 最新
+        </button>
+
+        <button
+            class="quick-btn"
+            data-filter="teacher"
+        >
+            👨‍🏫 教師
+        </button>
+
+        <button
+            class="quick-btn"
+            data-filter="student"
+        >
+            👦 學生
+        </button>
+
+    </div>
+
+
+
+    <!-- =====================
+         分類
+    ====================== -->
 
     <div
         class="categories"
@@ -463,7 +1043,10 @@
     ></div>
 
 
-    <!-- 工具 -->
+
+    <!-- =====================
+         工具標題
+    ====================== -->
 
     <div class="section-title">
 
@@ -481,6 +1064,11 @@
     </div>
 
 
+
+    <!-- =====================
+         工具容器
+    ====================== -->
+
     <div id="toolsContainer">
 
         <div class="empty">
@@ -495,12 +1083,16 @@
 
     </div>
 
+
 </main>
+
 
 
 <footer>
 
-    <strong>民生國小 AI 教育工具中心</strong>
+    <strong>
+        民生國小 AI 教育工具中心
+    </strong>
 
     <br>
 
@@ -509,25 +1101,34 @@
 </footer>
 
 
+
 <script>
+
+
+    /* =========================
+       全域資料
+    ========================= */
 
     let tools = [];
 
     let currentCategory = "全部";
 
+    let currentFilter = "all";
 
-    /*
-     * ============================
-     * 讀取 tools.json
-     * ============================
-     */
+
+
+    /* =========================
+       讀取 tools.json
+    ========================= */
 
     async function loadTools() {
 
         try {
 
             const response =
-                await fetch("./tools.json");
+                await fetch(
+                    "./tools.json"
+                );
 
             if (!response.ok) {
 
@@ -537,7 +1138,9 @@
 
             }
 
-            tools = await response.json();
+            tools =
+                await response.json();
+
 
             createCategories();
 
@@ -564,7 +1167,8 @@
                     </h3>
 
                     <p>
-                        請確認 tools.json 是否存在。
+                        請確認 tools.json 是否存在，
+                        並檢查 JSON 格式。
                     </p>
 
                 </div>
@@ -576,11 +1180,10 @@
     }
 
 
-    /*
-     * ============================
-     * 建立分類按鈕
-     * ============================
-     */
+
+    /* =========================
+       建立分類
+    ========================= */
 
     function createCategories() {
 
@@ -589,16 +1192,27 @@
                 "categoryContainer"
             );
 
+
         const categories = [
+
             "全部",
+
             ...new Set(
-                tools.map(
-                    tool => tool.category
-                )
+
+                tools
+                    .map(
+                        tool =>
+                            tool.category
+                    )
+                    .filter(Boolean)
+
             )
+
         ];
 
+
         container.innerHTML = "";
+
 
         categories.forEach(
             category => {
@@ -608,8 +1222,10 @@
                         "button"
                     );
 
+
                 button.className =
                     "category-btn";
+
 
                 if (
                     category ===
@@ -622,32 +1238,42 @@
 
                 }
 
+
                 button.textContent =
                     category;
 
-                button.onclick = () => {
 
-                    currentCategory =
-                        category;
+                button.addEventListener(
+                    "click",
+                    () => {
 
-                    document
-                        .querySelectorAll(
-                            ".category-btn"
-                        )
-                        .forEach(
-                            btn =>
-                                btn.classList.remove(
-                                    "active"
-                                )
+                        currentCategory =
+                            category;
+
+
+                        document
+                            .querySelectorAll(
+                                ".category-btn"
+                            )
+                            .forEach(
+                                btn =>
+                                    btn.classList
+                                        .remove(
+                                            "active"
+                                        )
+                            );
+
+
+                        button.classList.add(
+                            "active"
                         );
 
-                    button.classList.add(
-                        "active"
-                    );
 
-                    renderTools();
+                        renderTools();
 
-                };
+                    }
+                );
+
 
                 container.appendChild(
                     button
@@ -659,18 +1285,64 @@
     }
 
 
-    /*
-     * ============================
-     * 顯示工具
-     * ============================
-     */
 
-    function renderTools() {
+    /* =========================
+       判斷快速篩選
+    ========================= */
 
-        const container =
-            document.getElementById(
-                "toolsContainer"
-            );
+    function matchQuickFilter(tool) {
+
+        switch (
+            currentFilter
+        ) {
+
+            case "featured":
+
+                return tool.featured === true;
+
+
+            case "new":
+
+                return tool.new === true;
+
+
+            case "teacher":
+
+                return Array.isArray(
+                    tool.audience
+                )
+                &&
+                tool.audience.includes(
+                    "教師"
+                );
+
+
+            case "student":
+
+                return Array.isArray(
+                    tool.audience
+                )
+                &&
+                tool.audience.includes(
+                    "學生"
+                );
+
+
+            default:
+
+                return true;
+
+        }
+
+    }
+
+
+
+    /* =========================
+       搜尋 + 篩選
+    ========================= */
+
+    function getFilteredTools() {
 
         const keyword =
             document
@@ -682,44 +1354,361 @@
                 .toLowerCase();
 
 
-        const filteredTools =
-            tools.filter(tool => {
+        return tools.filter(
+            tool => {
+
 
                 const matchCategory =
+
                     currentCategory ===
-                    "全部" ||
+                    "全部"
+
+                    ||
+
                     tool.category ===
                     currentCategory;
 
-                const searchText = (
 
-                    tool.name +
-                    " " +
-                    tool.category +
-                    " " +
-                    tool.description +
-                    " " +
-                    tool.grade
 
-                ).toLowerCase();
+                const searchText = [
+
+                    tool.name,
+
+                    tool.category,
+
+                    tool.description,
+
+                    tool.grade,
+
+                    ...(tool.tags || []),
+
+                    ...(tool.audience || [])
+
+                ]
+
+                    .filter(Boolean)
+
+                    .join(" ")
+
+                    .toLowerCase();
+
+
 
                 const matchSearch =
+
                     searchText.includes(
                         keyword
                     );
 
+
+
+                const matchFilter =
+                    matchQuickFilter(
+                        tool
+                    );
+
+
+
                 return (
+
                     matchCategory &&
-                    matchSearch
+
+                    matchSearch &&
+
+                    matchFilter
+
                 );
 
-            });
+            }
+        );
+
+    }
+
+
+
+    /* =========================
+       工具卡片
+    ========================= */
+
+    function createToolCard(tool) {
+
+
+        const badges = [];
+
+
+        if (
+            tool.featured
+        ) {
+
+            badges.push(`
+
+                <span
+                    class="badge badge-featured"
+                >
+                    ⭐ 精選
+                </span>
+
+            `);
+
+        }
+
+
+        if (
+            tool.new
+        ) {
+
+            badges.push(`
+
+                <span
+                    class="badge badge-new"
+                >
+                    🆕 最新
+                </span>
+
+            `);
+
+        }
+
+
+        if (
+            tool.status ===
+            "online"
+        ) {
+
+            badges.push(`
+
+                <span
+                    class="badge badge-online"
+                >
+                    🟢 線上
+                </span>
+
+            `);
+
+        }
+
+
+
+        const audience =
+            Array.isArray(
+                tool.audience
+            )
+                ? tool.audience
+                : [];
+
+
+
+        const audienceText =
+            audience
+                .map(
+                    item =>
+                        item === "教師"
+                            ? "👨‍🏫 教師"
+                            : "👦 學生"
+                )
+                .join(" · ");
+
+
+
+        const tags =
+            Array.isArray(
+                tool.tags
+            )
+                ? tool.tags
+                : [];
+
+
+
+        const tagsHTML =
+            tags.length > 0
+
+                ? `
+
+                    <div class="tags">
+
+                        ${tags
+                            .slice(0, 4)
+                            .map(
+                                tag => `
+
+                                    <span
+                                        class="tag"
+                                    >
+                                        #${tag}
+                                    </span>
+
+                                `
+                            )
+                            .join("")
+                        }
+
+                    </div>
+
+                `
+
+                : "";
+
+
+
+        const isAvailable =
+            tool.url &&
+            tool.url !== "#" &&
+            !tool.url.includes(
+                "請填入"
+            );
+
+
+
+        const actionHTML =
+            isAvailable
+
+                ? `
+
+                    <a
+                        class="tool-link"
+                        href="${tool.url}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        🚀 開始使用
+                    </a>
+
+                `
+
+                : `
+
+                    <span class="grade">
+                        🚧 建置中
+                    </span>
+
+                `;
+
+
+
+        return `
+
+            <article
+                class="tool-card"
+            >
+
+
+                <div class="badges">
+
+                    ${badges.join("")}
+
+                </div>
+
+
+                <div class="tool-icon">
+
+                    ${tool.icon || "🤖"}
+
+                </div>
+
+
+                <div class="tool-category">
+
+                    ${tool.category || "其他"}
+
+                </div>
+
+
+                <div class="tool-name">
+
+                    ${tool.name || "未命名工具"}
+
+                </div>
+
+
+                <div class="tool-description">
+
+                    ${tool.description || ""}
+
+                </div>
+
+
+                ${tagsHTML}
+
+
+                <div class="tool-footer">
+
+
+                    <div class="tool-meta">
+
+                        ${
+                            tool.grade
+
+                            ? `
+
+                                <span
+                                    class="grade"
+                                >
+                                    🏫 ${tool.grade}
+                                </span>
+
+                            `
+
+                            : ""
+
+                        }
+
+
+                        ${
+                            audienceText
+
+                            ? `
+
+                                <span
+                                    class="audience"
+                                >
+                                    ${audienceText}
+                                </span>
+
+                            `
+
+                            : ""
+
+                        }
+
+                    </div>
+
+
+                    ${actionHTML}
+
+
+                </div>
+
+
+            </article>
+
+        `;
+
+    }
+
+
+
+    /* =========================
+       顯示工具
+    ========================= */
+
+    function renderTools() {
+
+        const container =
+            document.getElementById(
+                "toolsContainer"
+            );
+
+
+        const filteredTools =
+            getFilteredTools();
+
 
 
         document.getElementById(
             "toolCount"
         ).textContent =
             `共 ${filteredTools.length} 個工具`;
+
 
 
         if (
@@ -739,7 +1728,7 @@
                     </h3>
 
                     <p>
-                        試試其他關鍵字或分類。
+                        試試其他關鍵字、分類或篩選條件。
                     </p>
 
                 </div>
@@ -751,78 +1740,69 @@
         }
 
 
+
         container.innerHTML =
             filteredTools
-                .map(tool => `
-
-                    <article
-                        class="tool-card"
-                    >
-
-                        <div class="tool-icon">
-                            ${tool.icon}
-                        </div>
-
-                        <div class="tool-category">
-                            ${tool.category}
-                        </div>
-
-                        <div class="tool-name">
-                            ${tool.name}
-                        </div>
-
-                        <div class="tool-description">
-                            ${tool.description}
-                        </div>
-
-                        <div class="tool-footer">
-
-                            <span class="grade">
-                                ${tool.grade}
-                            </span>
-
-                            ${
-                                tool.url !== "#"
-
-                                ? `
-
-                                    <a
-                                        class="tool-link"
-                                        href="${tool.url}"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
-                                        🚀 開始使用
-                                    </a>
-
-                                `
-
-                                : `
-
-                                    <span
-                                        class="grade"
-                                    >
-                                        🚧 建置中
-                                    </span>
-
-                                `
-                            }
-
-                        </div>
-
-                    </article>
-
-                `)
+                .map(
+                    createToolCard
+                )
                 .join("");
 
     }
 
 
-    /*
-     * ============================
-     * 搜尋
-     * ============================
-     */
+
+    /* =========================
+       快速篩選
+    ========================= */
+
+    document
+        .querySelectorAll(
+            ".quick-btn"
+        )
+        .forEach(
+            button => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+
+                        currentFilter =
+                            button.dataset.filter;
+
+
+                        document
+                            .querySelectorAll(
+                                ".quick-btn"
+                            )
+                            .forEach(
+                                btn =>
+                                    btn.classList
+                                        .remove(
+                                            "active"
+                                        )
+                            );
+
+
+                        button.classList.add(
+                            "active"
+                        );
+
+
+                        renderTools();
+
+                    }
+                );
+
+            }
+        );
+
+
+
+    /* =========================
+       搜尋
+    ========================= */
 
     document
         .getElementById(
@@ -834,15 +1814,17 @@
         );
 
 
-    /*
-     * ============================
-     * 啟動
-     * ============================
-     */
+
+    /* =========================
+       啟動
+    ========================= */
 
     loadTools();
 
+
 </script>
 
+
 </body>
+
 </html>
