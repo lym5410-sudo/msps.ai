@@ -1,161 +1,64 @@
-// ============================================
-// 民生國小 AI 教育工具中心
-// 管理 API V2
-//
-// 功能：
-// GET    → 取得 tools.json
-// POST   → 新增工具
-// PUT    → 修改工具
-// DELETE → 刪除工具
-//
-// 安全：
-// ADMIN_PASSWORD 與 GITHUB_TOKEN
-// 都只存在 Netlify Environment Variables
-// ============================================
+const GITHUB_OWNER = "lym5410-sudo";
+const GITHUB_REPO = "msps.ai";
+const FILE_PATH = "tools.json";
+const BRANCH = "main";
 
 
-const jsonHeaders = {
-    "Content-Type": "application/json; charset=utf-8"
-};
+// ========================================
+// GitHub API
+// ========================================
+
+const githubHeaders = () => ({
+    "Authorization": `Bearer ${process.env.GITHUB_TOKEN}`,
+    "Accept": "application/vnd.github+json",
+    "X-GitHub-Api-Version": "2022-11-28"
+});
 
 
-// ============================================
-// 回傳 JSON
-// ============================================
+// ========================================
+// 驗證管理密碼
+// ========================================
 
-function response(data, status = 200) {
-
-    return new Response(
-        JSON.stringify(data),
-        {
-            status,
-            headers: jsonHeaders
-        }
-    );
-
-}
-
-
-// ============================================
-// 取得環境變數
-// ============================================
-
-function getConfig() {
-
-    const token =
-        Netlify.env.get("GITHUB_TOKEN");
+function checkPassword(event) {
 
     const password =
-        Netlify.env.get("ADMIN_PASSWORD");
+        event.headers["x-admin-password"] ||
+        event.headers["X-Admin-Password"];
 
-    const owner =
-        "lym5410-sudo";
-
-    const repo =
-        "msps.ai";
-
-    const path =
-        "tools.json";
-
-
-    return {
-        token,
-        password,
-        owner,
-        repo,
-        path
-    };
-
-}
-
-
-// ============================================
-// GitHub API URL
-// ============================================
-
-function getGithubUrl(config) {
-
-    return (
-        `https://api.github.com/repos/` +
-        `${config.owner}/` +
-        `${config.repo}/` +
-        `contents/${config.path}`
-    );
-
-}
-
-
-// ============================================
-// GitHub Request
-// ============================================
-
-async function githubRequest(
-    config,
-    method = "GET",
-    body = null
-) {
-
-    const options = {
-
-        method,
-
-        headers: {
-
-            "Authorization":
-                `Bearer ${config.token}`,
-
-            "Accept":
-                "application/vnd.github+json",
-
-            "X-GitHub-Api-Version":
-                "2022-11-28",
-
-            "Content-Type":
-                "application/json"
-
-        }
-
-    };
-
-
-    if (body) {
-
-        options.body =
-            JSON.stringify(body);
-
+    if (!password) {
+        return false;
     }
 
-
-    return fetch(
-        getGithubUrl(config),
-        options
-    );
-
+    return password === process.env.ADMIN_PASSWORD;
 }
 
 
-// ============================================
+// ========================================
 // 取得 tools.json
-// ============================================
+// ========================================
 
-async function getToolsFile(config) {
+async function getToolsFile() {
+
+    const url =
+        `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${FILE_PATH}?ref=${BRANCH}`;
 
     const response =
-        await githubRequest(
-            config,
-            "GET"
+        await fetch(
+            url,
+            {
+                headers: githubHeaders()
+            }
         );
 
 
     if (!response.ok) {
 
-        const error =
+        const text =
             await response.text();
 
         throw new Error(
-            `GitHub 讀取失敗：${response.status} ${error}`
+            `GitHub 讀取失敗：${response.status} ${text}`
         );
-
     }
 
 
@@ -163,591 +66,830 @@ async function getToolsFile(config) {
         await response.json();
 
 
-    // GitHub API 回傳 Base64
     const content =
-        data.content
-            .replace(/\n/g, "");
+        Buffer.from(
+            data.content.replace(/\n/g, ""),
+            "base64"
+        ).toString("utf-8");
 
 
-    const decoded =
-        Uint8Array.from(
-            atob(content),
-            char => char.charCodeAt(0)
+    let tools;
+
+    try {
+
+        tools =
+            JSON.parse(content);
+
+    } catch {
+
+        throw new Error(
+            "tools.json 格式錯誤"
         );
 
-
-    const text =
-        new TextDecoder("utf-8")
-            .decode(decoded);
-
-
-    const tools =
-        JSON.parse(text);
+    }
 
 
     return {
-
-        tools,
-
+        tools: Array.isArray(tools)
+            ? tools
+            : [],
         sha: data.sha
-
     };
 
 }
 
 
-// ============================================
-// 驗證管理密碼
-// ============================================
+// ========================================
+// 更新 tools.json
+// ========================================
 
-function checkPassword(
-    request,
-    config
-) {
-
-    const password =
-        request.headers.get(
-            "X-Admin-Password"
-        );
-
-
-    if (!password) {
-
-        return false;
-
-    }
-
-
-    return (
-        password ===
-        config.password
-    );
-
-}
-
-
-// ============================================
-// 寫入 tools.json
-// ============================================
-
-async function saveToolsFile(
-    config,
+async function updateToolsFile(
     tools,
-    sha
+    sha,
+    message
 ) {
+
+    const url =
+        `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${FILE_PATH}`;
+
 
     const content =
-        JSON.stringify(
-            tools,
-            null,
-            4
-        );
-
-
-    // UTF-8 → Base64
-    const bytes =
-        new TextEncoder()
-            .encode(content);
-
-
-    let binary = "";
-
-    bytes.forEach(
-        byte => {
-            binary +=
-                String.fromCharCode(byte);
-        }
-    );
-
-
-    const base64 =
-        btoa(binary);
+        Buffer.from(
+            JSON.stringify(
+                tools,
+                null,
+                4
+            ),
+            "utf-8"
+        ).toString("base64");
 
 
     const response =
-        await githubRequest(
-            config,
-            "PUT",
+        await fetch(
+            url,
             {
 
-                message:
-                    "更新 AI 教育工具中心工具資料",
+                method: "PUT",
 
-                content:
-                    base64,
+                headers: {
+                    ...githubHeaders(),
+                    "Content-Type":
+                        "application/json"
+                },
 
-                sha
+                body:
+                    JSON.stringify({
+
+                        message,
+
+                        content,
+
+                        sha,
+
+                        branch: BRANCH
+
+                    })
 
             }
         );
+
+
+    const data =
+        await response.json();
 
 
     if (!response.ok) {
 
-        const error =
-            await response.text();
-
         throw new Error(
-            `GitHub 寫入失敗：${response.status} ${error}`
+            data.message ||
+            `GitHub 更新失敗：${response.status}`
         );
 
     }
 
 
-    return response.json();
+    return data;
 
 }
 
 
-// ============================================
-// 驗證工具資料
-// ============================================
+// ========================================
+// 建立 ID
+// ========================================
 
-function validateTool(tool) {
+function createId() {
 
-    const requiredFields = [
-
-        "name",
-        "url",
-        "category",
-        "grade",
-        "icon",
-        "description"
-
-    ];
-
-
-    for (
-        const field
-        of requiredFields
-    ) {
-
-        if (
-            !tool[field] ||
-            typeof tool[field] !== "string"
-        ) {
-
-            return (
-                `缺少必要欄位：${field}`
-            );
-
-        }
-
-    }
-
-
-    return null;
+    return (
+        Date.now().toString(36) +
+        Math.random()
+            .toString(36)
+            .substring(2, 8)
+    );
 
 }
 
 
-// ============================================
-// API
-// ============================================
+// ========================================
+// Netlify Function
+// ========================================
 
-export default async (request) => {
+exports.handler =
+    async function(event) {
 
-    try {
+        try {
 
-        const config =
-            getConfig();
-
-
-        // ------------------------------------
-        // 檢查環境變數
-        // ------------------------------------
-
-        if (!config.token) {
-
-            return response(
-                {
-                    success: false,
-                    message:
-                        "GITHUB_TOKEN 尚未設定"
-                },
-                500
-            );
-
-        }
+            const method =
+                event.httpMethod;
 
 
-        if (!config.password) {
+            // ====================================
+            // GET
+            // 公開讀取工具
+            // ====================================
 
-            return response(
-                {
-                    success: false,
-                    message:
-                        "ADMIN_PASSWORD 尚未設定"
-                },
-                500
-            );
+            if (method === "GET") {
 
-        }
-
-
-        // ====================================
-        // GET
-        // 讀取工具
-        // ====================================
-
-        if (
-            request.method ===
-            "GET"
-        ) {
-
-            const result =
-                await getToolsFile(
-                    config
-                );
+                const {
+                    tools
+                } =
+                    await getToolsFile();
 
 
-            return response({
+                return {
 
-                success: true,
+                    statusCode: 200,
 
-                tools:
-                    result.tools
-
-            });
-
-        }
-
-
-        // ====================================
-        // 其他操作需要管理密碼
-        // ====================================
-
-        if (
-            !checkPassword(
-                request,
-                config
-            )
-        ) {
-
-            return response(
-                {
-                    success: false,
-                    message:
-                        "管理者驗證失敗"
-                },
-                401
-            );
-
-        }
-
-
-        // ====================================
-        // POST
-        // 新增工具
-        // ====================================
-
-        if (
-            request.method ===
-            "POST"
-        ) {
-
-            const tool =
-                await request.json();
-
-
-            const validation =
-                validateTool(tool);
-
-
-            if (validation) {
-
-                return response(
-                    {
-                        success: false,
-                        message:
-                            validation
+                    headers: {
+                        "Content-Type":
+                            "application/json",
+                        "Cache-Control":
+                            "no-cache"
                     },
-                    400
-                );
+
+                    body:
+                        JSON.stringify({
+
+                            success: true,
+
+                            tools
+
+                        })
+
+                };
 
             }
 
 
-            const result =
-                await getToolsFile(
-                    config
-                );
+            // ====================================
+            // POST
+            // 登入 / 新增
+            // ====================================
+
+            if (method === "POST") {
+
+                let body = {};
+
+                try {
+
+                    body =
+                        event.body
+                            ? JSON.parse(
+                                event.body
+                            )
+                            : {};
+
+                } catch {
+
+                    return {
+
+                        statusCode: 400,
+
+                        body:
+                            JSON.stringify({
+
+                                success: false,
+
+                                message:
+                                    "JSON 格式錯誤"
+
+                            })
+
+                    };
+
+                }
 
 
-            const tools =
-                result.tools;
+                // =================================
+                // 真正的登入
+                // =================================
+
+                if (
+                    body.action ===
+                    "login"
+                ) {
+
+                    if (
+                        !checkPassword(
+                            event
+                        )
+                    ) {
+
+                        return {
+
+                            statusCode: 401,
+
+                            body:
+                                JSON.stringify({
+
+                                    success: false,
+
+                                    message:
+                                        "管理密碼錯誤"
+
+                                })
+
+                        };
+
+                    }
 
 
-            // 建立唯一 ID
-            const newTool = {
+                    return {
 
-                id:
-                    Date.now().toString(),
+                        statusCode: 200,
 
-                ...tool
+                        body:
+                            JSON.stringify({
 
-            };
+                                success: true,
 
+                                message:
+                                    "登入成功"
 
-            tools.push(
-                newTool
-            );
+                            })
 
+                    };
 
-            await saveToolsFile(
-                config,
-                tools,
-                result.sha
-            );
+                }
 
 
-            return response({
+                // =================================
+                // 新增工具前驗證
+                // =================================
 
-                success: true,
+                if (
+                    !checkPassword(
+                        event
+                    )
+                ) {
 
-                message:
-                    "工具新增成功",
+                    return {
 
-                tool:
+                        statusCode: 401,
+
+                        body:
+                            JSON.stringify({
+
+                                success: false,
+
+                                message:
+                                    "未授權"
+
+                            })
+
+                    };
+
+                }
+
+
+                const {
+                    tools,
+                    sha
+                } =
+                    await getToolsFile();
+
+
+                // =================================
+                // 欄位驗證
+                // =================================
+
+                const requiredFields = [
+                    "name",
+                    "url",
+                    "category",
+                    "grade",
+                    "icon",
+                    "description"
+                ];
+
+
+                for (
+                    const field
+                    of requiredFields
+                ) {
+
+                    if (
+                        !body[field] ||
+                        String(
+                            body[field]
+                        ).trim() === ""
+                    ) {
+
+                        return {
+
+                            statusCode: 400,
+
+                            body:
+                                JSON.stringify({
+
+                                    success: false,
+
+                                    message:
+                                        `缺少必要欄位：${field}`
+
+                                })
+
+                        };
+
+                    }
+
+                }
+
+
+                // =================================
+                // 建立新工具
+                // =================================
+
+                const newTool = {
+
+                    id:
+                        createId(),
+
+                    name:
+                        String(
+                            body.name
+                        ).trim(),
+
+                    url:
+                        String(
+                            body.url
+                        ).trim(),
+
+                    category:
+                        String(
+                            body.category
+                        ).trim(),
+
+                    grade:
+                        String(
+                            body.grade
+                        ).trim(),
+
+                    icon:
+                        String(
+                            body.icon
+                        ).trim(),
+
+                    description:
+                        String(
+                            body.description
+                        ).trim()
+
+                };
+
+
+                tools.push(
                     newTool
-
-            });
-
-        }
-
-
-        // ====================================
-        // PUT
-        // 修改工具
-        // ====================================
-
-        if (
-            request.method ===
-            "PUT"
-        ) {
-
-            const data =
-                await request.json();
-
-
-            if (!data.id) {
-
-                return response(
-                    {
-                        success: false,
-                        message:
-                            "缺少工具 ID"
-                    },
-                    400
                 );
+
+
+                await updateToolsFile(
+                    tools,
+                    sha,
+                    `新增工具：${newTool.name}`
+                );
+
+
+                return {
+
+                    statusCode: 200,
+
+                    body:
+                        JSON.stringify({
+
+                            success: true,
+
+                            message:
+                                "工具新增成功",
+
+                            tool:
+                                newTool
+
+                        })
+
+                };
 
             }
 
 
-            const result =
-                await getToolsFile(
-                    config
+            // ====================================
+            // PUT
+            // 編輯工具
+            // ====================================
+
+            if (method === "PUT") {
+
+                if (
+                    !checkPassword(
+                        event
+                    )
+                ) {
+
+                    return {
+
+                        statusCode: 401,
+
+                        body:
+                            JSON.stringify({
+
+                                success: false,
+
+                                message:
+                                    "未授權"
+
+                            })
+
+                    };
+
+                }
+
+
+                let body;
+
+                try {
+
+                    body =
+                        JSON.parse(
+                            event.body || "{}"
+                        );
+
+                } catch {
+
+                    return {
+
+                        statusCode: 400,
+
+                        body:
+                            JSON.stringify({
+
+                                success: false,
+
+                                message:
+                                    "JSON 格式錯誤"
+
+                            })
+
+                    };
+
+                }
+
+
+                if (!body.id) {
+
+                    return {
+
+                        statusCode: 400,
+
+                        body:
+                            JSON.stringify({
+
+                                success: false,
+
+                                message:
+                                    "缺少工具 ID"
+
+                            })
+
+                    };
+
+                }
+
+
+                const {
+                    tools,
+                    sha
+                } =
+                    await getToolsFile();
+
+
+                const index =
+                    tools.findIndex(
+                        tool =>
+                            String(
+                                tool.id
+                            ) ===
+                            String(
+                                body.id
+                            )
+                    );
+
+
+                if (index === -1) {
+
+                    return {
+
+                        statusCode: 404,
+
+                        body:
+                            JSON.stringify({
+
+                                success: false,
+
+                                message:
+                                    "找不到指定工具"
+
+                            })
+
+                    };
+
+                }
+
+
+                const updatedTool = {
+
+                    ...tools[index],
+
+                    name:
+                        String(
+                            body.name
+                        ).trim(),
+
+                    url:
+                        String(
+                            body.url
+                        ).trim(),
+
+                    category:
+                        String(
+                            body.category
+                        ).trim(),
+
+                    grade:
+                        String(
+                            body.grade
+                        ).trim(),
+
+                    icon:
+                        String(
+                            body.icon
+                        ).trim(),
+
+                    description:
+                        String(
+                            body.description
+                        ).trim()
+
+                };
+
+
+                tools[index] =
+                    updatedTool;
+
+
+                await updateToolsFile(
+                    tools,
+                    sha,
+                    `修改工具：${updatedTool.name}`
                 );
 
 
-            const tools =
-                result.tools;
+                return {
 
+                    statusCode: 200,
 
-            const index =
-                tools.findIndex(
-                    tool =>
-                        String(tool.id) ===
-                        String(data.id)
-                );
+                    body:
+                        JSON.stringify({
 
+                            success: true,
 
-            if (index === -1) {
+                            message:
+                                "工具修改成功",
 
-                return response(
-                    {
-                        success: false,
-                        message:
-                            "找不到指定工具"
-                    },
-                    404
-                );
+                            tool:
+                                updatedTool
+
+                        })
+
+                };
 
             }
 
 
-            const updatedTool = {
+            // ====================================
+            // DELETE
+            // 刪除工具
+            // ====================================
 
-                ...tools[index],
+            if (method === "DELETE") {
 
-                ...data
+                if (
+                    !checkPassword(
+                        event
+                    )
+                ) {
+
+                    return {
+
+                        statusCode: 401,
+
+                        body:
+                            JSON.stringify({
+
+                                success: false,
+
+                                message:
+                                    "未授權"
+
+                            })
+
+                    };
+
+                }
+
+
+                let body;
+
+                try {
+
+                    body =
+                        JSON.parse(
+                            event.body || "{}"
+                        );
+
+                } catch {
+
+                    return {
+
+                        statusCode: 400,
+
+                        body:
+                            JSON.stringify({
+
+                                success: false,
+
+                                message:
+                                    "JSON 格式錯誤"
+
+                            })
+
+                    };
+
+                }
+
+
+                if (!body.id) {
+
+                    return {
+
+                        statusCode: 400,
+
+                        body:
+                            JSON.stringify({
+
+                                success: false,
+
+                                message:
+                                    "缺少工具 ID"
+
+                            })
+
+                    };
+
+                }
+
+
+                const {
+                    tools,
+                    sha
+                } =
+                    await getToolsFile();
+
+
+                const index =
+                    tools.findIndex(
+                        tool =>
+                            String(
+                                tool.id
+                            ) ===
+                            String(
+                                body.id
+                            )
+                    );
+
+
+                if (index === -1) {
+
+                    return {
+
+                        statusCode: 404,
+
+                        body:
+                            JSON.stringify({
+
+                                success: false,
+
+                                message:
+                                    "找不到指定工具"
+
+                            })
+
+                    };
+
+                }
+
+
+                const deletedTool =
+                    tools[index];
+
+
+                tools.splice(
+                    index,
+                    1
+                );
+
+
+                await updateToolsFile(
+                    tools,
+                    sha,
+                    `刪除工具：${deletedTool.name}`
+                );
+
+
+                return {
+
+                    statusCode: 200,
+
+                    body:
+                        JSON.stringify({
+
+                            success: true,
+
+                            message:
+                                "工具刪除成功"
+
+                        })
+
+                };
+
+            }
+
+
+            // ====================================
+            // 不支援的方法
+            // ====================================
+
+            return {
+
+                statusCode: 405,
+
+                body:
+                    JSON.stringify({
+
+                        success: false,
+
+                        message:
+                            "不支援的請求方法"
+
+                    })
 
             };
 
+        }
 
-            const validation =
-                validateTool(
-                    updatedTool
-                );
+        catch (error) {
 
-
-            if (validation) {
-
-                return response(
-                    {
-                        success: false,
-                        message:
-                            validation
-                    },
-                    400
-                );
-
-            }
-
-
-            tools[index] =
-                updatedTool;
-
-
-            await saveToolsFile(
-                config,
-                tools,
-                result.sha
+            console.error(
+                "manage-tools error:",
+                error
             );
 
 
-            return response({
+            return {
 
-                success: true,
+                statusCode: 500,
 
-                message:
-                    "工具修改成功",
+                body:
+                    JSON.stringify({
 
-                tool:
-                    updatedTool
+                        success: false,
 
-            });
+                        message:
+                            error.message ||
+                            "伺服器發生錯誤"
+
+                    })
+
+            };
 
         }
 
-
-        // ====================================
-        // DELETE
-        // 刪除工具
-        // ====================================
-
-        if (
-            request.method ===
-            "DELETE"
-        ) {
-
-            const data =
-                await request.json();
-
-
-            if (!data.id) {
-
-                return response(
-                    {
-                        success: false,
-                        message:
-                            "缺少工具 ID"
-                    },
-                    400
-                );
-
-            }
-
-
-            const result =
-                await getToolsFile(
-                    config
-                );
-
-
-            const tools =
-                result.tools;
-
-
-            const newTools =
-                tools.filter(
-                    tool =>
-                        String(tool.id) !==
-                        String(data.id)
-                );
-
-
-            if (
-                newTools.length ===
-                tools.length
-            ) {
-
-                return response(
-                    {
-                        success: false,
-                        message:
-                            "找不到指定工具"
-                    },
-                    404
-                );
-
-            }
-
-
-            await saveToolsFile(
-                config,
-                newTools,
-                result.sha
-            );
-
-
-            return response({
-
-                success: true,
-
-                message:
-                    "工具刪除成功"
-
-            });
-
-        }
-
-
-        // ====================================
-        // 不支援的方法
-        // ====================================
-
-        return response(
-            {
-                success: false,
-                message:
-                    "不支援的操作"
-            },
-            405
-        );
-
-
-    }
-
-    catch (error) {
-
-        console.error(
-            "manage-tools error:",
-            error
-        );
-
-
-        return response(
-            {
-                success: false,
-                message:
-                    "伺服器發生錯誤",
-                detail:
-                    error.message
-            },
-            500
-        );
-
-    }
-
-};
+    };
