@@ -1,760 +1,1155 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
-
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-<title>民生國小 AI 教育工具中心</title>
+    <title>民生國小 AI 教育工具中心</title>
 
-<meta
-    name="description"
-    content="民生國小 AI 教育工具中心，依學習領域與學習階段快速找到適合的學習工具。"
->
+    <meta
+        name="description"
+        content="民生國小 AI 教育工具中心，整合學科學習、AI工具、課堂工具與學習遊戲。"
+    >
 
+    <style>
 
-<style>
+        * {
+            box-sizing: border-box;
+        }
 
-/* =========================
-   基本設定
-========================= */
+        body {
 
-* {
-    box-sizing: border-box;
-}
+            margin: 0;
 
-html {
-    scroll-behavior: smooth;
-}
+            font-family:
+                "Noto Sans TC",
+                "Microsoft JhengHei",
+                Arial,
+                sans-serif;
 
-body {
+            background:
+                radial-gradient(
+                    circle at top left,
+                    #dbeafe 0%,
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at top right,
+                    #ede9fe 0%,
+                    transparent 35%
+                ),
+                #f8fafc;
 
-    margin: 0;
+            color: #1e293b;
 
-    font-family:
-        "Noto Sans TC",
-        "Microsoft JhengHei",
-        Arial,
-        sans-serif;
+            min-height: 100vh;
+        }
 
-    background:
-        radial-gradient(
-            circle at top left,
-            #dbeafe 0%,
-            transparent 35%
-        ),
-        radial-gradient(
-            circle at top right,
-            #ede9fe 0%,
-            transparent 35%
-        ),
-        #f8fafc;
 
-    color: #1e293b;
+        /* =========================
+           Header
+        ========================= */
 
-    min-height: 100vh;
-}
+        header {
 
+            position: relative;
 
-/* =========================
-   Header
-========================= */
+            overflow: hidden;
 
-header {
+            padding: 45px 20px 70px;
 
-    position: relative;
+            background:
+                linear-gradient(
+                    135deg,
+                    #312e81,
+                    #4f46e5,
+                    #7c3aed
+                );
 
-    overflow: hidden;
+            color: white;
 
-    padding: 55px 20px 75px;
+            text-align: center;
+        }
 
-    background:
-        linear-gradient(
-            135deg,
-            #312e81,
-            #4f46e5,
-            #7c3aed
-        );
 
-    color: white;
+        header::before,
+        header::after {
 
-    text-align: center;
-}
+            content: "";
 
+            position: absolute;
 
-header::before {
+            border-radius: 50%;
 
-    content: "";
+            background:
+                rgba(255,255,255,0.08);
+        }
 
-    position: absolute;
 
-    width: 300px;
-    height: 300px;
+        header::before {
 
-    top: -150px;
-    left: -80px;
+            width: 300px;
+            height: 300px;
 
-    border-radius: 50%;
+            top: -150px;
+            left: -80px;
+        }
 
-    background:
-        rgba(255,255,255,0.08);
-}
 
+        header::after {
 
-header::after {
+            width: 400px;
+            height: 400px;
 
-    content: "";
+            right: -150px;
+            bottom: -250px;
+        }
 
-    position: absolute;
 
-    width: 400px;
-    height: 400px;
+        .admin-button {
 
-    right: -150px;
-    bottom: -250px;
+            position: absolute;
 
-    border-radius: 50%;
+            top: 20px;
+            right: 20px;
 
-    background:
-        rgba(255,255,255,0.08);
-}
+            z-index: 10;
 
+            border: 1px solid
+                rgba(255,255,255,0.35);
 
-.hero {
+            background:
+                rgba(255,255,255,0.15);
 
-    position: relative;
+            color: white;
 
-    z-index: 2;
+            padding: 9px 15px;
 
-    max-width: 900px;
+            border-radius: 999px;
 
-    margin: auto;
-}
+            cursor: pointer;
 
+            font-size: 14px;
 
-.hero-icon {
+            font-weight: 700;
 
-    font-size: 60px;
+            backdrop-filter: blur(8px);
 
-    margin-bottom: 10px;
-}
+            transition: 0.2s;
+        }
 
 
-.hero h1 {
+        .admin-button:hover {
 
-    margin: 0;
+            background:
+                rgba(255,255,255,0.25);
 
-    font-size:
-        clamp(
-            32px,
-            6vw,
-            54px
-        );
+            transform:
+                translateY(-2px);
+        }
 
-    font-weight: 900;
 
-    letter-spacing: 2px;
-}
+        .hero {
 
+            position: relative;
 
-.hero p {
+            z-index: 2;
 
-    margin:
-        15px 0 0;
+            max-width: 900px;
 
-    font-size:
-        clamp(
-            16px,
-            2vw,
-            21px
-        );
+            margin: auto;
+        }
 
-    opacity: 0.9;
-}
 
+        .hero-icon {
 
-.hero-subtitle {
+            font-size: 64px;
 
-    margin-top: 8px;
+            margin-bottom: 10px;
+        }
 
-    font-size: 14px;
 
-    opacity: 0.75;
-}
+        .hero h1 {
 
+            margin: 0;
 
-/* =========================
-   Main
-========================= */
+            font-size:
+                clamp(32px, 6vw, 56px);
 
-main {
+            font-weight: 900;
 
-    max-width: 1200px;
+            letter-spacing: 2px;
+        }
 
-    margin:
-        -35px auto 0;
 
-    padding:
-        0 20px 60px;
+        .hero p {
 
-    position: relative;
+            margin: 16px 0 0;
 
-    z-index: 5;
-}
+            font-size:
+                clamp(16px, 2vw, 21px);
 
+            opacity: 0.9;
+        }
 
-/* =========================
-   搜尋
-========================= */
 
-.search-box {
+        .hero-subtitle {
 
-    background: white;
+            margin-top: 8px;
 
-    border-radius: 20px;
+            font-size: 14px;
 
-    padding: 10px;
+            opacity: 0.75;
+        }
 
-    box-shadow:
-        0 15px 40px
-        rgba(
-            15,
-            23,
-            42,
-            0.12
-        );
 
-    display: flex;
+        /* =========================
+           Main
+        ========================= */
 
-    align-items: center;
-}
+        main {
 
+            max-width: 1200px;
 
-.search-icon {
+            margin: -35px auto 0;
 
-    font-size: 25px;
+            padding:
+                0 20px 60px;
 
-    margin:
-        0 10px;
-}
+            position: relative;
 
+            z-index: 5;
+        }
 
-#searchInput {
 
-    border: none;
+        /* =========================
+           Search
+        ========================= */
 
-    outline: none;
+        .search-box {
 
-    flex: 1;
+            background: white;
 
-    font-size: 18px;
+            border-radius: 20px;
 
-    padding: 15px;
+            padding: 10px;
 
-    background: transparent;
+            box-shadow:
+                0 15px 40px
+                rgba(15, 23, 42, 0.12);
 
-    color: #1e293b;
-}
+            display: flex;
 
+            align-items: center;
+        }
 
-#searchInput::placeholder {
 
-    color:
-        #94a3b8;
-}
+        .search-icon {
 
+            font-size: 25px;
 
-/* =========================
-   分類區
-========================= */
+            margin:
+                0 10px;
+        }
 
-.filter-section {
 
-    margin-top: 30px;
-}
+        #searchInput {
 
+            border: none;
 
-.filter-title {
+            outline: none;
 
-    font-size: 18px;
+            flex: 1;
 
-    font-weight: 900;
+            font-size: 18px;
 
-    margin-bottom: 12px;
-}
+            padding: 15px;
 
+            background: transparent;
 
-.filter-buttons {
+            color: #1e293b;
+        }
 
-    display: flex;
 
-    flex-wrap: wrap;
+        /* =========================
+           Filters
+        ========================= */
 
-    gap: 10px;
-}
+        .filter-area {
 
+            margin-top: 25px;
+        }
 
-.filter-btn {
 
-    border: none;
+        .filter-title {
 
-    background: white;
+            font-size: 14px;
 
-    color: #475569;
+            font-weight: 800;
 
-    padding:
-        10px 17px;
+            color: #64748b;
 
-    border-radius: 999px;
+            margin-bottom: 10px;
+        }
 
-    font-size: 14px;
 
-    font-weight: 700;
+        .categories {
 
-    cursor: pointer;
+            display: flex;
 
-    box-shadow:
-        0 4px 15px
-        rgba(
-            15,
-            23,
-            42,
-            0.07
-        );
+            gap: 10px;
 
-    transition:
-        0.2s;
-}
+            overflow-x: auto;
 
+            padding-bottom: 5px;
+        }
 
-.filter-btn:hover {
 
-    transform:
-        translateY(-2px);
-}
+        .category-btn {
 
+            border: none;
 
-.filter-btn.active {
+            background: white;
 
-    background:
-        #4f46e5;
+            padding:
+                10px 17px;
 
-    color:
-        white;
+            border-radius: 999px;
 
-    box-shadow:
-        0 7px 18px
-        rgba(
-            79,
-            70,
-            229,
-            0.25
-        );
-}
+            font-size: 14px;
 
+            font-weight: 700;
 
-/* =========================
-   工具標題
-========================= */
+            cursor: pointer;
 
-.tools-header {
+            white-space: nowrap;
 
-    display: flex;
+            box-shadow:
+                0 4px 15px
+                rgba(15, 23, 42, 0.08);
 
-    justify-content:
-        space-between;
+            transition: 0.2s;
+        }
 
-    align-items:
-        center;
 
-    margin:
-        38px 0 18px;
-}
+        .category-btn:hover {
 
+            transform:
+                translateY(-2px);
+        }
 
-.tools-header h2 {
 
-    margin: 0;
+        .category-btn.active {
 
-    font-size: 25px;
-}
+            background:
+                #4f46e5;
 
+            color: white;
+        }
 
-.tool-count {
 
-    color:
-        #64748b;
+        /* =========================
+           Section
+        ========================= */
 
-    font-size:
-        14px;
-}
+        .section-title {
 
+            display: flex;
 
-/* =========================
-   工具卡片
-========================= */
+            justify-content:
+                space-between;
 
-#toolsContainer {
+            align-items: center;
 
-    display: grid;
+            margin:
+                35px 0 18px;
+        }
 
-    grid-template-columns:
-        repeat(
-            auto-fit,
-            minmax(
-                270px,
-                1fr
-            )
-        );
 
-    gap: 20px;
-}
+        .section-title h2 {
 
+            margin: 0;
 
-.tool-card {
+            font-size: 25px;
+        }
 
-    background:
-        white;
 
-    border-radius:
-        22px;
+        .tool-count {
 
-    padding:
-        24px;
+            color: #64748b;
 
-    min-height:
-        245px;
+            font-size: 14px;
+        }
 
-    border:
-        1px solid
-        rgba(
-            226,
-            232,
-            240,
-            0.9
-        );
 
-    box-shadow:
-        0 8px 25px
-        rgba(
-            15,
-            23,
-            42,
-            0.08
-        );
+        /* =========================
+           Cards
+        ========================= */
 
-    display:
-        flex;
+        #toolsContainer {
 
-    flex-direction:
-        column;
+            display: grid;
 
-    transition:
-        transform 0.25s,
-        box-shadow 0.25s;
-}
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(260px, 1fr)
+                );
 
+            gap: 20px;
+        }
 
-.tool-card:hover {
 
-    transform:
-        translateY(-6px);
+        .tool-card {
 
-    box-shadow:
-        0 18px 40px
-        rgba(
-            15,
-            23,
-            42,
-            0.14
-        );
-}
+            background: white;
 
+            border-radius: 22px;
 
-.tool-icon {
+            padding: 25px;
 
-    font-size:
-        48px;
+            box-shadow:
+                0 8px 25px
+                rgba(15, 23, 42, 0.08);
 
-    margin-bottom:
-        12px;
-}
+            border:
+                1px solid
+                rgba(226,232,240,0.8);
 
+            transition:
+                transform 0.25s,
+                box-shadow 0.25s;
 
-.tool-category {
+            display: flex;
 
-    display:
-        inline-block;
+            flex-direction: column;
 
-    color:
-        #6366f1;
+            min-height: 240px;
+        }
 
-    font-size:
-        13px;
 
-    font-weight:
-        800;
+        .tool-card:hover {
 
-    margin-bottom:
-        6px;
-}
+            transform:
+                translateY(-6px);
 
+            box-shadow:
+                0 18px 40px
+                rgba(15, 23, 42, 0.14);
+        }
 
-.tool-name {
 
-    font-size:
-        21px;
+        .tool-icon {
 
-    font-weight:
-        900;
+            font-size: 48px;
 
-    line-height:
-        1.4;
+            margin-bottom: 12px;
+        }
 
-    margin-bottom:
-        9px;
-}
 
+        .tool-category {
 
-.tool-description {
+            color: #6366f1;
 
-    color:
-        #64748b;
+            font-size: 13px;
 
-    font-size:
-        14px;
+            font-weight: 800;
 
-    line-height:
-        1.65;
+            margin-bottom: 5px;
+        }
 
-    flex:
-        1;
-}
 
+        .tool-name {
 
-.tool-footer {
+            font-size: 21px;
 
-    display:
-        flex;
+            font-weight: 900;
 
-    justify-content:
-        space-between;
+            margin-bottom: 10px;
+        }
 
-    align-items:
-        center;
 
-    gap:
-        10px;
+        .tool-description {
 
-    margin-top:
-        20px;
-}
+            color: #64748b;
 
+            line-height: 1.6;
 
-.stage {
+            font-size: 14px;
 
-    background:
-        #f1f5f9;
+            flex: 1;
+        }
 
-    color:
-        #475569;
 
-    padding:
-        6px 10px;
+        .tool-footer {
 
-    border-radius:
-        8px;
+            display: flex;
 
-    font-size:
-        12px;
+            justify-content:
+                space-between;
 
-    font-weight:
-        700;
-}
+            align-items: center;
 
+            gap: 10px;
 
-.tool-link {
+            margin-top: 20px;
+        }
 
-    display:
-        inline-flex;
 
-    align-items:
-        center;
+        .grade {
 
-    gap:
-        5px;
+            background:
+                #f1f5f9;
 
-    background:
-        #4f46e5;
+            padding:
+                6px 10px;
 
-    color:
-        white;
+            border-radius: 8px;
 
-    text-decoration:
-        none;
+            font-size: 12px;
 
-    padding:
-        9px 14px;
+            color: #475569;
 
-    border-radius:
-        10px;
+            white-space: nowrap;
+        }
 
-    font-size:
-        13px;
 
-    font-weight:
-        800;
+        .tool-link {
 
-    transition:
-        0.2s;
-}
+            display: inline-flex;
 
+            align-items: center;
 
-.tool-link:hover {
+            gap: 5px;
 
-    background:
-        #3730a3;
-}
+            background:
+                #4f46e5;
 
+            color: white;
 
-.building {
+            text-decoration: none;
 
-    background:
-        #f1f5f9;
+            padding:
+                9px 14px;
 
-    color:
-        #64748b;
+            border-radius: 10px;
 
-    padding:
-        8px 12px;
+            font-weight: 700;
 
-    border-radius:
-        9px;
+            font-size: 13px;
 
-    font-size:
-        12px;
+            transition: 0.2s;
+        }
 
-    font-weight:
-        700;
-}
 
+        .tool-link:hover {
 
-/* =========================
-   找不到工具
-========================= */
+            background:
+                #3730a3;
+        }
 
-.empty {
 
-    grid-column:
-        1 / -1;
+        /* =========================
+           Empty
+        ========================= */
 
-    text-align:
-        center;
+        .empty {
 
-    padding:
-        70px 20px;
+            grid-column:
+                1 / -1;
 
-    color:
-        #64748b;
-}
+            text-align: center;
 
+            padding:
+                70px 20px;
 
-.empty-icon {
+            color: #64748b;
+        }
 
-    font-size:
-        60px;
 
-    margin-bottom:
-        15px;
-}
+        .empty-icon {
 
+            font-size: 60px;
 
-/* =========================
-   Footer
-========================= */
+            margin-bottom: 15px;
+        }
 
-footer {
 
-    text-align:
-        center;
+        /* =========================
+           Modal
+        ========================= */
 
-    padding:
-        30px 20px 45px;
+        .modal {
 
-    color:
-        #64748b;
+            display: none;
 
-    font-size:
-        13px;
-}
+            position: fixed;
 
+            inset: 0;
 
-footer strong {
+            z-index: 1000;
 
-    color:
-        #4f46e5;
-}
+            background:
+                rgba(15,23,42,0.55);
 
+            backdrop-filter:
+                blur(5px);
 
-/* =========================
-   手機版
-========================= */
+            padding: 20px;
 
-@media (
-    max-width: 600px
-) {
+            overflow-y: auto;
+        }
 
-    header {
 
-        padding:
-            45px 18px 65px;
-    }
+        .modal.show {
 
+            display: flex;
 
-    .hero-icon {
+            align-items:
+                center;
 
-        font-size:
-            50px;
-    }
+            justify-content:
+                center;
+        }
 
 
-    main {
+        .modal-box {
 
-        padding-left:
-            14px;
+            background: white;
 
-        padding-right:
-            14px;
-    }
+            width: 100%;
 
+            max-width: 650px;
 
-    #toolsContainer {
+            border-radius: 24px;
 
-        grid-template-columns:
-            1fr;
-    }
+            padding: 30px;
 
+            box-shadow:
+                0 30px 80px
+                rgba(0,0,0,0.25);
 
-    .tools-header {
+            position: relative;
+        }
 
-        align-items:
-            flex-start;
 
-        gap:
-            10px;
+        .modal-header {
 
-        flex-direction:
-            column;
-    }
+            display: flex;
 
-}
+            justify-content:
+                space-between;
 
-</style>
+            align-items: center;
+
+            margin-bottom: 25px;
+        }
+
+
+        .modal-header h2 {
+
+            margin: 0;
+
+            font-size: 24px;
+        }
+
+
+        .close-button {
+
+            border: none;
+
+            background:
+                #f1f5f9;
+
+            width: 38px;
+
+            height: 38px;
+
+            border-radius: 50%;
+
+            cursor: pointer;
+
+            font-size: 20px;
+
+            color: #475569;
+        }
+
+
+        .close-button:hover {
+
+            background:
+                #e2e8f0;
+        }
+
+
+        /* =========================
+           Login
+        ========================= */
+
+        .login-box {
+
+            max-width: 420px;
+        }
+
+
+        .form-group {
+
+            margin-bottom: 18px;
+        }
+
+
+        .form-group label {
+
+            display: block;
+
+            font-weight: 800;
+
+            font-size: 14px;
+
+            margin-bottom: 7px;
+
+            color: #334155;
+        }
+
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+
+            width: 100%;
+
+            padding:
+                12px 14px;
+
+            border:
+                1px solid #cbd5e1;
+
+            border-radius: 10px;
+
+            outline: none;
+
+            font-size: 15px;
+
+            font-family: inherit;
+
+            transition: 0.2s;
+        }
+
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+
+            border-color:
+                #6366f1;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(99,102,241,0.12);
+        }
+
+
+        .form-group textarea {
+
+            min-height: 100px;
+
+            resize: vertical;
+        }
+
+
+        .form-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 15px;
+        }
+
+
+        .primary-button {
+
+            border: none;
+
+            background:
+                #4f46e5;
+
+            color: white;
+
+            padding:
+                12px 20px;
+
+            border-radius: 10px;
+
+            font-size: 15px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+
+        .primary-button:hover {
+
+            background:
+                #3730a3;
+        }
+
+
+        .secondary-button {
+
+            border: none;
+
+            background:
+                #f1f5f9;
+
+            color: #475569;
+
+            padding:
+                12px 20px;
+
+            border-radius: 10px;
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+        }
+
+
+        .danger-button {
+
+            border: none;
+
+            background:
+                #fee2e2;
+
+            color: #b91c1c;
+
+            padding:
+                8px 12px;
+
+            border-radius: 8px;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+        }
+
+
+        .edit-button {
+
+            border: none;
+
+            background:
+                #eef2ff;
+
+            color: #4338ca;
+
+            padding:
+                8px 12px;
+
+            border-radius: 8px;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+        }
+
+
+        .form-actions {
+
+            display: flex;
+
+            justify-content:
+                flex-end;
+
+            gap: 10px;
+
+            margin-top: 25px;
+        }
+
+
+        /* =========================
+           Admin list
+        ========================= */
+
+        .admin-list {
+
+            margin-top: 10px;
+        }
+
+
+        .admin-item {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding:
+                14px 0;
+
+            border-bottom:
+                1px solid #e2e8f0;
+        }
+
+
+        .admin-item-icon {
+
+            font-size: 30px;
+
+            width: 45px;
+
+            text-align: center;
+        }
+
+
+        .admin-item-info {
+
+            flex: 1;
+
+            min-width: 0;
+        }
+
+
+        .admin-item-name {
+
+            font-weight: 800;
+
+            margin-bottom: 4px;
+        }
+
+
+        .admin-item-category {
+
+            font-size: 12px;
+
+            color: #64748b;
+        }
+
+
+        .admin-item-actions {
+
+            display: flex;
+
+            gap: 7px;
+        }
+
+
+        .add-button {
+
+            border: none;
+
+            background:
+                #4f46e5;
+
+            color: white;
+
+            padding:
+                10px 16px;
+
+            border-radius: 10px;
+
+            cursor: pointer;
+
+            font-weight: 800;
+        }
+
+
+        .admin-toolbar {
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items: center;
+
+            margin-bottom: 15px;
+
+            gap: 10px;
+        }
+
+
+        /* =========================
+           Toast
+        ========================= */
+
+        .toast {
+
+            position: fixed;
+
+            left: 50%;
+
+            bottom: 30px;
+
+            transform:
+                translateX(-50%)
+                translateY(100px);
+
+            background:
+                #1e293b;
+
+            color: white;
+
+            padding:
+                12px 20px;
+
+            border-radius: 999px;
+
+            z-index: 2000;
+
+            opacity: 0;
+
+            transition:
+                0.3s;
+
+            pointer-events: none;
+
+            font-size: 14px;
+
+            box-shadow:
+                0 10px 30px
+                rgba(0,0,0,0.2);
+        }
+
+
+        .toast.show {
+
+            opacity: 1;
+
+            transform:
+                translateX(-50%)
+                translateY(0);
+        }
+
+
+        /* =========================
+           Loading
+        ========================= */
+
+        .loading {
+
+            opacity: 0.6;
+
+            pointer-events: none;
+        }
+
+
+        /* =========================
+           Footer
+        ========================= */
+
+        footer {
+
+            text-align: center;
+
+            padding:
+                30px 20px 45px;
+
+            color: #64748b;
+
+            font-size: 13px;
+        }
+
+
+        footer strong {
+
+            color:
+                #4f46e5;
+        }
+
+
+        /* =========================
+           Mobile
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            header {
+
+                padding:
+                    45px 18px 70px;
+            }
+
+
+            .admin-button {
+
+                top: 12px;
+
+                right: 12px;
+
+                font-size: 12px;
+
+                padding:
+                    8px 12px;
+            }
+
+
+            .hero-icon {
+
+                font-size: 50px;
+            }
+
+
+            main {
+
+                padding-left: 14px;
+
+                padding-right: 14px;
+            }
+
+
+            #toolsContainer {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .tool-card {
+
+                min-height: 220px;
+            }
+
+
+            .form-grid {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .modal-box {
+
+                padding: 22px;
+            }
+
+
+            .admin-item-actions {
+
+                flex-direction:
+                    column;
+            }
+
+        }
+
+    </style>
 
 </head>
 
@@ -762,194 +1157,572 @@ footer strong {
 <body>
 
 
-<!-- =========================
-     Header
-========================= -->
-
 <header>
 
-<div class="hero">
+    <button
+        class="admin-button"
+        onclick="openLogin()"
+    >
+        🔐 管理
+    </button>
 
-<div class="hero-icon">
-🤖
-</div>
 
-<h1>
-AI 教育工具中心
-</h1>
+    <div class="hero">
 
-<p>
-AI × 教育 × 創意 × 學習
-</p>
+        <div class="hero-icon">
+            🤖
+        </div>
 
-<div class="hero-subtitle">
-民生國小 AI 教育工具平台
-</div>
+        <h1>
+            AI 教育工具中心
+        </h1>
 
-</div>
+        <p>
+            AI × 教育 × 創意 × 學習
+        </p>
+
+        <div class="hero-subtitle">
+            民生國小 AI 教育工具平台
+        </div>
+
+    </div>
 
 </header>
-
 
 
 <main>
 
 
-<!-- =========================
-     搜尋
-========================= -->
+    <!-- 搜尋 -->
 
-<div class="search-box">
+    <div class="search-box">
 
-<span class="search-icon">
-🔎
-</span>
+        <span class="search-icon">
+            🔎
+        </span>
 
-<input
-    type="text"
-    id="searchInput"
-    placeholder="搜尋工具名稱、學習領域或學習階段……"
->
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="搜尋工具名稱、學習領域或學習階段……"
+        >
 
-</div>
+    </div>
 
 
+    <!-- 學習領域 -->
 
-<!-- =========================
-     學習領域
-========================= -->
+    <div class="filter-area">
 
-<section class="filter-section">
+        <div class="filter-title">
+            📚 學習領域
+        </div>
 
-<div class="filter-title">
-📚 學習領域
-</div>
+        <div
+            class="categories"
+            id="categoryContainer"
+        ></div>
 
-<div
-    class="filter-buttons"
-    id="categoryContainer"
-></div>
-
-</section>
+    </div>
 
 
+    <!-- 學習階段 -->
 
-<!-- =========================
-     學習階段
-========================= -->
+    <div class="filter-area">
 
-<section class="filter-section">
+        <div class="filter-title">
+            🎓 學習階段
+        </div>
 
-<div class="filter-title">
-🏫 學習階段
-</div>
+        <div
+            class="categories"
+            id="gradeContainer"
+        ></div>
 
-<div
-    class="filter-buttons"
-    id="stageContainer"
-></div>
-
-</section>
+    </div>
 
 
+    <!-- 工具 -->
 
-<!-- =========================
-     工具
-========================= -->
+    <div class="section-title">
 
-<div class="tools-header">
+        <h2>
+            🧰 學習工具
+        </h2>
 
-<h2>
-🧰 學習工具
-</h2>
+        <span
+            class="tool-count"
+            id="toolCount"
+        >
+            載入中……
+        </span>
 
-<span
-    class="tool-count"
-    id="toolCount"
->
-載入中……
-</span>
-
-</div>
+    </div>
 
 
-<div id="toolsContainer">
+    <div id="toolsContainer">
 
-<div class="empty">
+        <div class="empty">
 
-<div class="empty-icon">
-⏳
-</div>
+            <div class="empty-icon">
+                ⏳
+            </div>
 
-正在載入工具……
+            正在載入工具……
 
-</div>
+        </div>
 
-</div>
+    </div>
 
 
 </main>
 
 
-
 <footer>
 
-<strong>
-民生國小 AI 教育工具中心
-</strong>
+    <strong>
+        民生國小 AI 教育工具中心
+    </strong>
 
-<br>
+    <br>
 
-AI × 教育 × 創意 × 未來
+    AI × 教育 × 創意 × 未來
 
 </footer>
+
+
+
+<!-- =========================================
+     登入 Modal
+========================================= -->
+
+<div
+    class="modal"
+    id="loginModal"
+>
+
+    <div class="modal-box login-box">
+
+        <div class="modal-header">
+
+            <h2>
+                🔐 管理者登入
+            </h2>
+
+            <button
+                class="close-button"
+                onclick="closeModal('loginModal')"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                管理密碼
+            </label>
+
+            <input
+                type="password"
+                id="adminPassword"
+                placeholder="請輸入管理密碼"
+                autocomplete="current-password"
+                onkeydown="
+                    if(event.key === 'Enter')
+                    loginAdmin()
+                "
+            >
+
+        </div>
+
+
+        <div class="form-actions">
+
+            <button
+                class="secondary-button"
+                onclick="closeModal('loginModal')"
+            >
+                取消
+            </button>
+
+            <button
+                class="primary-button"
+                onclick="loginAdmin()"
+            >
+                登入
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================
+     管理面板
+========================================= -->
+
+<div
+    class="modal"
+    id="adminModal"
+>
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <h2>
+                🛠️ 工具管理
+            </h2>
+
+            <button
+                class="close-button"
+                onclick="logoutAdmin()"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="admin-toolbar">
+
+            <strong>
+                我的工具
+            </strong>
+
+            <button
+                class="add-button"
+                onclick="openToolForm()"
+            >
+                ＋ 新增工具
+            </button>
+
+        </div>
+
+
+        <div
+            class="admin-list"
+            id="adminToolList"
+        >
+
+            正在載入……
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================
+     新增 / 編輯工具
+========================================= -->
+
+<div
+    class="modal"
+    id="toolFormModal"
+>
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <h2 id="toolFormTitle">
+                ➕ 新增工具
+            </h2>
+
+            <button
+                class="close-button"
+                onclick="closeModal('toolFormModal')"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <form
+            id="toolForm"
+            onsubmit="saveTool(event)"
+        >
+
+
+            <div class="form-group">
+
+                <label>
+                    網站名稱
+                </label>
+
+                <input
+                    type="text"
+                    id="toolName"
+                    placeholder="例如：六上自然自主學習網站"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    網站網址
+                </label>
+
+                <input
+                    type="url"
+                    id="toolUrl"
+                    placeholder="https://xxxxx.netlify.app/"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-grid">
+
+
+                <div class="form-group">
+
+                    <label>
+                        學習領域
+                    </label>
+
+                    <input
+                        type="text"
+                        id="toolCategory"
+                        placeholder="例如：自然"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        學習階段
+                    </label>
+
+                    <input
+                        type="text"
+                        id="toolGrade"
+                        placeholder="例如：中年級"
+                        required
+                    >
+
+                </div>
+
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    圖示
+                </label>
+
+                <input
+                    type="text"
+                    id="toolIcon"
+                    placeholder="例如：🔬"
+                    maxlength="10"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    簡短介紹
+                </label>
+
+                <textarea
+                    id="toolDescription"
+                    placeholder="簡單介紹這個網站可以做什麼……"
+                    required
+                ></textarea>
+
+            </div>
+
+
+            <div class="form-actions">
+
+                <button
+                    type="button"
+                    class="secondary-button"
+                    onclick="
+                        closeModal('toolFormModal')
+                    "
+                >
+                    取消
+                </button>
+
+
+                <button
+                    type="submit"
+                    class="primary-button"
+                    id="saveToolButton"
+                >
+                    儲存工具
+                </button>
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+<!-- Toast -->
+
+<div
+    class="toast"
+    id="toast"
+></div>
 
 
 
 <script>
 
 
-/* =========================
-   全域資料
-========================= */
+/* ==================================================
+   全域變數
+================================================== */
 
 let tools = [];
 
 let currentCategory = "全部";
 
-let currentStage = "全部";
+let currentGrade = "全部";
+
+let editingToolId = null;
+
+let adminPassword = "";
 
 
-/* =========================
-   讀取 tools.json
-========================= */
+
+/* ==================================================
+   API
+================================================== */
+
+const API_URL =
+    "./.netlify/functions/manage-tools";
+
+
+
+/* ==================================================
+   Toast
+================================================== */
+
+function showToast(message) {
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+    toast.textContent =
+        message;
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    setTimeout(() => {
+
+        toast.classList.remove(
+            "show"
+        );
+
+    }, 2800);
+
+}
+
+
+
+/* ==================================================
+   Modal
+================================================== */
+
+function openModal(id) {
+
+    document
+        .getElementById(id)
+        .classList.add("show");
+
+}
+
+
+function closeModal(id) {
+
+    document
+        .getElementById(id)
+        .classList.remove("show");
+
+}
+
+
+
+/* ==================================================
+   讀取工具
+================================================== */
 
 async function loadTools() {
 
     try {
 
         const response =
-            await fetch(
-                "./tools.json"
-            );
+            await fetch(API_URL);
 
 
         if (!response.ok) {
 
             throw new Error(
-                "無法讀取 tools.json"
+                "工具資料載入失敗"
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        if (!data.success) {
+
+            throw new Error(
+                data.message ||
+                "工具資料載入失敗"
             );
 
         }
 
 
         tools =
-            await response.json();
+            Array.isArray(data.tools)
+                ? data.tools
+                : [];
 
 
         createCategories();
 
-        createStages();
+        createGrades();
 
         renderTools();
 
@@ -960,37 +1733,68 @@ async function loadTools() {
         console.error(error);
 
 
-        document.getElementById(
-            "toolsContainer"
-        ).innerHTML = `
+        document
+            .getElementById(
+                "toolsContainer"
+            )
+            .innerHTML = `
 
-        <div class="empty">
+                <div class="empty">
 
-            <div class="empty-icon">
-                ⚠️
-            </div>
+                    <div class="empty-icon">
+                        ⚠️
+                    </div>
 
-            <h3>
-                工具資料載入失敗
-            </h3>
+                    <h3>
+                        工具資料載入失敗
+                    </h3>
 
-            <p>
-                請確認 tools.json 是否存在，
-                並檢查 JSON 格式。
-            </p>
+                    <p>
+                        ${escapeHtml(
+                            error.message
+                        )}
+                    </p>
 
-        </div>
+                </div>
 
-        `;
+            `;
 
     }
 
 }
 
 
-/* =========================
-   建立學習領域
-========================= */
+
+/* ==================================================
+   HTML 防護
+================================================== */
+
+function escapeHtml(value) {
+
+    if (
+        value === null ||
+        value === undefined
+    ) {
+
+        return "";
+
+    }
+
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+
+/* ==================================================
+   分類：學習領域
+================================================== */
 
 function createCategories() {
 
@@ -1031,7 +1835,7 @@ function createCategories() {
 
 
             button.className =
-                "filter-btn";
+                "category-btn";
 
 
             if (
@@ -1056,9 +1860,20 @@ function createCategories() {
                     category;
 
 
-                updateFilterButtons(
-                    "categoryContainer",
-                    category
+                document
+                    .querySelectorAll(
+                        "#categoryContainer .category-btn"
+                    )
+                    .forEach(
+                        btn =>
+                            btn.classList.remove(
+                                "active"
+                            )
+                    );
+
+
+                button.classList.add(
+                    "active"
                 );
 
 
@@ -1077,19 +1892,20 @@ function createCategories() {
 }
 
 
-/* =========================
-   建立學習階段
-========================= */
 
-function createStages() {
+/* ==================================================
+   分類：學習階段
+================================================== */
+
+function createGrades() {
 
     const container =
         document.getElementById(
-            "stageContainer"
+            "gradeContainer"
         );
 
 
-    const stages = [
+    const grades = [
 
         "全部",
 
@@ -1098,7 +1914,7 @@ function createStages() {
             tools
                 .map(
                     tool =>
-                        tool.stage
+                        tool.grade
                 )
                 .filter(Boolean)
 
@@ -1110,8 +1926,8 @@ function createStages() {
     container.innerHTML = "";
 
 
-    stages.forEach(
-        stage => {
+    grades.forEach(
+        grade => {
 
             const button =
                 document.createElement(
@@ -1120,12 +1936,12 @@ function createStages() {
 
 
             button.className =
-                "filter-btn";
+                "category-btn";
 
 
             if (
-                stage ===
-                currentStage
+                grade ===
+                currentGrade
             ) {
 
                 button.classList.add(
@@ -1136,18 +1952,29 @@ function createStages() {
 
 
             button.textContent =
-                stage;
+                grade;
 
 
             button.onclick = () => {
 
-                currentStage =
-                    stage;
+                currentGrade =
+                    grade;
 
 
-                updateFilterButtons(
-                    "stageContainer",
-                    stage
+                document
+                    .querySelectorAll(
+                        "#gradeContainer .category-btn"
+                    )
+                    .forEach(
+                        btn =>
+                            btn.classList.remove(
+                                "active"
+                            )
+                    );
+
+
+                button.classList.add(
+                    "active"
                 );
 
 
@@ -1166,211 +1993,10 @@ function createStages() {
 }
 
 
-/* =========================
-   更新按鈕
-========================= */
 
-function updateFilterButtons(
-    containerId,
-    selected
-) {
-
-    document
-        .getElementById(
-            containerId
-        )
-        .querySelectorAll(
-            ".filter-btn"
-        )
-        .forEach(
-            button => {
-
-                button.classList.toggle(
-                    "active",
-                    button.textContent ===
-                    selected
-                );
-
-            }
-        );
-
-}
-
-
-/* =========================
-   篩選工具
-========================= */
-
-function getFilteredTools() {
-
-    const keyword =
-
-        document
-            .getElementById(
-                "searchInput"
-            )
-            .value
-            .trim()
-            .toLowerCase();
-
-
-    return tools.filter(
-        tool => {
-
-
-            const matchCategory =
-
-                currentCategory ===
-                "全部"
-
-                ||
-
-                tool.category ===
-                currentCategory;
-
-
-            const matchStage =
-
-                currentStage ===
-                "全部"
-
-                ||
-
-                tool.stage ===
-                currentStage;
-
-
-            const searchText = [
-
-                tool.name,
-
-                tool.category,
-
-                tool.stage,
-
-                tool.description
-
-            ]
-
-            .filter(Boolean)
-
-            .join(" ")
-
-            .toLowerCase();
-
-
-            const matchSearch =
-
-                searchText.includes(
-                    keyword
-                );
-
-
-            return (
-
-                matchCategory &&
-
-                matchStage &&
-
-                matchSearch
-
-            );
-
-        }
-    );
-
-}
-
-
-/* =========================
-   工具卡片
-========================= */
-
-function createToolCard(tool) {
-
-    const isAvailable =
-
-        tool.url &&
-
-        tool.url !== "#";
-
-
-    return `
-
-    <article class="tool-card">
-
-
-        <div class="tool-icon">
-            ${tool.icon || "🤖"}
-        </div>
-
-
-        <div class="tool-category">
-            ${tool.category || "其他"}
-        </div>
-
-
-        <div class="tool-name">
-            ${tool.name || "未命名工具"}
-        </div>
-
-
-        <div class="tool-description">
-            ${tool.description || ""}
-        </div>
-
-
-        <div class="tool-footer">
-
-
-            <span class="stage">
-                🏫 ${tool.stage || "全學段"}
-            </span>
-
-
-            ${
-                isAvailable
-
-                ?
-
-                `
-
-                <a
-                    class="tool-link"
-                    href="${tool.url}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    🚀 開始使用
-                </a>
-
-                `
-
-                :
-
-                `
-
-                <span class="building">
-                    🚧 建置中
-                </span>
-
-                `
-            }
-
-
-        </div>
-
-
-    </article>
-
-    `;
-
-}
-
-
-/* =========================
+/* ==================================================
    顯示工具
-========================= */
+================================================== */
 
 function renderTools() {
 
@@ -1380,14 +2006,73 @@ function renderTools() {
         );
 
 
+    const keyword =
+        document
+            .getElementById(
+                "searchInput"
+            )
+            .value
+            .trim()
+            .toLowerCase();
+
+
     const filteredTools =
-        getFilteredTools();
+        tools.filter(
+            tool => {
+
+
+                const matchCategory =
+
+                    currentCategory ===
+                    "全部" ||
+
+                    tool.category ===
+                    currentCategory;
+
+
+                const matchGrade =
+
+                    currentGrade ===
+                    "全部" ||
+
+                    tool.grade ===
+                    currentGrade;
+
+
+                const searchText = (
+
+                    tool.name +
+                    " " +
+                    tool.category +
+                    " " +
+                    tool.description +
+                    " " +
+                    tool.grade
+
+                ).toLowerCase();
+
+
+                const matchSearch =
+                    searchText.includes(
+                        keyword
+                    );
+
+
+                return (
+
+                    matchCategory &&
+                    matchGrade &&
+                    matchSearch
+
+                );
+
+            }
+        );
 
 
     document.getElementById(
         "toolCount"
     ).textContent =
-
         `共 ${filteredTools.length} 個工具`;
 
 
@@ -1397,21 +2082,21 @@ function renderTools() {
 
         container.innerHTML = `
 
-        <div class="empty">
+            <div class="empty">
 
-            <div class="empty-icon">
-                🔍
+                <div class="empty-icon">
+                    🔍
+                </div>
+
+                <h3>
+                    找不到符合的工具
+                </h3>
+
+                <p>
+                    試試其他關鍵字或分類。
+                </p>
+
             </div>
-
-            <h3>
-                找不到符合的工具
-            </h3>
-
-            <p>
-                請換一個學習領域、學習階段或關鍵字。
-            </p>
-
-        </div>
 
         `;
 
@@ -1421,19 +2106,121 @@ function renderTools() {
 
 
     container.innerHTML =
-
         filteredTools
             .map(
-                createToolCard
+                tool => {
+
+
+                    const url =
+                        escapeHtml(
+                            tool.url
+                        );
+
+
+                    return `
+
+                        <article
+                            class="tool-card"
+                        >
+
+                            <div
+                                class="tool-icon"
+                            >
+                                ${escapeHtml(
+                                    tool.icon
+                                )}
+                            </div>
+
+
+                            <div
+                                class="tool-category"
+                            >
+                                ${escapeHtml(
+                                    tool.category
+                                )}
+                            </div>
+
+
+                            <div
+                                class="tool-name"
+                            >
+                                ${escapeHtml(
+                                    tool.name
+                                )}
+                            </div>
+
+
+                            <div
+                                class="tool-description"
+                            >
+                                ${escapeHtml(
+                                    tool.description
+                                )}
+                            </div>
+
+
+                            <div
+                                class="tool-footer"
+                            >
+
+                                <span
+                                    class="grade"
+                                >
+                                    ${escapeHtml(
+                                        tool.grade
+                                    )}
+                                </span>
+
+
+                                ${
+                                    tool.url &&
+                                    tool.url !== "#"
+
+                                    ?
+
+                                    `
+
+                                        <a
+                                            class="tool-link"
+                                            href="${url}"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            🚀 開始使用
+                                        </a>
+
+                                    `
+
+                                    :
+
+                                    `
+
+                                        <span
+                                            class="grade"
+                                        >
+                                            🚧 建置中
+                                        </span>
+
+                                    `
+                                }
+
+                            </div>
+
+                        </article>
+
+                    `;
+
+                }
             )
             .join("");
 
 }
 
 
-/* =========================
+
+/* ==================================================
    搜尋
-========================= */
+================================================== */
 
 document
     .getElementById(
@@ -1445,15 +2232,960 @@ document
     );
 
 
-/* =========================
+
+/* ==================================================
+   管理者登入
+================================================== */
+
+function openLogin() {
+
+    document
+        .getElementById(
+            "adminPassword"
+        )
+        .value = "";
+
+
+    openModal(
+        "loginModal"
+    );
+
+
+    setTimeout(
+        () => {
+
+            document
+                .getElementById(
+                    "adminPassword"
+                )
+                .focus();
+
+        },
+        100
+    );
+
+}
+
+
+
+/* ==================================================
+   登入驗證
+================================================== */
+
+async function loginAdmin() {
+
+    const password =
+        document
+            .getElementById(
+                "adminPassword"
+            )
+            .value;
+
+
+    if (!password) {
+
+        showToast(
+            "請輸入管理密碼"
+        );
+
+        return;
+
+    }
+
+
+    const button =
+        document.querySelector(
+            "#loginModal .primary-button"
+        );
+
+
+    button.disabled = true;
+
+    button.textContent =
+        "驗證中……";
+
+
+    try {
+
+        const response =
+            await fetch(
+                API_URL,
+                {
+
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json",
+
+                        "X-Admin-Password":
+                            password
+
+                    },
+
+                    body:
+                        JSON.stringify({})
+
+                }
+            );
+
+
+        /*
+         * POST 空資料會通過密碼驗證，
+         * 但後端接下來會進行工具驗證。
+         *
+         * 因此這裡如果不是 400，
+         * 就代表密碼驗證已經通過。
+         */
+
+        const data =
+            await response.json();
+
+
+        if (
+            response.status === 401
+        ) {
+
+            throw new Error(
+                "管理密碼錯誤"
+            );
+
+        }
+
+
+        if (
+            data.message ===
+            "缺少必要欄位：name"
+        ) {
+
+            adminPassword =
+                password;
+
+        }
+        else if (
+            response.ok
+        ) {
+
+            adminPassword =
+                password;
+
+        }
+        else {
+
+            /*
+             * 其他 400 錯誤，
+             * 如果不是密碼錯誤，
+             * 仍視為密碼驗證成功。
+             */
+
+            adminPassword =
+                password;
+
+        }
+
+
+        closeModal(
+            "loginModal"
+        );
+
+
+        await openAdminPanel();
+
+
+    }
+
+    catch (error) {
+
+        showToast(
+            error.message ||
+            "登入失敗"
+        );
+
+    }
+
+    finally {
+
+        button.disabled =
+            false;
+
+        button.textContent =
+            "登入";
+
+    }
+
+}
+
+
+
+/* ==================================================
+   開啟管理面板
+================================================== */
+
+async function openAdminPanel() {
+
+    openModal(
+        "adminModal"
+    );
+
+
+    await renderAdminList();
+
+}
+
+
+
+/* ==================================================
+   管理列表
+================================================== */
+
+async function renderAdminList() {
+
+    const container =
+        document.getElementById(
+            "adminToolList"
+        );
+
+
+    container.innerHTML =
+        "正在載入工具……";
+
+
+    try {
+
+        const response =
+            await fetch(
+                API_URL
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!data.success) {
+
+            throw new Error(
+                data.message
+            );
+
+        }
+
+
+        tools =
+            data.tools || [];
+
+
+        createCategories();
+
+        createGrades();
+
+        renderTools();
+
+
+        if (
+            tools.length === 0
+        ) {
+
+            container.innerHTML = `
+
+                <div class="empty">
+
+                    <div class="empty-icon">
+                        📭
+                    </div>
+
+                    尚未建立工具
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        container.innerHTML =
+            tools
+                .map(
+                    tool => `
+
+                        <div
+                            class="admin-item"
+                        >
+
+                            <div
+                                class="admin-item-icon"
+                            >
+                                ${escapeHtml(
+                                    tool.icon
+                                )}
+                            </div>
+
+
+                            <div
+                                class="admin-item-info"
+                            >
+
+                                <div
+                                    class="admin-item-name"
+                                >
+                                    ${escapeHtml(
+                                        tool.name
+                                    )}
+                                </div>
+
+
+                                <div
+                                    class="admin-item-category"
+                                >
+                                    ${escapeHtml(
+                                        tool.category
+                                    )}
+                                    ・
+                                    ${escapeHtml(
+                                        tool.grade
+                                    )}
+                                </div>
+
+                            </div>
+
+
+                            <div
+                                class="admin-item-actions"
+                            >
+
+                                <button
+                                    class="edit-button"
+                                    onclick="editTool('${escapeHtml(
+                                        String(tool.id || "")
+                                    )}')"
+                                >
+                                    ✏️ 編輯
+                                </button>
+
+
+                                <button
+                                    class="danger-button"
+                                    onclick="deleteTool('${escapeHtml(
+                                        String(tool.id || "")
+                                    )}')"
+                                >
+                                    🗑️ 刪除
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    `
+                )
+                .join("");
+
+    }
+
+    catch (error) {
+
+        container.innerHTML = `
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    ⚠️
+                </div>
+
+                ${escapeHtml(
+                    error.message
+                )}
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+
+/* ==================================================
+   開啟新增工具
+================================================== */
+
+function openToolForm() {
+
+    editingToolId =
+        null;
+
+
+    document
+        .getElementById(
+            "toolFormTitle"
+        )
+        .textContent =
+        "➕ 新增工具";
+
+
+    document
+        .getElementById(
+            "toolForm"
+        )
+        .reset();
+
+
+    openModal(
+        "toolFormModal"
+    );
+
+}
+
+
+
+/* ==================================================
+   編輯工具
+================================================== */
+
+function editTool(id) {
+
+    const tool =
+        tools.find(
+            item =>
+                String(item.id) ===
+                String(id)
+        );
+
+
+    if (!tool) {
+
+        showToast(
+            "找不到這個工具"
+        );
+
+        return;
+
+    }
+
+
+    editingToolId =
+        id;
+
+
+    document
+        .getElementById(
+            "toolFormTitle"
+        )
+        .textContent =
+        "✏️ 編輯工具";
+
+
+    document
+        .getElementById(
+            "toolName"
+        )
+        .value =
+        tool.name || "";
+
+
+    document
+        .getElementById(
+            "toolUrl"
+        )
+        .value =
+        tool.url || "";
+
+
+    document
+        .getElementById(
+            "toolCategory"
+        )
+        .value =
+        tool.category || "";
+
+
+    document
+        .getElementById(
+            "toolGrade"
+        )
+        .value =
+        tool.grade || "";
+
+
+    document
+        .getElementById(
+            "toolIcon"
+        )
+        .value =
+        tool.icon || "";
+
+
+    document
+        .getElementById(
+            "toolDescription"
+        )
+        .value =
+        tool.description || "";
+
+
+    openModal(
+        "toolFormModal"
+    );
+
+}
+
+
+
+/* ==================================================
+   儲存工具
+================================================== */
+
+async function saveTool(event) {
+
+    event.preventDefault();
+
+
+    if (!adminPassword) {
+
+        showToast(
+            "管理登入已失效，請重新登入"
+        );
+
+        closeModal(
+            "toolFormModal"
+        );
+
+        openLogin();
+
+        return;
+
+    }
+
+
+    const button =
+        document.getElementById(
+            "saveToolButton"
+        );
+
+
+    const tool = {
+
+        name:
+            document
+                .getElementById(
+                    "toolName"
+                )
+                .value
+                .trim(),
+
+        url:
+            document
+                .getElementById(
+                    "toolUrl"
+                )
+                .value
+                .trim(),
+
+        category:
+            document
+                .getElementById(
+                    "toolCategory"
+                )
+                .value
+                .trim(),
+
+        grade:
+            document
+                .getElementById(
+                    "toolGrade"
+                )
+                .value
+                .trim(),
+
+        icon:
+            document
+                .getElementById(
+                    "toolIcon"
+                )
+                .value
+                .trim(),
+
+        description:
+            document
+                .getElementById(
+                    "toolDescription"
+                )
+                .value
+                .trim()
+
+    };
+
+
+    button.disabled =
+        true;
+
+    button.textContent =
+        "儲存中……";
+
+
+    try {
+
+        let response;
+
+
+        /*
+         * 新增
+         */
+
+        if (
+            editingToolId ===
+            null
+        ) {
+
+            response =
+                await fetch(
+                    API_URL,
+                    {
+
+                        method: "POST",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json",
+
+                            "X-Admin-Password":
+                                adminPassword
+
+                        },
+
+                        body:
+                            JSON.stringify(
+                                tool
+                            )
+
+                    }
+                );
+
+        }
+
+
+        /*
+         * 編輯
+         */
+
+        else {
+
+            response =
+                await fetch(
+                    API_URL,
+                    {
+
+                        method: "PUT",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json",
+
+                            "X-Admin-Password":
+                                adminPassword
+
+                        },
+
+                        body:
+                            JSON.stringify({
+
+                                id:
+                                    editingToolId,
+
+                                ...tool
+
+                            })
+
+                    }
+                );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            response.status ===
+            401
+        ) {
+
+            adminPassword =
+                "";
+
+            throw new Error(
+                "登入已失效，請重新登入"
+            );
+
+        }
+
+
+        if (
+            !response.ok ||
+            !data.success
+        ) {
+
+            throw new Error(
+                data.message ||
+                "儲存失敗"
+            );
+
+        }
+
+
+        showToast(
+            editingToolId === null
+                ? "🎉 工具新增成功！"
+                : "🎉 工具修改成功！"
+        );
+
+
+        closeModal(
+            "toolFormModal"
+        );
+
+
+        await renderAdminList();
+
+
+        /*
+         * 等待 Netlify 部署後，
+         * 再重新讀取首頁資料。
+         */
+
+        setTimeout(
+            loadTools,
+            3000
+        );
+
+    }
+
+    catch (error) {
+
+        showToast(
+            error.message ||
+            "儲存失敗"
+        );
+
+    }
+
+    finally {
+
+        button.disabled =
+            false;
+
+        button.textContent =
+            "儲存工具";
+
+    }
+
+}
+
+
+
+/* ==================================================
+   刪除工具
+================================================== */
+
+async function deleteTool(id) {
+
+    const tool =
+        tools.find(
+            item =>
+                String(item.id) ===
+                String(id)
+        );
+
+
+    if (!tool) {
+
+        showToast(
+            "找不到這個工具"
+        );
+
+        return;
+
+    }
+
+
+    const confirmed =
+        confirm(
+            `確定要刪除「${tool.name}」嗎？\n\n刪除後會直接更新工具中心。`
+        );
+
+
+    if (!confirmed) {
+
+        return;
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                API_URL,
+                {
+
+                    method: "DELETE",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json",
+
+                        "X-Admin-Password":
+                            adminPassword
+
+                    },
+
+                    body:
+                        JSON.stringify({
+
+                            id
+
+                        })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            response.status ===
+            401
+        ) {
+
+            adminPassword =
+                "";
+
+            throw new Error(
+                "登入已失效，請重新登入"
+            );
+
+        }
+
+
+        if (
+            !response.ok ||
+            !data.success
+        ) {
+
+            throw new Error(
+                data.message ||
+                "刪除失敗"
+            );
+
+        }
+
+
+        showToast(
+            "🗑️ 工具已刪除"
+        );
+
+
+        await renderAdminList();
+
+
+        setTimeout(
+            loadTools,
+            3000
+        );
+
+    }
+
+    catch (error) {
+
+        showToast(
+            error.message ||
+            "刪除失敗"
+        );
+
+    }
+
+}
+
+
+
+/* ==================================================
+   登出
+================================================== */
+
+function logoutAdmin() {
+
+    adminPassword =
+        "";
+
+
+    closeModal(
+        "adminModal"
+    );
+
+
+    closeModal(
+        "toolFormModal"
+    );
+
+
+    showToast(
+        "已登出管理模式"
+    );
+
+}
+
+
+
+/* ==================================================
+   點擊 Modal 背景關閉
+================================================== */
+
+document
+    .querySelectorAll(".modal")
+    .forEach(
+        modal => {
+
+            modal.addEventListener(
+                "click",
+                event => {
+
+                    if (
+                        event.target ===
+                        modal
+                    ) {
+
+                        modal.classList.remove(
+                            "show"
+                        );
+
+                    }
+
+                }
+            );
+
+        }
+    );
+
+
+
+/* ==================================================
    啟動
-========================= */
+================================================== */
 
 loadTools();
 
+
 </script>
 
-
 </body>
-
 </html>
