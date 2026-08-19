@@ -80,5 +80,14 @@
         "grade": "教師",
         "icon": "🀄",
         "description": "線上進行投票，立即開票"
+    },
+    {
+        "id": "mszf4r7kone9bc",
+        "name": "迴響之聲 Echoes",
+        "url": "https://sites.google.com/go.edu.tw/aitools/%E8%BF%B4%E9%9F%BF%E4%B9%8B%E8%81%B2sel%E7%B7%9A%E4%B8%8A%E6%A1%8C%E9%81%8A?authuser=0",
+        "category": "綜合",
+        "grade": "全年級",
+        "icon": "🥰",
+        "description": "國小班級經營團體動力凝聚（SEL）線上實境桌遊"
     }
 ]
