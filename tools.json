@@ -89,5 +89,14 @@
         "grade": "全年級",
         "icon": "🥰",
         "description": "國小班級經營團體動力凝聚（SEL）線上實境桌遊"
+    },
+    {
+        "id": "mszf9g35492eed",
+        "name": "課室英語發音板",
+        "url": "https://sites.google.com/go.edu.tw/aitools/ai-%E6%95%99%E5%AD%B8%E8%BC%94%E5%8A%A9%E8%88%87%E6%95%99%E5%B8%AB%E5%B0%88%E7%94%A8/%E8%AA%B2%E5%AE%A4%E8%8B%B1%E8%AA%9E%E7%99%BC%E9%9F%B3%E6%9D%BF?authuser=0",
+        "category": "英語",
+        "grade": "教師",
+        "icon": "✌",
+        "description": "收錄課堂常用指令與互動句型的雙語教學輔助工具。教師透過點擊即可即時播放標準語音，適合備課練習或於雙語課堂中直接引導學生聆聽使用。"
     }
 ]
