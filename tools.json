@@ -107,5 +107,14 @@
         "grade": "全年級",
         "icon": "🥱",
         "description": "彙整各類 AI 教學輔助資源的平台，旨在協助教師提升課堂互動效率。網站涵蓋語文、數學及創意探索等多種領域的線上工具，為老師與學生提供豐富的數位學習應用。"
+    },
+    {
+        "id": "mt4f4ydrdm96o4",
+        "name": "文字雲製作工具",
+        "url": "https://drive.google.com/file/d/1wYxzyYbljOWEUzYYl9TcuaZ_CfppRwtU/view?usp=sharing",
+        "category": "全領域",
+        "grade": "全年級",
+        "icon": "☁️",
+        "description": "文字雲是一種將大量文字資料轉化為視覺圖形的分析工具。它透過統計詞彙出現的次數，將熱門關鍵字以較大的字體突顯出來。讓人能不用讀完所有文章，就能在一秒內快速掌握核心重點與趨勢。"
     }
 ]
