@@ -116,5 +116,14 @@
         "grade": "全年級",
         "icon": "☁️",
         "description": "文字雲是一種將大量文字資料轉化為視覺圖形的分析工具。它透過統計詞彙出現的次數，將熱門關鍵字以較大的字體突顯出來。讓人能不用讀完所有文章，就能在一秒內快速掌握核心重點與趨勢。"
+    },
+    {
+        "id": "mte0h5omeh83f4",
+        "name": "班級作業繳交(本地端執行)",
+        "url": "https://drive.google.com/drive/folders/1T2a87ZaOvxaa_yXE6gwY_FmZRmfmpEMF?usp=sharing",
+        "category": "全領域",
+        "grade": "全階段",
+        "icon": "📚",
+        "description": "這是一個可離線使用的作業繳交確認網頁。所有資料只會儲存在開啟網頁的電腦與瀏覽器中，不會上傳到網路。"
     }
 ]
