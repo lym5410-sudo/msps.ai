@@ -125,5 +125,14 @@
         "grade": "全階段",
         "icon": "📚",
         "description": "這是一個可離線使用的作業繳交確認網頁。所有資料只會儲存在開啟網頁的電腦與瀏覽器中，不會上傳到網路。"
+    },
+    {
+        "id": "mte2dvmv3ey2y0",
+        "name": "定時語音提醒系統",
+        "url": "https://drive.google.com/drive/folders/18XIbZvHc-WJRu1RypAgQKAOcTCEYafVA?usp=sharing",
+        "category": "全領域",
+        "grade": "全階段",
+        "icon": "⏰",
+        "description": "開啟後設定時間，時間到語音提醒。"
     }
 ]
