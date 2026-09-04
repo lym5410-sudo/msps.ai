@@ -134,5 +134,14 @@
         "grade": "全階段",
         "icon": "⏰",
         "description": "開啟後設定時間，時間到語音提醒。本地端執行。"
+    },
+    {
+        "id": "mtmnr6mrn2vnrk",
+        "name": "PaGamo AI命題批量製作自訂題庫上傳系統",
+        "url": "https://pagamo-ai-maker.streamlit.app/",
+        "category": "全領域",
+        "grade": "全年級",
+        "icon": "🔂",
+        "description": "依據 108 課綱三大版本（康軒、翰林、南一）詳細各單元與各課課名，一鍵產生 100% 合乎 PaGamO 上傳要求的 .xlsx 題庫檔！"
     }
 ]
