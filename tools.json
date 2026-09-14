@@ -1,5 +1,18 @@
 [
     {
+        "name": "AI體驗生成式繪圖創作坊",
+        "url": "https://student-ai-painter.lym5410.workers.dev/",
+        "type": "teacher",
+        "category": "AI教學",
+        "stage": "低年級",
+        "keywords": [
+            "AI繪圖"
+        ],
+        "icon": "🖌️",
+        "description": "不必登入帳號密碼，只要輸入天馬行空的提示詞，由 Groq AI 與 Cloudflare 為你繪製專屬畫作",
+        "id": "mu1bzxj76c2g4h"
+    },
+    {
         "name": "國小英語600單字",
         "category": "學生",
         "icon": "🇬🇧",
