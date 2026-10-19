@@ -1,5 +1,18 @@
 [
     {
+        "name": "民生拍貼機",
+        "url": "https://minsheng-photobooth.lym5410.workers.dev/",
+        "type": "tool",
+        "category": "AI工具",
+        "stage": "",
+        "keywords": [
+            "拍貼機"
+        ],
+        "icon": "📷",
+        "description": "與民生校景拍照",
+        "id": "mvfe5m828h1qf6"
+    },
+    {
         "name": "AI體驗生成式繪圖創作坊",
         "url": "https://student-ai-painter.lym5410.workers.dev/",
         "type": "teacher",
